@@ -1,17 +1,17 @@
 <template>
   <div class="bg-primary">
-    <div class="container max-w-screen-2xl">
+    <div class="container max-w-screen-2xl mx-auto px-2 py-4">
       <div class="flex justify-between items-center">
         <figure class="w-16 flex justify-center items-center">
-          <img src="" alt="" />
+          <img src="@/static/images/imagotipo-color.png" alt="cepol-logo" />
         </figure>
         <ul class="flex justify-center items-center flex-1">
-          <li class="text-secondary px-1">Inicio</li>
-          <li class="text-secondary px-1">Servicios</li>
-          <li class="text-secondary px-1">Blog</li>
-          <li class="text-secondary px-1">Contáctos</li>
+          <li class="text-lg font-semibold px-1 mx-2 text-white">Inicio</li>
+          <li class="text-lg font-semibold px-1 mx-2 text-white">Servicios</li>
+          <li class="text-lg font-semibold px-1 mx-2 text-white">Blog</li>
+          <li class="text-lg font-semibold px-1 mx-2 text-white">Contáctos</li>
         </ul>
-        <div class="flex flex-1 justify-between w-16 items-center">
+        <div class="flex justify-between w-12 items-center">
           <c-button name="Hola" class="bg-secondary" />
           <c-button name="Hola" class="bg-secondary" />
         </div>
