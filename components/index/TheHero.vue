@@ -1,5 +1,5 @@
 <template>
   <div>
-    Hola sy el footer
+    Hola soy el hero
   </div>
 </template>

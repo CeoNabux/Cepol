@@ -1,7 +1,8 @@
-import {
-  mdiAccount
-} from '@mdi/js'
+import { mdiFacebook, mdiInstagram, mdiMenu, mdiWhatsapp } from '@mdi/js'
 
 export default {
-  account: mdiAccount
+  facebook: mdiFacebook,
+  instagram: mdiInstagram,
+  whatsapp: mdiWhatsapp,
+  menu: mdiMenu
 }
