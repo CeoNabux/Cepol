@@ -1,7 +1,6 @@
 <template>
-  <Tutorial/>
+  <div>
+    <the-header />
+  </div>
 </template>
 
-<script>
-export default {}
-</script>
