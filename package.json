@@ -12,7 +12,8 @@
     "@mdi/js": "^5.9.55",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
-    "nuxt": "^2.15.7"
+    "nuxt": "^2.15.7",
+    "vue-clickaway": "^2.2.2"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^4.2.1",
