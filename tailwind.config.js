@@ -7,6 +7,9 @@ module.exports = {
         primary: '#013F66',
         secondary: '#6da548',
       },
+      inset: {
+        '100': '100%'
+      }
     },
   },
   variants: {

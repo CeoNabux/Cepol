@@ -50,16 +50,20 @@
         h-full
         flex
         justify-center
-        items
-        center
+        items-center
+        transition-all
+        duration-300
+        ease-linear
+        delay-75
       "
+      :class="{'left-100': showMenu}"
     >
       <div class="w-full h-full flex flex-col justify-center">
         <div class="flex w-12 justify-center items-center">
           <button
             class="rounded-full bg-primary p-2 shadow-lg"
             @click="getMenu"
-            v-on-clickaway="closeMenu"
+            v-on-clickaway="getMenu"
           >
             <c-icon name="menu" class="text-white" />
           </button>
@@ -90,8 +94,10 @@ export default {
     getMenu() {
       if (this.showMenu) {
         this.activeMenu(false)
+        console.log('funciono')
       } else {
         this.activeMenu(true)
+        console.log('funciono')
       }
     },
     closeMenu() {
