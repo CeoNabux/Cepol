@@ -31,7 +31,6 @@
           <button
             class="rounded-full bg-primary p-2 shadow-lg"
             @click="getMenu"
-            v-on-clickaway="closeMenu"
           >
             <c-icon name="menu" class="text-white" />
           </button>
@@ -56,17 +55,53 @@
         ease-linear
         delay-75
       "
-      :class="{'left-100': showMenu}"
+      :class="{ 'left-100': showMenu }"
     >
-      <div class="w-full h-full flex flex-col justify-center">
-        <div class="flex w-12 justify-center items-center">
-          <button
-            class="rounded-full bg-primary p-2 shadow-lg"
-            @click="getMenu"
-            v-on-clickaway="getMenu"
-          >
-            <c-icon name="menu" class="text-white" />
-          </button>
+      <div class="w-full h-full">
+        <div class="flex w-full flex-col justify-center items-center">
+          <div class="w-full h-20 flex justify-end px-2 py-4">
+            <div class="w-12 flex justify-center items-center">
+              <button
+                class="rounded-full bg-primary p-2 shadow-lg"
+                @click="getMenu"
+              >
+                <c-icon name="menu" class="text-white" />
+              </button>
+            </div>
+          </div>
+          <figure class="w-56 flex justify-center items-center mb-8">
+            <nuxt-link to="/">
+              <img
+                src="@/static/images/logo-color.png"
+                class="img-grayscale"
+                alt="logo-cepol"
+              />
+            </nuxt-link>
+          </figure>
+          <div class="flex flex-col items-center mb-8">
+            <div
+              v-for="(item, i) in menu"
+              :key="i"
+              class="w-full h-12 flex justify-center items-center py-4 mb-4"
+            >
+              <nuxt-link :to="item.link">
+                <p class="text-white text-xl font-semibold">
+                  {{ item.name }}
+                </p>
+              </nuxt-link>
+            </div>
+          </div>
+          <div class="flex flex-col mt-4 w-full items-center">
+            <div class="px-2 w-full flex justify-center items-center mb-6">
+              <c-button
+                name="Inicia Sesión"
+                class="border-2 border-secondary text-secondary shadow-lg"
+              />
+            </div>
+            <div class="px-2 w-full flex justify-center items-center">
+              <c-button name="Registro" class="bg-primary border border-white text-white shadow-lg" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -94,10 +129,8 @@ export default {
     getMenu() {
       if (this.showMenu) {
         this.activeMenu(false)
-        console.log('funciono')
       } else {
         this.activeMenu(true)
-        console.log('funciono')
       }
     },
     closeMenu() {
@@ -106,3 +139,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.img-grayscale {
+  filter: grayscale(100);
+}
+</style>
