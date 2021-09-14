@@ -55,7 +55,7 @@
         ease-linear
         delay-75
       "
-      :class="{ 'left-100': showMenu }"
+      :class="{ 'left-100': !showMenu }"
     >
       <div class="w-full h-full">
         <div class="flex w-full flex-col justify-center items-center">
@@ -127,10 +127,10 @@ export default {
   methods: {
     ...mapActions('config_drawer', ['activeMenu']),
     getMenu() {
-      if (this.showMenu) {
-        this.activeMenu(false)
-      } else {
+      if (!this.showMenu) {
         this.activeMenu(true)
+      } else {
+        this.activeMenu(false)
       }
     },
     closeMenu() {
