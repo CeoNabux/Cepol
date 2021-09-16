@@ -92,13 +92,13 @@
             </div>
           </div>
           <div class="flex flex-col mt-4 w-full items-center">
-            <div class="px-2 w-full flex justify-center items-center mb-6">
+            <div class="px-2 w-full max-w-sm flex justify-center items-center mb-6">
               <c-button
                 name="Inicia Sesión"
                 class="border-2 border-secondary text-secondary shadow-lg"
               />
             </div>
-            <div class="px-2 w-full flex justify-center items-center">
+            <div class="px-2 w-full max-w-sm flex justify-center items-center">
               <c-button name="Registro" class="bg-primary border border-white text-white shadow-lg" />
             </div>
           </div>
