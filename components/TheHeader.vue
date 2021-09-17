@@ -24,7 +24,11 @@
             />
           </div>
           <div class="px-1 w-1/2 flex justify-center items-center">
-            <c-button name="Registro" class="bg-primary text-white" />
+            <c-button
+              name="Registro"
+              class="bg-primary text-white"
+              @click="signUpRedirection"
+            />
           </div>
         </div>
         <div class="flex lg:hidden w-12 justify-center items-center">
@@ -39,6 +43,7 @@
     </div>
     <div
       class="
+        z-50
         fixed
         top-0
         left-0
@@ -92,14 +97,20 @@
             </div>
           </div>
           <div class="flex flex-col mt-4 w-full items-center">
-            <div class="px-2 w-full max-w-sm flex justify-center items-center mb-6">
+            <div
+              class="px-2 w-full max-w-sm flex justify-center items-center mb-6"
+            >
               <c-button
                 name="Inicia Sesión"
                 class="border-2 border-secondary text-secondary shadow-lg"
               />
             </div>
             <div class="px-2 w-full max-w-sm flex justify-center items-center">
-              <c-button name="Registro" class="bg-primary border border-white text-white shadow-lg" />
+              <c-button
+                name="Registro"
+                class="bg-primary border border-white text-white shadow-lg"
+                @click="signUpRedirection"
+              />
             </div>
           </div>
         </div>
@@ -135,6 +146,10 @@ export default {
     },
     closeMenu() {
       this.activeMenu(false)
+    },
+    signUpRedirection() {
+      console.log('estoy vivo')
+      this.$router.push('/authentication/signUp')
     },
   },
 }
