@@ -22,7 +22,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/clickaway.js'
+    '~/plugins/clickaway.js',
+    { src:'~/plugins/vee-validate.js', ssr:'true' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,5 +43,7 @@ export default {
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['vee-validate']
+  },
 }
