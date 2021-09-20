@@ -1,5 +1,5 @@
-import fireAuth from '@/plugins/firebase.js'
-
+import { fireAuth } from "~/plugins/firebase/app"
+import { createUserWithEmailAndPassword } from "@firebase/auth"
 export const data = () => ({
   user: {
     id: '',
@@ -14,7 +14,8 @@ export const mutations = {
 
 export const actions = {
   async signUserUp ({ commit }, payload) {
-    const user = await fireAuth.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+    const auth = fireAuth
+    const user = await createUserWithEmailAndPassword(auth, payload.email, payload.password)
       .then(user => {
         const newUser = {
           id: user.uid,

@@ -101,6 +101,7 @@
             name="Regístrate"
             class="text-white"
             :class="[{ 'bg-gray-400': !formIsValid}, {'bg-secondary': formIsValid}]"
+            @click.prevent="signUp"
           />
         </div>
       </form>
@@ -112,6 +113,7 @@
 import CButton from '@/components/global/CButton.vue'
 import CIcon from '@/components/global/CIcon.vue'
 import { ValidationProvider } from 'vee-validate'
+import { mapActions } from 'vuex'
 export default {
   components: {
     CButton,
@@ -139,6 +141,13 @@ export default {
     },
   },
   methods: {
+    ...mapActions('fireAuthentication', ['signUserUp']),
+    signUp() {
+      this.signUserUp({
+        email: this.email,
+        password: this.password
+      })
+    },
     getBack() {
       this.$router.push('/')
     },
