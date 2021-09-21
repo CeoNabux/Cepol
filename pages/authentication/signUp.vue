@@ -139,6 +139,16 @@ export default {
         this.password === this.passwordRepeated
       )
     },
+    user() {
+      return this.$store.getters['fireAuthentication/user']
+    }
+  },
+  watch: {
+    user(value) {
+      if(value !== undefined && value !== null) {
+        this.$router.push('/')
+      }
+    }
   },
   methods: {
     ...mapActions('fireAuthentication', ['signUserUp']),
