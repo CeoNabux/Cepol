@@ -13,6 +13,9 @@
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
     "firebase": "^9.0.2",
+    "firebase-admin": "^9.11.1",
+    "firebase-functions": "^3.15.7",
+    "firebase-tools": "^9.18.0",
     "nuxt": "^2.15.7",
     "vee-validate": "^3.4.13",
     "vue-clickaway": "^2.2.2"
