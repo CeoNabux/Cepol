@@ -1,11 +1,12 @@
 import { fireAuth } from "~/plugins/firebase/app"
 import { createUserWithEmailAndPassword } from "@firebase/auth"
-export const data = () => ({
+
+export const state = () => ({
   user: null
 })
 
 export const getters = {
-  user (state) {
+  getUser(state) {
     return state.user
   }
 }

@@ -113,7 +113,7 @@
 import CButton from '@/components/global/CButton.vue'
 import CIcon from '@/components/global/CIcon.vue'
 import { ValidationProvider } from 'vee-validate'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     CButton,
@@ -123,7 +123,7 @@ export default {
   data: () => ({
     email: '',
     password: '',
-    passwordRepeated: '',
+    passwordRepeated: ''
   }),
   computed: {
     passwordConfirmed() {
@@ -139,6 +139,16 @@ export default {
         this.password === this.passwordRepeated
       )
     },
+    user() {
+      return this.$store.getters['fireAuthentication/getUser']
+    }
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
+      }
+    }
   },
   methods: {
     ...mapActions('fireAuthentication', ['signUserUp']),
