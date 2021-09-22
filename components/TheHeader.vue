@@ -16,7 +16,11 @@
             <a :href="item.link">{{ item.name }}</a>
           </li>
         </ul>
-        <div class="hidden lg:flex justify-between items-center w-64">
+        <!-- BOTONES CON USUARIO NO AUTENTICADO -->
+        <div
+          v-if="!userIsAuthenticated"
+          class="hidden lg:flex justify-between items-center w-64"
+        >
           <div class="px-1 w-1/2 flex justify-center items-center">
             <c-button
               name="Inicia Sesión"
@@ -31,6 +35,35 @@
             />
           </div>
         </div>
+        <!-- BOTONES CON USUARIOS AUTENTICADOS -->
+        <div v-else class="hidden lg:flex justify-between items-center w-52">
+          <div class="p-1 w-12 h-12 flex justify-center items-center">
+            <button class="p-1 rounded-full border-2 text-primary">
+              <c-icon name="account" />
+            </button>
+          </div>
+          <div class="py-1 px-2 w-4/5 h-8 flex justify-center items-center">
+            <button
+              class="
+                px-1
+                py-2
+                w-full
+                text-sm
+                rounded-md
+                bg-primary
+                text-white
+                flex
+                justify-center
+                items-center
+              "
+            >
+              Cerrar sesion
+              <div class="w-6 h-6 ml-2">
+                <c-icon name="logout" />
+              </div>
+            </button>
+          </div>
+        </div>
         <div class="flex lg:hidden w-12 justify-center items-center">
           <button
             class="rounded-full bg-primary p-2 shadow-lg"
@@ -41,6 +74,7 @@
         </div>
       </div>
     </div>
+    <!-- MENU EN SIDEBAR PARA RESPONSIVE DESIGN -->
     <div
       class="
         z-50
@@ -124,16 +158,33 @@ import { mapGetters, mapActions } from 'vuex'
 import CIcon from './global/CIcon.vue'
 export default {
   components: { CIcon },
-  data: () => ({
-    menu: [
-      { name: 'Inicio', link: '/' },
-      { name: 'Blog', link: '/blog' },
-      { name: 'Servicios', link: '/services' },
-      { name: 'Contáctos', link: '/contacts' },
-    ],
-  }),
   computed: {
     ...mapGetters('config_drawer', ['showMenu']),
+    menu() {
+      let menuItems = [
+        { name: 'Inicio', link: '/' },
+        { name: 'Blog', link: '/blog' },
+        { name: 'Servicios', link: '/services' },
+        { name: 'Contáctos', link: '/contacts' },
+      ]
+      if (this.userIsAuthenticated) {
+        let menuItems = [
+          { name: 'Blog', link: '/blog' },
+          { name: 'Dashboard', link: '/dashboard' },
+          { name: 'Simulador', link: '/simulador' },
+          { name: 'Servicios', link: '/services' },
+          { name: 'Contáctos', link: '/contacts' },
+        ]
+        return menuItems
+      }
+      return menuItems
+    },
+    userIsAuthenticated() {
+      return (
+        this.$store.getters['fireAuthentication/user'] !== null &&
+        this.$store.getters['fireAuthentication/user'] !== undefined
+      )
+    },
   },
   methods: {
     ...mapActions('config_drawer', ['activeMenu']),

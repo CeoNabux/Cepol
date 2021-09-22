@@ -1,9 +1,11 @@
-import { mdiClose, mdiFacebook, mdiInstagram, mdiMenu, mdiWhatsapp } from '@mdi/js'
+import { mdiAccount, mdiClose, mdiFacebook, mdiInstagram, mdiLogout, mdiMenu, mdiWhatsapp } from '@mdi/js'
 
 export default {
   facebook: mdiFacebook,
   instagram: mdiInstagram,
   whatsapp: mdiWhatsapp,
   menu: mdiMenu,
-  close: mdiClose
+  close: mdiClose,
+  account: mdiAccount,
+  logout: mdiLogout
 }
