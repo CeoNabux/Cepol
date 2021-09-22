@@ -1,6 +1,7 @@
 <template>
   <div class="bg-white border-b border-secondary relative">
     <div class="container max-w-screen-2xl mx-auto px-2 py-4">
+      <!-- HEADER PREPARADO PARA PANTALLAS MAYORES A 1024 -->
       <div class="flex justify-between items-center">
         <figure class="w-24 flex justify-center items-center">
           <a href="/">
@@ -38,7 +39,10 @@
         <!-- BOTONES CON USUARIOS AUTENTICADOS -->
         <div v-else class="hidden lg:flex justify-between items-center w-52">
           <div class="p-1 w-12 h-12 flex justify-center items-center">
-            <button class="p-1 rounded-full border-2 text-primary">
+            <button
+              class="p-1 rounded-full border-2 text-primary"
+              @click="profileRedirection"
+            >
               <c-icon name="account" />
             </button>
           </div>
@@ -130,7 +134,10 @@
               </nuxt-link>
             </div>
           </div>
-          <div class="flex flex-col mt-4 w-full items-center">
+          <div
+            v-if="!userIsAuthenticated"
+            class="flex flex-col mt-4 w-full items-center"
+          >
             <div
               class="px-2 w-full max-w-sm flex justify-center items-center mb-6"
             >
@@ -145,6 +152,37 @@
                 class="bg-primary border border-white text-white shadow-lg"
                 @click="signUpRedirection"
               />
+            </div>
+          </div>
+          <div v-else class="flex flex-col justify-between items-center w-52">
+            <div class="p-1 w-12 h-12 flex justify-center items-center">
+              <button
+                class="p-1 rounded-full border-2 text-white"
+                @click="profileRedirection"
+              >
+                <c-icon name="account" />
+              </button>
+            </div>
+            <div class="py-1 px-2 w-4/5 h-8 flex justify-center items-center">
+              <button
+                class="
+                  px-1
+                  py-2
+                  w-full
+                  text-sm
+                  rounded-md
+                  bg-primary
+                  text-white
+                  flex
+                  justify-center
+                  items-center
+                "
+              >
+                Cerrar sesion
+                <div class="w-6 h-6 ml-2">
+                  <c-icon name="logout" />
+                </div>
+              </button>
             </div>
           </div>
         </div>
@@ -199,8 +237,10 @@ export default {
       this.activeMenu(false)
     },
     signUpRedirection() {
-      console.log('estoy vivo')
       this.$router.push('/authentication/signUp')
+    },
+    profileRedirection() {
+      this.$router.push('/profile')
     },
   },
 }
