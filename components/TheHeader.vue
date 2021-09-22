@@ -26,6 +26,7 @@
             <c-button
               name="Inicia Sesión"
               class="border-2 border-primary text-primary"
+              @click="signInRedirection"
             />
           </div>
           <div class="px-1 w-1/2 flex justify-center items-center">
@@ -144,6 +145,7 @@
               <c-button
                 name="Inicia Sesión"
                 class="border-2 border-secondary text-secondary shadow-lg"
+                @click="signInRedirection"
               />
             </div>
             <div class="px-2 w-full max-w-sm flex justify-center items-center">
@@ -242,6 +244,9 @@ export default {
     profileRedirection() {
       this.$router.push('/profile')
     },
+    signInRedirection() {
+      this.$router.push('/authentication/signIn')
+    }
   },
 }
 </script>
