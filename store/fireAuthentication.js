@@ -1,5 +1,5 @@
 import { fireAuth } from "~/plugins/firebase/app"
-import { createUserWithEmailAndPassword } from "@firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@firebase/auth"
 export const state = () => ({
   user: null
 })
@@ -27,7 +27,21 @@ export const actions = {
       }
       commit('SET_USER', newUser)
     }
-    catch {
+    catch(error) {
+      console.error(error)
+    }
+  },
+  async signUserIn ({commit}, payload) {
+    try {
+      const auth = fireAuth
+      const user = await signInWithEmailAndPassword(auth, payload.email, payload.password)
+      const newUser = {
+        id: user.user.uid,
+        registeredNotes: []
+      }
+      commit('SET_USER', newUser)
+    }
+    catch(error) {
       console.error(error)
     }
   }

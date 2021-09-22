@@ -116,9 +116,7 @@ export default {
     formIsValid() {
       return (
         this.email !== '' &&
-        this.password !== '' &&
-        this.passwordRepeated !== '' &&
-        this.password === this.passwordRepeated
+        this.password !== ''
       )
     },
     user() {
@@ -135,7 +133,7 @@ export default {
   methods: {
     ...mapActions('fireAuthentication', ['signUserIn']),
     signIn() {
-      this.signUserUp({
+      this.signUserIn({
         email: this.email,
         password: this.password,
       })
