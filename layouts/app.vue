@@ -19,33 +19,39 @@
         shadow-md
         lg:divide-y
         divide-secondary
+        transform transition duration-500
+        open
       "
     >
       <!-- LOGO DE LA EMPRESA -->
-      <figure class="p-1 h-14 hidden lg:flex justify-center items-center">
+      <figure class="p-1 h-14 hidden lg:flex justify-center items-center my-2">
         <img src="@/static/images/favicon.png" alt="cepol-logo" />
       </figure>
       <!-- ICONOS DEL MENU -->
-      <div class="w-full flex flex-row justify-evenly items-center lg:flex-col lg:divide-x-0 divide-secondary">
+      <div class="w-full flex flex-row justify-evenly items-center lg:flex-col xl:items-start lg:divide-x-0 divide-secondary">
         <button
           v-for="(item, i) in menuItems"
           :key="i"
           class="
             w-8
             lg:w-1/2 lg:h-14 lg:mb-4
+            xl:w-full
             flex
             justify-center
+            xl:justify-start
+            xl:pl-3
             items-center
             my-auto
             mx-auto
             text-secondary
+            align-sidebar
           "
           @click='redirection(item.link)'
         >
-          <div class="w-full xl:w-8 xl:mr-3">
+          <div class="w-full lg:w-6 xl:w-8 xl:mr-3 icons">
             <c-icon :name="item.icon" />
           </div>
-          <p class="text-secondary text-base font-semibold hidden xl:block">
+          <p class="text-secondary text-base font-semibold hidden xl:block words">
             {{ item.name }}
           </p>
         </button>
@@ -62,8 +68,8 @@
 export default {
   data: () => ({
     menuItems: [
-      { icon: 'account', link: 'profile', name: 'Perfil' },
-      { icon: 'account', link: 'profile', name: 'Perfil' },
+      { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
+      { icon: 'newLesson', link: 'createQuestions', name: 'Crear Preguntas' },
       { icon: 'account', link: 'profile', name: 'Perfil' },
     ],
   }),
@@ -74,3 +80,24 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.open:hover {
+  width: 256px;
+}
+
+.open:hover .words {
+  display: flex;
+}
+
+.open:hover .align-sidebar {
+  justify-content: start;
+  width: 80%;
+}
+
+.open:hover .icons {
+  margin-right: 0.75rem;
+}
+
+</style>
