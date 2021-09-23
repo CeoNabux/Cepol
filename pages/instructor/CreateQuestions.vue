@@ -1,6 +1,6 @@
 <template>
   <div>
-    Soy el contenido del sitio jaja
+    Aqui vamos a tomar el ejemplo del firebase
   </div>
 </template>
 
