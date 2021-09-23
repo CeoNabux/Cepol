@@ -19,7 +19,7 @@
         h-screen
         md:w-96 md:h-auto
         border
-        py-2
+        py-3
         px-4
         border-secondary
         rounded-md
@@ -35,6 +35,7 @@
           <c-icon name="close" class="hover:text-pink-700" />
         </button>
       </div>
+      <alert class="my-2" />
       <h3 class="text-lg font-semibold text-gray-600 mb-4">Regístrate con</h3>
       aqui va el boton de google
       <div class="flex justify-center items-center w-10/12">
@@ -114,11 +115,13 @@ import CButton from '@/components/global/CButton.vue'
 import CIcon from '@/components/global/CIcon.vue'
 import { ValidationProvider } from 'vee-validate'
 import { mapActions } from 'vuex'
+import Alert from '~/components/global/Alert.vue'
 export default {
   components: {
     CButton,
     CIcon,
     ValidationProvider,
+    Alert
   },
   data: () => ({
     email: '',
