@@ -19,7 +19,9 @@
         shadow-md
         lg:divide-y
         divide-secondary
-        transform transition duration-500
+        transform
+        transition
+        duration-500
         open
       "
     >
@@ -28,7 +30,18 @@
         <img src="@/static/images/favicon.png" alt="cepol-logo" />
       </figure>
       <!-- ICONOS DEL MENU -->
-      <div class="w-full flex flex-row justify-evenly items-center lg:flex-col xl:items-start lg:divide-x-0 divide-secondary">
+      <div
+        class="
+          w-full
+          flex flex-row
+          justify-evenly
+          items-center
+          lg:flex-col
+          xl:items-start
+          lg:divide-x-0
+          divide-secondary
+        "
+      >
         <button
           v-for="(item, i) in menuItems"
           :key="i"
@@ -38,20 +51,21 @@
             xl:w-full
             flex
             justify-center
-            xl:justify-start
-            xl:pl-3
+            xl:justify-start xl:pl-3
             items-center
             my-auto
             mx-auto
             text-secondary
             align-sidebar
           "
-          @click='redirection(item.link)'
+          @click="redirection(item.link)"
         >
           <div class="w-full lg:w-6 xl:w-8 xl:mr-3 icons">
             <c-icon :name="item.icon" />
           </div>
-          <p class="text-secondary text-base font-semibold hidden xl:block words">
+          <p
+            class="text-secondary text-base font-semibold hidden xl:block words"
+          >
             {{ item.name }}
           </p>
         </button>
@@ -76,28 +90,28 @@ export default {
   methods: {
     redirection(link) {
       this.$router.push(link)
-    }
-  }
+    },
+  },
 }
 </script>
 
-
 <style scoped>
-.open:hover {
-  width: 256px;
-}
+@media only screen and (min-width: 1024px) {
+  .open:hover {
+    width: 256px;
+  }
 
-.open:hover .words {
-  display: flex;
-}
+  .open:hover .words {
+    display: flex;
+  }
 
-.open:hover .align-sidebar {
-  justify-content: start;
-  width: 80%;
-}
+  .open:hover .align-sidebar {
+    justify-content: start;
+    width: 80%;
+  }
 
-.open:hover .icons {
-  margin-right: 0.75rem;
+  .open:hover .icons {
+    margin-right: 0.75rem;
+  }
 }
-
 </style>
