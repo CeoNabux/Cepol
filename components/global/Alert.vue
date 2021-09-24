@@ -1,6 +1,6 @@
 <template>
   <button
-    class="w-full flex rounded border border-pink-600 bg-pink-300 py-2 px-3"
+    class="w-full flex justify-between rounded border border-pink-600 bg-pink-300 py-2 px-3"
     @click="onClose"
     :value="true"
   >

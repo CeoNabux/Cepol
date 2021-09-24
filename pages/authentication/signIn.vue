@@ -35,6 +35,13 @@
           <c-icon name="close" class="hover:text-pink-700" />
         </button>
       </div>
+      <!-- ALERTA DE ERRORES -->
+      <alert
+        v-if="error"
+        class="my-2"
+        @dismissed="onDismissed"
+        :text="error.message"
+      />
       <h3 class="text-lg font-semibold text-gray-600 mb-4">Inicia Sesion</h3>
       aqui va el boton de google
       <div class="flex justify-center items-center w-10/12">
@@ -83,6 +90,10 @@
           />
           <span class="text-pink-700 text-sm">{{ errors[0] }}</span>
         </ValidationProvider>
+        <!-- LOADER -->
+        <div class="mx-auto my-2">
+          <loading :loading="loading" />
+        </div>
         <!-- BOTON DE ACCION -->
         <div class="w-full lg:w-32 mx-auto mt-4">
           <c-button
@@ -103,7 +114,7 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     ValidationProvider,
@@ -113,6 +124,7 @@ export default {
     password: '',
   }),
   computed: {
+    ...mapGetters('fireAuthentication', ['loading', 'error']),
     formIsValid() {
       return (
         this.email !== '' &&
@@ -141,6 +153,9 @@ export default {
     getBack() {
       this.$router.push('/')
     },
+    onDismissed() {
+      this.$store.dispatch('fireAuthentication/clearError')
+    }
   },
 }
 </script>
