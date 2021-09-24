@@ -35,8 +35,16 @@
           <c-icon name="close" class="hover:text-pink-700" />
         </button>
       </div>
-      <alert class="my-2" />
+      <!-- ALERTA DE ERRORES -->
+      <alert
+        v-if="error"
+        class="my-2"
+        @dismissed="onDismissed"
+        :text="error.message"
+      />
+      <!-- INICIO DE LA TARJETA -->
       <h3 class="text-lg font-semibold text-gray-600 mb-4">Regístrate con</h3>
+      <!-- BOTON DE GOOGLE -->
       aqui va el boton de google
       <div class="flex justify-center items-center w-10/12">
         <div class="h-px w-1/3 bg-gray-400" />
@@ -101,7 +109,10 @@
             :disabled="!formIsValid"
             name="Regístrate"
             class="text-white"
-            :class="[{ 'bg-gray-400': !formIsValid}, {'bg-secondary': formIsValid}]"
+            :class="[
+              { 'bg-gray-400': !formIsValid },
+              { 'bg-secondary': formIsValid },
+            ]"
             @click.prevent="signUp"
           />
         </div>
@@ -114,14 +125,14 @@
 import CButton from '@/components/global/CButton.vue'
 import CIcon from '@/components/global/CIcon.vue'
 import { ValidationProvider } from 'vee-validate'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Alert from '~/components/global/Alert.vue'
 export default {
   components: {
     CButton,
     CIcon,
     ValidationProvider,
-    Alert
+    Alert,
   },
   data: () => ({
     email: '',
@@ -129,6 +140,7 @@ export default {
     passwordRepeated: '',
   }),
   computed: {
+    ...mapGetters('fireAuthentication', ['error', 'loading']),
     passwordConfirmed() {
       return this.password !== this.passwordRepeated
         ? 'Tu Contraseña debe ser igual'
@@ -144,25 +156,28 @@ export default {
     },
     user() {
       return this.$store.getters['fireAuthentication/user']
-    }
+    },
   },
   watch: {
     user(value) {
-      if(value !== undefined && value !== null) {
+      if (value !== undefined && value !== null) {
         this.$router.push('/')
       }
-    }
+    },
   },
   methods: {
     ...mapActions('fireAuthentication', ['signUserUp']),
     signUp() {
       this.signUserUp({
         email: this.email,
-        password: this.password
+        password: this.password,
       })
     },
     getBack() {
       this.$router.push('/')
+    },
+    onDismissed() {
+      this.$store.dispatch('fireAuthentication/clearError')
     },
   },
 }

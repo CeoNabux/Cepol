@@ -18,6 +18,12 @@ export const getters = {
   user(state) {
     return state.user
   },
+  loading(state) {
+    return state.loading
+  },
+  error(state) {
+    return state.error
+  }
 }
 
 
@@ -89,4 +95,7 @@ export const actions = {
       console.error(error)
     }
   },
+  clearError({ commit }) {
+    commit('CLEAR_ERROR')
+  }
 }
