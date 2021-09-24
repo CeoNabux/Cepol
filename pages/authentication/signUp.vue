@@ -103,6 +103,10 @@
           placeholder="UnPasswordLargoEsMasSeguro"
         />
         <span class="text-pink-700 text-sm">{{ passwordConfirmed }}</span>
+        <!-- LOADER -->
+        <div class="mx-auto my-2">
+          <loading :loading="loading" />
+        </div>
         <!-- BOTON DE ACCION -->
         <div class="w-full lg:w-32 mx-auto mt-4">
           <c-button
@@ -127,12 +131,15 @@ import CIcon from '@/components/global/CIcon.vue'
 import { ValidationProvider } from 'vee-validate'
 import { mapActions, mapGetters } from 'vuex'
 import Alert from '~/components/global/Alert.vue'
+import Loading from '~/components/global/Loading.vue'
+
 export default {
   components: {
     CButton,
     CIcon,
     ValidationProvider,
     Alert,
+    Loading,
   },
   data: () => ({
     email: '',
