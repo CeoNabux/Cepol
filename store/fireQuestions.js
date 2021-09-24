@@ -7,3 +7,10 @@ export const getters = {
     return state.questions
   }
 }
+
+export const mutations = {
+  SET_QUESTIONS(state, payload) {
+    return state.questions = payload
+  }
+}
+
