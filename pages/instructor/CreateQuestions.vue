@@ -2,7 +2,9 @@
   <div class="px-6 py-2 border border-gray-400 rounded-lg shadow">
     <h1 class="text-4xl text-gray-700 font-semibold">Crea preguntas</h1>
     <!-- SECCION DE CREACION DE PREGUNTAS -->
-    <div class="flex flex-wrap justify-between items-start mt-4 max-w-screen-lg">
+    <div
+      class="flex flex-wrap justify-between items-start mt-4 max-w-screen-lg"
+    >
       <!-- INSERTAMOS PREGUNTAS -->
       <div
         class="
@@ -16,7 +18,7 @@
         "
       >
         <!-- CREANDO PREGUNTAS -->
-        <div v-if="question.questionEditing" class="w-full">
+        <div v-if="question.editing" class="w-full">
           <!-- APARECE EDITOR CUANDO NO HAY PREGUNTA GUARDADA -->
           <div v-if="!question.question.text" class="w-full">
             <the-editor v-model="questionContent" />
@@ -28,21 +30,25 @@
               />
             </div>
           </div>
-          <div
-            v-else
-            v-html="question.question.text"
-            class="w-full border border-gray-300 rounded p-3"
-          />
+          <div v-else class="w-full border border-gray-300 rounded p-3">
+            <div v-html="question.question.text" />
+            <div class="w-full lg:w-1/2 mt-2">
+              <c-button
+                name="Editar"
+                class="bg-white text-secondary border border-secondary"
+              />
+            </div>
+          </div>
           <div class="w-full h-px bg-gray-200 mt-6" />
           <p class="text-xl text-gray-700 font-medium mt-6">
-            Agrega las respuestas a tu pregunta
+            Agrega las opciones de respuesta
           </p>
           <p class="text-sm text-pink-600 font-light">
             Agrega al menos dos respuestas
           </p>
           <!-- AGREGAR RESPUESTA -->
           <div class="w-full my-4">
-            <the-editor v-if="question.answerEditing" v-model="answerContent" />
+            <the-editor v-if="question.editing" v-model="answerContent" />
           </div>
           <!-- LISTA DE RESPUESTAS -->
           <div v-if="question.answers.length" class="w-full mt-8">
@@ -52,30 +58,37 @@
                 flex flex-col
                 justify-center
                 items-center
-                border border-gray-300
                 rounded
-                p-2
               "
             >
               <div
                 v-for="(answer, i) in question.answers"
                 :key="i"
-                class="w-full flex flex-col justify-between items-center mb-3"
+                class="w-full flex flex-col border border-gray-300 p-2 justify-between items-center mb-3"
               >
                 <!-- RESPUESTA -->
-                <div class="w-full">
-                  <p class="text-gray-700 text-base font-semibold">
-                    {{ i + 1 }}) {{ answer.answer }}
+                <div class="w-full flex">
+                  <p class="text-gray-700 text-base font-semibold mr-2">
+                    {{ i + 1 }})
                   </p>
+                  <div v-html="answer" />
                 </div>
                 <!-- BOTON DE ELIMINAR RESPUESTA -->
                 <div
-                  class="w-full flex flex-wrap justify-center items-center mt-2"
+                  class="w-full flex flex-wrap justify-evenly items-center mt-2"
                 >
-                  <div class="w-full bg-pink-600">
+                  <div class="w-full lg:w-5/12">
+                    <c-button
+                      name="Marcar Correcta"
+                      class="text-base text-white bg-yellow-600"
+                      @click="rightAnswer"
+                    />
+                  </div>
+                  <div class="w-full lg:w-5/12">
                     <c-button
                       name="Eliminar Respuesta"
-                      class="text-base text-white"
+                      class="text-base text-white bg-pink-600"
+                      @click="deleteAnswer"
                     />
                   </div>
                 </div>
@@ -84,11 +97,15 @@
           </div>
           <!-- BOTON PARA AGREGAR RESPUESTA -->
           <div class="w-full flex flex-wrap justify-between items-center mt-8">
-            <div v-show="question.answerEditing" class="w-full lg:w-1/2 px-1 text-white">
-              <c-button name="Guardar pregunta" class="border border-secondary text-secondary bg-gray-50" @click="createAnswer" />
-            </div>
-            <div class="w-full lg:w-1/2 px-1 text-white">
-              <c-button name="Nueva respuesta" class="bg-primary" @click="createAnswer" />
+            <div
+              v-show="question.editing"
+              class="w-full lg:w-1/2 px-1 text-white"
+            >
+              <c-button
+                name="Guardar pregunta"
+                class="border border-secondary text-secondary bg-gray-50"
+                @click="saveAnswer"
+              />
             </div>
           </div>
         </div>
@@ -134,7 +151,7 @@
       </div>
       <!-- GUARDAMOS PREGUNTAS Y PUBLICAMOS -->
       <div
-        v-if="question.questionEditing"
+        v-if="question.editing"
         class="
           w-full
           lg:w-3/12
@@ -167,8 +184,7 @@ export default {
     questionImage: '',
     answerContent: '',
     question: {
-      questionEditing: false,
-      answerEditing: false,
+      editing: false,
       question: {
         text: '',
         imageUrl: '',
@@ -178,14 +194,19 @@ export default {
   }),
   methods: {
     createQuestion() {
-      return (this.question.questionEditing = true)
-    },
-    createAnswer() {
-      return (this.question.answerEditing = true)
+      return (this.question.editing = true)
     },
     saveQuestion() {
       this.question.question.text = this.questionContent
-      console.log(this.questionImage)
+    },
+    saveAnswer() {
+      this.question.answers.push(this.answerContent)
+    },
+    rightAnswer() {
+      console.log('Boton de respuesta correcta esta vivo')
+    },
+    deleteAnswer() {
+      console.log('Boton de eliminar pregunta esta vivo')
     },
     saveContent() {
       alert(this.content)
