@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col-reverse lg:flex-row h-screen">
+  <div class="flex flex-col-reverse lg:flex-row h-screen bg-blue-900">
     <!-- SIDEBBAR -->
     <div
       class="
@@ -13,10 +13,11 @@
         lg:flex-col
         justify-start
         items-center
+        bg-white
         border-t border-secondary
         lg:border-secondary lg:border-r lg:rounded-r-xl
         rounded
-        shadow-md
+        drop-shadow-xl
         lg:divide-y
         divide-secondary
         transform
@@ -72,8 +73,18 @@
       </div>
     </div>
     <!-- CONTENT -->
-    <div class="w-full flex-grow justify-center items-center">
-      <nuxt />
+    <div
+      class="
+        w-full
+        flex-grow
+        justify-center
+        items-center
+        max-w-screen-xl
+        py-2
+        px-3
+      "
+    >
+      <nuxt class="bg-white" />
     </div>
   </div>
 </template>

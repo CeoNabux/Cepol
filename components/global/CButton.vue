@@ -1,6 +1,9 @@
 <template>
-  <button class="w-full text-white text-base rounded-xl font-medium py-2" @click="$emit('click', $event)">
-    {{name}}
+  <button
+    class="w-full text-white text-base rounded-xl font-medium py-2 shadow-md"
+    @click="$emit('click', $event)"
+  >
+    {{ name }}
   </button>
 </template>
 
@@ -9,8 +12,8 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

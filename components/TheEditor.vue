@@ -12,6 +12,8 @@
 </template>
 
 <script>
+// import MathType from '@wiris/mathtype-ckeditor5'
+
 
 let ClassicEditor
 let CKEditor
@@ -46,7 +48,7 @@ export default {
       type: String,
       required: false
     },
-    config: {
+    editorConfig: {
       type: Object,
       required: false,
       default: function () {
