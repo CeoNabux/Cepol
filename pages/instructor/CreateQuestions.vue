@@ -1,6 +1,6 @@
 <template>
   <div class="px-6 py-2">
-    <h1 class="text-4xl text-gray-800 font-semibold">Crea preguntas</h1>
+    <h1 class="text-4xl text-gray-700 font-semibold">Crea preguntas</h1>
     <!-- SECCION DE CREACION DE PREGUNTAS -->
     <div class="flex flex-wrap justify-between items-center mt-4">
       <!-- INSERTAMOS PREGUNTAS -->
@@ -16,7 +16,9 @@
         "
       >
         <!-- CREANDO PREGUNTAS -->
-        <div v-if="questions.length" class="w-full"></div>
+        <div v-if="questions.length" class="w-full">
+          <the-editor v-model="content" />
+        </div>
         <!-- EN CASO DE QUE NO TENGA PREGUNTAS CREADAS -->
         <div
           v-else
@@ -71,12 +73,16 @@ export default {
   layout: 'app',
   data: () => ({
     bgImage: require('@/static/images/svg/newLesson.svg'),
-    questions: [],
+    questions: [{message: 'hola'}],
+    content: ''
   }),
   methods: {
     createLesson() {
       console.log('Estoy vivo')
     },
+    saveContent() {
+      alert(this.content)
+    }
   },
 }
 </script>
