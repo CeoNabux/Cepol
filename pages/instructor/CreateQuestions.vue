@@ -213,6 +213,9 @@ export default {
       this.answerContent = ''
     },
     rightAnswer(index) {
+      for(let i = 0; i < this.question.answers.length; i++) {
+        this.question.answers[i].state = false
+      }
       this.question.answers[index].state = true
       console.log('Boton de respuesta correcta esta vivo')
     },
