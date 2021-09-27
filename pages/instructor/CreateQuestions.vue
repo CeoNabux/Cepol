@@ -88,7 +88,7 @@
                     <c-button
                       name="Eliminar Respuesta"
                       class="text-base text-white bg-pink-600"
-                      @click="deleteAnswer"
+                      @click="deleteAnswer(i)"
                     />
                   </div>
                 </div>
@@ -205,7 +205,8 @@ export default {
     rightAnswer() {
       console.log('Boton de respuesta correcta esta vivo')
     },
-    deleteAnswer() {
+    deleteAnswer(index) {
+      this.question.answers.splice(index , 1)
       console.log('Boton de eliminar pregunta esta vivo')
     },
     saveContent() {
