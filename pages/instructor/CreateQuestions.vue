@@ -20,7 +20,7 @@
         <!-- CREANDO PREGUNTAS -->
         <div v-if="question.editing" class="w-full">
           <!-- APARECE EDITOR CUANDO NO HAY PREGUNTA GUARDADA -->
-          <div v-if="!question.question.text" class="w-full">
+          <div v-if="!question.question.edit" class="w-full">
             <the-editor v-model="questionContent" />
             <div class="w-full lg:w-1/2 mt-2">
               <c-button
@@ -36,6 +36,7 @@
               <c-button
                 name="Editar"
                 class="bg-white text-secondary border border-secondary"
+                @click="editQuestion"
               />
             </div>
           </div>
@@ -53,25 +54,28 @@
           <!-- LISTA DE RESPUESTAS -->
           <div v-if="question.answers.length" class="w-full mt-8">
             <div
-              class="
-                w-full
-                flex flex-col
-                justify-center
-                items-center
-                rounded
-              "
+              class="w-full flex flex-col justify-center items-center rounded"
             >
               <div
                 v-for="(answer, i) in question.answers"
                 :key="i"
-                class="w-full flex flex-col border border-gray-300 p-2 justify-between items-center mb-3"
+                class="
+                  w-full
+                  flex flex-col
+                  border border-gray-300
+                  p-2
+                  justify-between
+                  items-center
+                  mb-3
+                "
+                :class="{'border-secondary': answer.state}"
               >
                 <!-- RESPUESTA -->
                 <div class="w-full flex">
                   <p class="text-gray-700 text-base font-semibold mr-2">
                     {{ i + 1 }})
                   </p>
-                  <div v-html="answer" />
+                  <div v-html="answer.text" />
                 </div>
                 <!-- BOTON DE ELIMINAR RESPUESTA -->
                 <div
@@ -81,7 +85,7 @@
                     <c-button
                       name="Marcar Correcta"
                       class="text-base text-white bg-yellow-600"
-                      @click="rightAnswer"
+                      @click="rightAnswer(i)"
                     />
                   </div>
                   <div class="w-full lg:w-5/12">
@@ -186,6 +190,7 @@ export default {
     question: {
       editing: false,
       question: {
+        edit: false,
         text: '',
         imageUrl: '',
       },
@@ -196,17 +201,23 @@ export default {
     createQuestion() {
       return (this.question.editing = true)
     },
+    editQuestion() {
+      return (this.question.question.edit = false)
+    },
     saveQuestion() {
       this.question.question.text = this.questionContent
+      return (this.question.question.edit = true)
     },
     saveAnswer() {
-      this.question.answers.push(this.answerContent)
+      this.question.answers.push({ text: this.answerContent, state: false })
+      this.answerContent = ''
     },
-    rightAnswer() {
+    rightAnswer(index) {
+      this.question.answers[index].state = true
       console.log('Boton de respuesta correcta esta vivo')
     },
     deleteAnswer(index) {
-      this.question.answers.splice(index , 1)
+      this.question.answers.splice(index, 1)
       console.log('Boton de eliminar pregunta esta vivo')
     },
     saveContent() {
