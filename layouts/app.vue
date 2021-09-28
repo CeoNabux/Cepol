@@ -88,7 +88,7 @@
         px-3
       "
     >
-      <nuxt class="bg-white" />
+      <nuxt class="bg-blue-900" />
     </div>
   </div>
 </template>
