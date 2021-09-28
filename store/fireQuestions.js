@@ -1,3 +1,6 @@
+import { fireDataBase } from "~/plugins/firebase/app"
+import { collection, addDoc, getDocs } from "firebase/firestore"
+
 export const state = () => ({
   questions: []
 })
@@ -16,6 +19,12 @@ export const mutations = {
 
 export const actions = {
   saveQuestionInformation({ commit }, payload) {
+    try {
+      const 
+    }
+    catch (error) {
+      console.error(error)
+    }
     const question = {
       question: payload.text,
       answers: payload.answers,
