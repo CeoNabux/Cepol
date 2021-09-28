@@ -262,7 +262,7 @@ export default {
       const question = {
         text: this.question.question.text,
         image: this.question.question.imageUrl,
-        answers: this.question.answers
+        answers: this.question.answers,
       }
       console.log(question)
       this.saveQuestionInformation(question)
