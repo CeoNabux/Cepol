@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col-reverse lg:flex-row h-screen bg-blue-900">
+  <div class="flex flex-col-reverse lg:flex-row min-h-screen bg-blue-900 relative">
     <!-- SIDEBBAR -->
     <div
       class="
@@ -23,6 +23,10 @@
         transform
         transition
         duration-500
+        sticky
+        top-0
+        left-0
+        h-screen
         open
       "
     >

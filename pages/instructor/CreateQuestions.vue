@@ -207,7 +207,9 @@ export default {
   computed: {
     validQuestion() {
       return (
-        this.question.question.text !== '' && this.question.answers.length >= 2 && this.correctAnswerVerified
+        this.question.question.text !== '' &&
+        this.question.answers.length >= 2 &&
+        this.correctAnswerVerified
       )
     },
     answerIsValid() {
