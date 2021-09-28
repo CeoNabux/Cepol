@@ -68,7 +68,7 @@
                   items-center
                   mb-3
                 "
-                :class="{'border-secondary': answer.state}"
+                :class="{ 'border-secondary': answer.state }"
               >
                 <!-- RESPUESTA -->
                 <div class="w-full flex">
@@ -107,7 +107,9 @@
             >
               <c-button
                 name="Guardar pregunta"
-                class="border border-secondary text-secondary bg-gray-50"
+                class="border border-gray-400 text-gray-400 bg-gray-50"
+                :disabled="!answerIsValid"
+                :class="{ ['border-secondary text-secondary']: answerIsValid }"
                 @click="saveAnswer"
               />
             </div>
@@ -170,7 +172,12 @@
           Guardar y continuar
         </p>
         <div class="w-full px-1 mt-2">
-          <c-button name="Guardar" class="bg-secondary text-lg" />
+          <c-button
+            :disabled="validQuestion"
+            name="Guardar"
+            class="bg-gray-300 text-lg text-white"
+            :class="{ 'bg-secondary': validQuestion }"
+          />
         </div>
       </div>
     </div>
@@ -197,6 +204,25 @@ export default {
       answers: [],
     },
   }),
+  computed: {
+    validQuestion() {
+      return (
+        this.question.question.text !== '' && this.question.answers.length >= 2 && this.correctAnswerVerified
+      )
+    },
+    answerIsValid() {
+      return this.answerContent !== ''
+    },
+    correctAnswerVerified() {
+      for (let i = 0; i < this.question.answers.length; i++) {
+        if (this.question.answers[i].state) {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+  },
   methods: {
     createQuestion() {
       return (this.question.editing = true)
@@ -210,10 +236,11 @@ export default {
     },
     saveAnswer() {
       this.question.answers.push({ text: this.answerContent, state: false })
+      console.log(this.question.answers)
       this.answerContent = ''
     },
     rightAnswer(index) {
-      for(let i = 0; i < this.question.answers.length; i++) {
+      for (let i = 0; i < this.question.answers.length; i++) {
         this.question.answers[i].state = false
       }
       this.question.answers[index].state = true
