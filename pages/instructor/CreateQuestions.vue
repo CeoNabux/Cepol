@@ -18,9 +18,9 @@
         "
       >
         <!-- CREANDO PREGUNTAS -->
-        <div v-if="question.editing" class="w-full">
+        <div class="w-full">
           <!-- APARECE EDITOR CUANDO NO HAY PREGUNTA GUARDADA -->
-          <div v-if="!question.question.edit" class="w-full">
+          <div v-if="!question.editing" class="w-full">
             <the-editor v-model="questionContent" />
             <div class="w-full lg:w-1/2 mt-2">
               <c-button
@@ -49,7 +49,7 @@
           </p>
           <!-- AGREGAR RESPUESTA -->
           <div class="w-full my-4">
-            <the-editor v-if="question.editing" v-model="answerContent" />
+            <the-editor v-model="answerContent" />
           </div>
           <!-- LISTA DE RESPUESTAS -->
           <div v-if="question.answers.length" class="w-full mt-8">
@@ -102,7 +102,6 @@
           <!-- BOTON PARA AGREGAR RESPUESTA -->
           <div class="w-full flex flex-wrap justify-between items-center mt-8">
             <div
-              v-show="question.editing"
               class="w-full lg:w-1/2 px-1 text-white"
             >
               <c-button
@@ -115,49 +114,9 @@
             </div>
           </div>
         </div>
-        <!-- EN CASO DE QUE NO TENGA PREGUNTAS CREADAS -->
-        <div
-          v-else
-          class="
-            w-full
-            bg-gradient-to-br
-            from-secondary
-            to-primary
-            shadow-lg
-            flex
-            justify-start
-            items-center
-            h-44
-            sm:h-60
-            rounded
-            py-4
-            px-2
-          "
-        >
-          <div
-            class="w-full h-full bg-image"
-            :style="{ backgroundImage: 'url(' + bgImage + ')' }"
-          >
-            <div
-              class="w-full h-full flex flex-col justify-between items-start"
-            >
-              <h2 class="text-white font-semibold text-2xl w-full sm:w-1/2">
-                Aún no tienes preguntas, empieza ahora
-              </h2>
-              <div class="w-full sm:w-1/2 lg:w-33 mt-4">
-                <c-button
-                  name="Crear preguntas"
-                  class="bg-primary mb-1"
-                  @click="createQuestion"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <!-- GUARDAMOS PREGUNTAS Y PUBLICAMOS -->
       <div
-        v-if="question.editing"
         class="
           w-full
           lg:w-3/12
@@ -192,7 +151,6 @@ export default {
   components: { CButton },
   layout: 'app',
   data: () => ({
-    bgImage: require('@/static/images/svg/newLesson.svg'),
     questionContent: '',
     questionImage: '',
     answerContent: '',
@@ -229,17 +187,14 @@ export default {
   methods: {
     ...mapActions('fireQuestions', ['saveQuestionInformation']),
     // EMPEZAMOS A CREAR PREGUNTAS
-    createQuestion() {
-      return (this.question.editing = true)
-    },
     // INDICAMOS QUE ESTAMOS EDITANDO LA PREGUNTA
     editQuestion() {
-      return (this.question.question.edit = false)
+      return (this.question.editing = false)
     },
     // EMPEZAMOS A ARMAR NUESTRO OBJETO PARA EL PAYLOAD DE VUEX EN FIREQUESTIONS
     saveQuestion() {
       this.question.question.text = this.questionContent
-      return (this.question.question.edit = true)
+      return (this.question.editing = true)
     },
     // GUARDAMOS LAS RESPUESTA QUE SE VAN CREANDO
     saveAnswer() {
@@ -264,23 +219,10 @@ export default {
         image: this.question.question.imageUrl,
         answers: this.question.answers,
       }
-      console.log(question)
       this.saveQuestionInformation(question)
     },
   },
 }
 </script>
 
-<style scoped>
-.bg-image {
-  background-position: right;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-@media only screen and (max-width: 640px) {
-  .bg-image {
-    background-size: cover;
-    background-position-x: 50rem;
-  }
-}
-</style>
+
