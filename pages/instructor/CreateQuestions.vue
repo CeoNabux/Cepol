@@ -88,7 +88,7 @@
                       @click="rightAnswer(i)"
                     />
                   </div>
-                  <div class="w-full lg:w-5/12">
+                  <div class="w-full lg:w-5/12 mt-2 lg:mt-0">
                     <c-button
                       name="Eliminar Respuesta"
                       class="text-base text-white bg-pink-600"
@@ -219,10 +219,9 @@ export default {
       for (let i = 0; i < this.question.answers.length; i++) {
         if (this.question.answers[i].state) {
           return true
-        } else {
-          return false
         }
       }
+      return false
     },
   },
   methods: {
@@ -238,7 +237,6 @@ export default {
     },
     saveAnswer() {
       this.question.answers.push({ text: this.answerContent, state: false })
-      console.log(this.question.answers)
       this.answerContent = ''
     },
     rightAnswer(index) {
@@ -246,11 +244,9 @@ export default {
         this.question.answers[i].state = false
       }
       this.question.answers[index].state = true
-      console.log('Boton de respuesta correcta esta vivo')
     },
     deleteAnswer(index) {
       this.question.answers.splice(index, 1)
-      console.log('Boton de eliminar pregunta esta vivo')
     },
     saveContent() {
       alert(this.content)

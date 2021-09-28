@@ -23,10 +23,10 @@
         transform
         transition
         duration-500
-        sticky
-        top-0
-        left-0
-        h-screen
+        lg:sticky
+        lg:top-0
+        lg:left-0
+        lg:h-screen
         open
       "
     >
