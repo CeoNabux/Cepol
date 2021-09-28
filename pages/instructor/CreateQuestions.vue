@@ -173,10 +173,11 @@
         </p>
         <div class="w-full px-1 mt-2">
           <c-button
-            :disabled="validQuestion"
+            :disabled="!validQuestion"
             name="Guardar"
             class="bg-gray-300 text-lg text-white"
             :class="{ 'bg-secondary': validQuestion }"
+            @click="sendToFirebase"
           />
         </div>
       </div>
@@ -186,6 +187,7 @@
 
 <script>
 import CButton from '~/components/global/CButton.vue'
+import { mapActions } from 'vuex'
 export default {
   components: { CButton },
   layout: 'app',
@@ -225,31 +227,45 @@ export default {
     },
   },
   methods: {
+    ...mapActions('fireQuestions', ['saveQuestionInformation']),
+    // EMPEZAMOS A CREAR PREGUNTAS
     createQuestion() {
       return (this.question.editing = true)
     },
+    // INDICAMOS QUE ESTAMOS EDITANDO LA PREGUNTA
     editQuestion() {
       return (this.question.question.edit = false)
     },
+    // EMPEZAMOS A ARMAR NUESTRO OBJETO PARA EL PAYLOAD DE VUEX EN FIREQUESTIONS
     saveQuestion() {
       this.question.question.text = this.questionContent
       return (this.question.question.edit = true)
     },
+    // GUARDAMOS LAS RESPUESTA QUE SE VAN CREANDO
     saveAnswer() {
       this.question.answers.push({ text: this.answerContent, state: false })
       this.answerContent = ''
     },
+    // SELECCIONAMOS LA RESPUESTA CORRECTA
     rightAnswer(index) {
       for (let i = 0; i < this.question.answers.length; i++) {
         this.question.answers[i].state = false
       }
       this.question.answers[index].state = true
     },
+    // ELIMINAMOS LA RESPUESTA DE LA LISTA EXISTENTE
     deleteAnswer(index) {
       this.question.answers.splice(index, 1)
     },
-    saveContent() {
-      alert(this.content)
+    // ENVIAMOS LA INFORMACION GUARDADA EN FIREQUESTIONS DE VUEX
+    sendToFirebase() {
+      const question = {
+        text: this.question.question.text,
+        image: this.question.question.imageUrl,
+        answers: this.question.answers
+      }
+      console.log(question)
+      this.saveQuestionInformation(question)
     },
   },
 }

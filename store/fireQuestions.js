@@ -9,8 +9,18 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_QUESTIONS(state, payload) {
-    return state.questions = payload
+  SET_QUESTION(state, payload) {
+    return state.questions.push(payload)
   }
 }
 
+export const actions = {
+  saveQuestionInformation({ commit }, payload) {
+    const question = {
+      question: payload.text,
+      answers: payload.answers,
+      image: payload.image
+    }
+    commit('SET_QUESTION', question)
+  }
+}
