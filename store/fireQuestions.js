@@ -1,5 +1,5 @@
+import { collection, addDoc } from "firebase/firestore"
 import { fireDataBase } from "~/plugins/firebase/app"
-import { collection, addDoc, getDocs } from "firebase/firestore"
 
 export const state = () => ({
   questions: []
@@ -18,18 +18,18 @@ export const mutations = {
 }
 
 export const actions = {
-  saveQuestionInformation({ commit }, payload) {
+  async saveQuestionInformation({ commit }, payload) {
     try {
-      const 
+      const question = {
+        question: payload.text,
+        answers: payload.answers,
+        image: payload.image
+      }
+      const docREF = await addDoc(collection(fireDataBase, 'questions'), question)
+      commit('SET_QUESTION', question)
     }
     catch (error) {
       console.error(error)
     }
-    const question = {
-      question: payload.text,
-      answers: payload.answers,
-      image: payload.image
-    }
-    commit('SET_QUESTION', question)
   }
 }
