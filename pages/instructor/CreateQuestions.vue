@@ -128,25 +128,47 @@
         <div
           class="
             w-full
-            lg:w-3/12
-            flex flex-col
+            lg:w-4/12
+            flex flex-col-reverse
             items-start
             border border-gray-200
             rounded
             p-2
           "
         >
-          <p class="text-gray-600 text-lg font-medium w-full text-center">
-            Guardar y continuar
-          </p>
-          <div class="w-full px-1 mt-2">
-            <c-button
-              :disabled="!validQuestion"
-              name="Guardar"
-              class="bg-gray-300 text-lg text-white"
-              :class="{ 'bg-secondary': validQuestion }"
-              @click="sendToFirebase"
-            />
+          <div class="w-full flex flex-col justify-center items-center mt-4">
+            <p class="text-gray-600 text-lg font-medium w-full text-center">
+              Guardar y continuar
+            </p>
+            <div class="w-full px-1 mt-2">
+              <c-button
+                :disabled="!validQuestion"
+                name="Guardar"
+                class="bg-gray-300 text-lg text-white"
+                :class="{ 'bg-secondary': validQuestion }"
+                @click="sendToFirebase"
+              />
+            </div>
+          </div>
+          <!-- AGREGAR CATEGORIAS -->
+          <div class="w-full">
+            <p
+              class="text-gray-600 text-lg font-medium mb-2 w-full text-center"
+            >
+              Escoge un razonamiento
+            </p>
+            <div
+              v-for="(category, i) in categories"
+              :key="i"
+              class="w-full lg:w-3/4 mb-2 mx-auto"
+            >
+              <c-button
+                :name="category.name"
+                class="text-sm border"
+                :class="{ 'bg-secondary text-white border border-white': category.state, 'text-secondary border-secondary': !category.state }"
+                @click="getCategory(i)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -164,8 +186,28 @@ export default {
     questionContent: '',
     questionImage: '',
     answerContent: '',
+    categories: [
+      {
+        name: 'verbal',
+        state: false,
+      },
+      {
+        name: 'numerico',
+        state: false,
+      },
+      {
+        name: 'lógico',
+        state: false,
+      },
+      {
+        name: 'atención y concentración',
+        state: false,
+      },
+    ],
+    // OBJETO EN EL QUE SE GUARDAN LOS DATOS A SUBIR
     question: {
       editing: false,
+      category: '',
       question: {
         edit: false,
         text: '',
@@ -179,7 +221,8 @@ export default {
       return (
         this.question.question.text !== '' &&
         this.question.answers.length >= 2 &&
-        this.correctAnswerVerified
+        this.correctAnswerVerified &&
+        this.question.category !== ''
       )
     },
     answerIsValid() {
@@ -222,12 +265,23 @@ export default {
     deleteAnswer(index) {
       this.question.answers.splice(index, 1)
     },
+    // ESCOGEMOS CATEGORIA
+    getCategory(index) {
+      for (let i = 0; i < this.categories.length; i++) {
+        this.question.category = ''
+        this.categories[i].state = false
+      }
+      this.categories[index].state = true
+      this.question.category = this.categories[index].name
+      console.log(this.categories[index].state, this.question.category)
+    },
     // ENVIAMOS LA INFORMACION GUARDADA EN FIREQUESTIONS DE VUEX
     sendToFirebase() {
       const question = {
         text: this.question.question.text,
         image: this.question.question.imageUrl,
         answers: this.question.answers,
+        category: this.question.category
       }
       this.saveQuestionInformation(question)
     },

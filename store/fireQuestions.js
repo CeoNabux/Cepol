@@ -1,4 +1,4 @@
-import { collection, addDoc } from "firebase/firestore"
+import { collection, addDoc, query, orderBy, limit, doc, getDoc } from "firebase/firestore"
 import { fireDataBase } from "~/plugins/firebase/app"
 
 export const state = () => ({
@@ -23,10 +23,26 @@ export const actions = {
       const question = {
         question: payload.text,
         answers: payload.answers,
-        image: payload.image
+        image: payload.image,
+        category: payload.category
       }
       const docREF = await addDoc(collection(fireDataBase, 'questions'), question)
       commit('SET_QUESTION', question)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  },
+  async getQuestions({ commit }) {
+    try{
+      const questionRef = doc(fireDataBase, 'questions')
+      const questionQuery = query(questionRef, orderBy('category'), limit(5))
+      const questionSnap = await getDoc(questionQuery)
+      if (questionSnap.exists()) {
+        console.log('document data: ', questionSnap.data())
+      } else {
+        console.log('No existe ese documento')
+      }
     }
     catch (error) {
       console.error(error)
