@@ -112,7 +112,7 @@
             >
               <div class="w-full lg:w-1/2 px-1 text-white">
                 <c-button
-                  name="Guardar pregunta"
+                  name="Guardar respuesta"
                   class="border border-gray-400 text-gray-400 bg-gray-50"
                   :disabled="!answerIsValid"
                   :class="{

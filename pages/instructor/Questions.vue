@@ -63,31 +63,28 @@
     >
       <!-- RENDERIZADO DE PREGUNTAS -->
       <div
+        v-for="(question, i) in getQuestions"
+        :key="i"
         class="
           w-full
           flex flex-wrap
           justify-between
           items-end
-          shadow-xl
+          shadow-2xl
           rounded
-          p-2
+          px-2
+          py-3
+          mb-4
         "
       >
         <div class="w-full lg:w-1/2">
-          <p class="text-sm font-semibold text-gray-800">Matematica</p>
-          <p class="text-base text-gray-800 mt-2">Pregunta en cuestion</p>
+          <p class="text-sm font-semibold text-gray-800">{{ question.category }}</p>
+          <div v-html="question.question.question" class="text-base text-gray-800 mt-2" />
         </div>
         <div class="w-full lg:w-1/4 mt-4 lg:mt-0 flex flex-wrap">
           <div class="w-full">
             <c-button name="Eliminar pregunta" class="bg-pink-700 text-white" />
           </div>
-        </div>
-        <div class="w-full">
-          <c-button
-            name="Pruebas de traida"
-            class="bg-pink-700 text-white"
-            @click="getDoc"
-          />
         </div>
       </div>
     </div>
@@ -101,7 +98,7 @@ export default {
   data: () => ({
     bgImage: require('@/static/images/svg/newLesson.svg'),
   }),
-  created() {
+  mounted() {
     this.fetchQuestions()
   },
   computed: {
