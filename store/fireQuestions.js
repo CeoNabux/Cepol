@@ -1,4 +1,4 @@
-import { setDoc, updateDoc, query, orderBy, limit, doc, getDoc } from "firebase/firestore"
+import { setDoc, doc, getDocs, collection, query, where } from "firebase/firestore"
 import { fireDataBase } from "~/plugins/firebase/app"
 
 export const state = () => ({
@@ -12,7 +12,7 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_QUESTION(state, payload) {
+  SET_QUESTIONS(state, payload) {
     return state.questions.push(payload)
   }
 }
@@ -33,16 +33,16 @@ export const actions = {
       console.error(error)
     }
   },
-  async getQuestions({ commit }) {
+  async fetchQuestions({ commit }, payload) {
     try{
-      const questionRef = doc(fireDataBase, 'questions')
-      const questionQuery = query(questionRef, orderBy('category'), limit(5))
-      const questionSnap = await getDoc(questionQuery)
-      if (questionSnap.exists()) {
-        console.log('document data: ', questionSnap.data())
-      } else {
-        console.log('No existe ese documento')
-      }
+      const questionQuery = query(collection(fireDataBase, 'questions'))
+      const questionSnapshot = await getDocs(questionQuery)
+      questionSnapshot.forEach((doc) => {
+        commit('SET_QUESTIONS', {
+          category: doc.id,
+          question: doc.data()
+        })
+      })
     }
     catch (error) {
       console.error(error)

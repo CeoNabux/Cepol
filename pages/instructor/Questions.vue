@@ -49,21 +49,45 @@
         </div>
       </div>
     </div>
-    <div class="mt-6 w-full lg:w-3/4 rounded-lg border border-gray-400 bg-white px-4 py-6">
+    <div
+      class="
+        mt-6
+        w-full
+        lg:w-3/4
+        rounded-lg
+        border border-gray-400
+        bg-white
+        px-4
+        py-6
+      "
+    >
       <!-- RENDERIZADO DE PREGUNTAS -->
-      <div class="w-full flex flex-wrap justify-between items-end shadow-xl rounded p-2">
+      <div
+        class="
+          w-full
+          flex flex-wrap
+          justify-between
+          items-end
+          shadow-xl
+          rounded
+          p-2
+        "
+      >
         <div class="w-full lg:w-1/2">
-          <p class="text-sm font-semibold text-gray-800">
-            Matematica
-          </p>
-          <p class="text-base text-gray-800 mt-2">
-            Pregunta en cuestion
-          </p>
+          <p class="text-sm font-semibold text-gray-800">Matematica</p>
+          <p class="text-base text-gray-800 mt-2">Pregunta en cuestion</p>
         </div>
         <div class="w-full lg:w-1/4 mt-4 lg:mt-0 flex flex-wrap">
           <div class="w-full">
             <c-button name="Eliminar pregunta" class="bg-pink-700 text-white" />
           </div>
+        </div>
+        <div class="w-full">
+          <c-button
+            name="Pruebas de traida"
+            class="bg-pink-700 text-white"
+            @click="getDoc"
+          />
         </div>
       </div>
     </div>
@@ -71,14 +95,25 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   layout: 'app',
   data: () => ({
     bgImage: require('@/static/images/svg/newLesson.svg'),
   }),
+  created() {
+    this.fetchQuestions()
+  },
+  computed: {
+    ...mapGetters('fireQuestions', ['getQuestions']),
+  },
   methods: {
+    ...mapActions('fireQuestions', ['fetchQuestions']),
     redirectionToCreateQuestion() {
       this.$router.push('/instructor/createquestions')
+    },
+    getDoc(category) {
+      console.log('Estoy listo para ser usado')
     },
   },
 }

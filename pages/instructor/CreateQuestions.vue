@@ -45,8 +45,8 @@
             <p class="text-xl text-gray-700 font-medium mt-6">
               Agrega las opciones de respuesta
             </p>
-            <p class="text-sm text-pink-600 font-light">
-              Agrega al menos dos respuestas
+            <p class="text-xs text-pink-600 font-light">
+              Agrega al menos dos respuestas y una categoría
             </p>
             <!-- AGREGAR RESPUESTA -->
             <div class="w-full my-4">
