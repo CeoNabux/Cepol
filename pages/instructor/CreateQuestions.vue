@@ -189,18 +189,22 @@ export default {
     categories: [
       {
         name: 'verbal',
+        category: 'verbal',
         state: false,
       },
       {
         name: 'numerico',
+        category: 'numerico',
         state: false,
       },
       {
         name: 'lógico',
+        category: 'logico',
         state: false,
       },
       {
         name: 'atención y concentración',
+        category: 'atencion',
         state: false,
       },
     ],
@@ -272,7 +276,7 @@ export default {
         this.categories[i].state = false
       }
       this.categories[index].state = true
-      this.question.category = this.categories[index].name
+      this.question.category = this.categories[index].category
       console.log(this.categories[index].state, this.question.category)
     },
     // ENVIAMOS LA INFORMACION GUARDADA EN FIREQUESTIONS DE VUEX
@@ -284,6 +288,15 @@ export default {
         category: this.question.category
       }
       this.saveQuestionInformation(question)
+      this.questionContent = ''
+      this.answerContent = ''
+      this.question.question.text = ''
+      this.question.question.imageUrl = ''
+      this.question.answers = []
+      this.question.editing = false
+      for (let i = 0; i < this.categories.length; i++) {
+        this.categories[i].state = false
+      }
     },
   },
 }

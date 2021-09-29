@@ -1,4 +1,4 @@
-import { collection, addDoc, query, orderBy, limit, doc, getDoc } from "firebase/firestore"
+import { setDoc, updateDoc, query, orderBy, limit, doc, getDoc } from "firebase/firestore"
 import { fireDataBase } from "~/plugins/firebase/app"
 
 export const state = () => ({
@@ -24,9 +24,9 @@ export const actions = {
         question: payload.text,
         answers: payload.answers,
         image: payload.image,
-        category: payload.category
       }
-      const docREF = await addDoc(collection(fireDataBase, 'questions'), question)
+      const questionRef = doc(fireDataBase, 'questions', payload.category)
+      await setDoc(questionRef, question)
       commit('SET_QUESTION', question)
     }
     catch (error) {
