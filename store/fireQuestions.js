@@ -36,13 +36,13 @@ export const actions = {
       }
       const questionRef = doc(collection(fireDataBase, 'questions'))
       await setDoc(questionRef, question)
-      commit('SET_QUESTIONS', question)
     }
     catch (error) {
       console.error(error)
     }
   },
   async fetchQuestions({ commit }) {
+    commit('ERASE_QUESTIONS')
     try{
       const questionQuery = query(collection(fireDataBase, 'questions'))
       const questionSnapshot = await getDocs(questionQuery)
