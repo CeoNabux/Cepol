@@ -33,7 +33,7 @@ export const actions = {
       console.error(error)
     }
   },
-  async fetchQuestions({ commit }, payload) {
+  async fetchQuestions({ commit }) {
     try{
       const questionQuery = query(collection(fireDataBase, 'questions'))
       const questionSnapshot = await getDocs(questionQuery)
@@ -47,5 +47,8 @@ export const actions = {
     catch (error) {
       console.error(error)
     }
+  },
+  async fetchByCategory({ commit }, payload) {
+    console.log(payload)
   }
 }

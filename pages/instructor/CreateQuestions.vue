@@ -164,7 +164,7 @@
             >
               <c-button
                 :name="category.name"
-                class="text-sm border"
+                class="text-xs border"
                 :class="{ 'bg-secondary text-white border border-white': category.state, 'text-secondary border-secondary': !category.state }"
                 @click="getCategory(i)"
               />
@@ -277,7 +277,6 @@ export default {
       }
       this.categories[index].state = true
       this.question.category = this.categories[index].category
-      console.log(this.categories[index].state, this.question.category)
     },
     // ENVIAMOS LA INFORMACION GUARDADA EN FIREQUESTIONS DE VUEX
     sendToFirebase() {
