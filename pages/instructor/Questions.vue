@@ -120,7 +120,7 @@
         </div>
         <div class="w-full lg:w-1/4 mt-4 lg:mt-0 flex flex-wrap">
           <div class="w-full">
-            <c-button name="Eliminar pregunta" class="bg-pink-700 text-white" />
+            <c-button name="Eliminar pregunta" class="bg-pink-700 text-white" @click="removeQuestion(question.id)" />
           </div>
         </div>
       </div>
@@ -165,7 +165,7 @@ export default {
     ...mapGetters('fireQuestions', ['getQuestions']),
   },
   methods: {
-    ...mapActions('fireQuestions', ['fetchQuestions', 'fetchByCategory']),
+    ...mapActions('fireQuestions', ['fetchQuestions', 'fetchByCategory', 'eraseQuestion']),
     redirectionToCreateQuestion() {
       this.$router.push('/instructor/createquestions')
     },
@@ -181,6 +181,10 @@ export default {
     getDoc(category) {
       this.fetchByCategory(category)
     },
+    removeQuestion(id) {
+      const docId = id
+      this.eraseQuestion(docId)
+    }
   },
 }
 </script>

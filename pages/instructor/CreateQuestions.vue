@@ -292,6 +292,7 @@ export default {
       this.question.question.text = ''
       this.question.question.imageUrl = ''
       this.question.answers = []
+      this.question.category = ''
       this.question.editing = false
       for (let i = 0; i < this.categories.length; i++) {
         this.categories[i].state = false
