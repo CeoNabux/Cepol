@@ -69,6 +69,7 @@ export default {
       this.start.miliseconds = now.getMilliseconds()
     },
     startTest() {
+      this.getStart()
       const time = {
         hours: this.start.hours,
         minutes: this.start.minutes,
@@ -80,8 +81,8 @@ export default {
     startSimulator() {
       if (!this.getSimulatorActive) {
         this.activeSimulator(true)
+        this.startTest()
       }
-      console.log('el activador esta en falso')
     },
   },
 }
