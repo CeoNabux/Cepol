@@ -24,8 +24,9 @@ export const actions = {
         question: payload.text,
         answers: payload.answers,
         image: payload.image,
+        category: payload.category,
       }
-      const questionRef = doc(fireDataBase, 'questions', payload.category)
+      const questionRef = doc(collection(fireDataBase, 'questions'))
       await setDoc(questionRef, question)
       commit('SET_QUESTION', question)
     }
@@ -49,6 +50,13 @@ export const actions = {
     }
   },
   async fetchByCategory({ commit }, payload) {
-    console.log(payload)
+    try{
+      const questionQuery = query(collection(fireDataBase, 'questions'))
+      const questionSnapshot = await getDocs(questionQuery)
+      console.log(questionSnapshot)
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 }

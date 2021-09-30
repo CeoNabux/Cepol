@@ -106,11 +106,12 @@
           px-2
           py-3
           mb-4
+          border border-gray-200
         "
       >
         <div class="w-full lg:w-1/2">
           <p class="text-sm font-semibold text-gray-800">
-            {{ question.category }}
+            {{ question.question.category }}
           </p>
           <div
             v-html="question.question.question"
@@ -175,11 +176,9 @@ export default {
       }
       this.categories[index].state = true
       this.category = this.categories[index].category
-      console.log(this.category)
       this.getDoc(this.category)
     },
     getDoc(category) {
-      console.log(category)
       this.fetchByCategory(category)
     },
   },
