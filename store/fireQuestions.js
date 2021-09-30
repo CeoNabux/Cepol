@@ -14,6 +14,9 @@ export const getters = {
 export const mutations = {
   SET_QUESTIONS(state, payload) {
     return state.questions.push(payload)
+  },
+  ERASE_QUESTIONS(state) {
+    return state.questions = []
   }
 }
 
@@ -28,7 +31,7 @@ export const actions = {
       }
       const questionRef = doc(collection(fireDataBase, 'questions'))
       await setDoc(questionRef, question)
-      commit('SET_QUESTION', question)
+      commit('SET_QUESTIONS', question)
     }
     catch (error) {
       console.error(error)
@@ -40,7 +43,6 @@ export const actions = {
       const questionSnapshot = await getDocs(questionQuery)
       questionSnapshot.forEach((doc) => {
         commit('SET_QUESTIONS', {
-          category: doc.id,
           question: doc.data()
         })
       })
@@ -50,10 +52,15 @@ export const actions = {
     }
   },
   async fetchByCategory({ commit }, payload) {
+    commit('ERASE_QUESTIONS')
     try{
-      const questionQuery = query(collection(fireDataBase, 'questions'))
+      const questionQuery = query(collection(fireDataBase, 'questions'), where('category', '==', payload))
       const questionSnapshot = await getDocs(questionQuery)
-      console.log(questionSnapshot)
+      questionSnapshot.forEach((doc) => {
+        commit('SET_QUESTIONS', {
+          question: doc.data()
+        })
+      })
     }
     catch (error) {
       console.error(error)
