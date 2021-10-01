@@ -1,11 +1,14 @@
 export const state = () => ({
   simulatorActive: false,
-  durationTest: 0,
+  simulatorStructure: {},
 })
 
 export const getters = {
   getSimulatorActive(state) {
     return state.simulatorActive
+  },
+  getSimulatorStructure(state) {
+    return state.simulatorStructure
   },
 }
 
@@ -22,15 +25,8 @@ export const mutations = {
 }
 
 export const actions = {
-  setSimulatorTime({ commit, state }, payload) {
-    const oldTime = new Date()
-    const newTime = new Date()
-    newTime.setTime(oldTime.getTime() + (3600 * 1000))
-    const duration = newTime.getTime() - oldTime
-    console.log(duration)
-    commit('SET_TIME_TEST', duration)
-  },
-  activeSimulator({ commit }, payload) {
-    commit('ACTIVE_SIMULATOR', payload)
+  async fetchNumberOfCategories({ commit }, payload) {
+    try {
+    } catch (error) {}
   },
 }

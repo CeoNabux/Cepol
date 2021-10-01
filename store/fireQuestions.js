@@ -1,8 +1,9 @@
-import { setDoc, doc, getDocs, collection, query, where, deleteDoc } from "firebase/firestore"
+import { setDoc, doc, getDocs, increment, collection, query, where, deleteDoc, updateDoc } from "firebase/firestore"
 import { fireDataBase } from "~/plugins/firebase/app"
 
 export const state = () => ({
-  questions: []
+  questions: [],
+  categoryToCount: ''
 })
 
 export const getters = {
@@ -13,20 +14,22 @@ export const getters = {
 
 export const mutations = {
   SET_QUESTIONS(state, payload) {
-    return state.questions.push(payload)
+    state.questions.push(payload)
   },
   ERASE_QUESTIONS(state) {
-    return state.questions = []
+    state.questions = []
   },
   ERASE_QUESTION(state, payload) {
     const toErase = state.questions.find((question) => question.id === payload )
-    console.log(toErase)
     state.questions.splice(toErase, 1)
+  },
+  COUNT_CATEGORY(state, payload) {
+    state.categoryToCount = payload
   }
 }
 
 export const actions = {
-  async saveQuestionInformation({ commit }, payload) {
+  async saveQuestionInformation({ dispatch, commit, state }, payload) {
     try {
       const question = {
         question: payload.text,
@@ -36,6 +39,8 @@ export const actions = {
       }
       const questionRef = doc(collection(fireDataBase, 'questions'))
       await setDoc(questionRef, question)
+      commit('COUNT_CATEGORY', payload.category)
+      dispatch('addCounter')
     }
     catch (error) {
       console.error(error)
@@ -73,9 +78,31 @@ export const actions = {
       console.error(error)
     }
   },
-  async eraseQuestion({ commit }, payload) {
+  async addCounter({ state }) {
+    try{
+      console.log('comienza el try', state.categoryToCount)
+      const counterRef = doc(fireDataBase, 'categoryCounters', state.categoryToCount )
+      await updateDoc(counterRef, {
+        counter: increment(1)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  async subtractCounter({ state }) {
+    try{
+      const counterRef = doc(fireDataBase, 'categoryCounters', state.categoryToCount )
+      await updateDoc(counterRef, {
+        counter: increment(-1)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  async eraseQuestion({ commit, dispatch }, payload) {
     try {
       await deleteDoc(doc(fireDataBase, 'questions', payload))
+      dispatch('subtractCounter')
       commit('ERASE_QUESTION', payload)
     }
     catch (error) {

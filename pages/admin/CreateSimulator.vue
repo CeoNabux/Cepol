@@ -216,7 +216,7 @@ export default {
   }),
   computed: {
     validSimulator() {
-      console.log('hola')
+      
     },
     simulatorIsValid() {
       return this.answerContent !== ''
