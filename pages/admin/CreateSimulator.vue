@@ -86,19 +86,20 @@
                   <div class="w-1/2 flex justify-end">
                     <div class="w-1/2 flex justify-center items-center">
                       <input
-                        v-if="!questionNumber"
+                        v-if="!category.state"
                         type="number"
+                        v-model="category.number"
                         class="py-1 px-2 w-12 border border-gray-300 rounded"
                       />
                       <p v-else class="text-secondary text-lg font-semibold">
-                        {{ questionNumber }}
+                        {{ category.number }}
                       </p>
-                      <p class="text-lg text-gray-800 font-semibol  ml-2">
+                      <p class="text-lg text-gray-800 font-semibol ml-2">
                         / {{ categoryNumber }}
                       </p>
                     </div>
                     <div class="w-1/2">
-                      <div class="w-full">
+                      <div v-if="!category.state" class="w-full">
                         <c-button
                           name="Agregar"
                           class="text-xs border"
@@ -107,7 +108,20 @@
                               category.state,
                             'text-secondary border-secondary': !category.state,
                           }"
-                          @click="getCategory"
+                          @click="
+                            getNumberOfQuestions(
+                              category.category,
+                              i,
+                              category.number
+                            )
+                          "
+                        />
+                      </div>
+                      <div v-else class="w-full">
+                        <c-button
+                          name="Editar"
+                          class="bg-secondary"
+                          @click="editNumberOfQuestions(i)"
                         />
                       </div>
                     </div>
@@ -116,20 +130,13 @@
               </div>
             </div>
             <!-- BOTON PARA AGREGAR RESPUESTA -->
-            <div
-              class="w-full flex flex-wrap justify-between items-center mt-8"
-            >
-              <div class="w-full lg:w-1/2 px-1 text-white">
-                <c-button
-                  name="Guardar respuesta"
-                  class="border border-gray-400 text-gray-400 bg-gray-50"
-                  :disabled="!simulatorIsValid"
-                  :class="{
-                    ['border-secondary text-secondary']: simulatorIsValid,
-                  }"
-                  @click="saveSimulator"
-                />
-              </div>
+            <div class="w-full flex flex-wrap justify-start items-end mt-8">
+              <p class="text-lg mr-4 text-gray-800 font-medium">
+                Total de preguntas:
+              </p>
+              <p class="text-2xl font-semibold text-secondary">
+                {{ totalOfQuestions }}
+              </p>
             </div>
           </div>
         </div>
@@ -147,12 +154,12 @@
         >
           <div class="w-full flex flex-col justify-center items-center mt-1">
             <p class="text-gray-600 text-lg font-medium w-full text-center">
-              Guardar y continuar
+              Guardar y publicar
             </p>
             <div class="w-full px-1 mt-2">
               <c-button
                 :disabled="!validSimulator"
-                name="Guardar"
+                name="Publicar Simulador"
                 class="bg-gray-300 text-lg text-white"
                 :class="{ 'bg-secondary': validSimulator }"
                 @click="sendToFirebase"
@@ -173,34 +180,37 @@ export default {
   data: () => ({
     descriptionContent: '',
     categoryNumber: 15,
-    questionNumber: 0,
     categories: [
       {
         name: 'verbal',
         category: 'verbal',
         state: false,
+        number: 0,
       },
       {
         name: 'numerico',
         category: 'numerico',
         state: false,
+        number: 0,
       },
       {
         name: 'lógico',
         category: 'logico',
         state: false,
+        number: 0,
       },
       {
         name: 'atención y concentración',
         category: 'atencion',
         state: false,
+        number: 0,
       },
     ],
     // OBJETO EN EL QUE SE GUARDAN LOS DATOS A SUBIR
     simulator: {
       editing: false,
       description: '',
-      categories: [],
+      simulatorStructure: [],
     },
     totalAnswer: 0,
   }),
@@ -211,13 +221,23 @@ export default {
     simulatorIsValid() {
       return this.answerContent !== ''
     },
+    totalOfQuestions() {
+      if (!this.simulator.simulatorStructure.length) {
+        return 0
+      } else {
+        return this.simulator.simulatorStructure
+          .map((item) => item.number)
+          .reduce((prev, next) => prev + next)
+      }
+    },
   },
   methods: {
     sendToFirebase() {
       console.log('hola')
     },
-    getCategory() {
-      console.log('tomamos la categoria')
+    editNumberOfQuestions(index) {
+      this.categories[index].state = false
+      this.categories[index].number = 0
     },
     saveDescription() {
       this.simulator.description = this.descriptionContent
@@ -228,6 +248,39 @@ export default {
     },
     saveSimulator() {
       console.log('Guardar simulador')
+    },
+    getNumberOfQuestions(category, index, numberOfQuestions) {
+      this.categories[index].state = true
+      if (this.simulator.simulatorStructure.length) {
+        const questionExist = this.simulator.simulatorStructure.findIndex(
+          (item) => item.categoryName === category
+        )
+        console.log(questionExist)
+        if (questionExist !== -1) {
+          const replaceNumberOfQuestions =
+            this.simulator.simulatorStructure.indexOf((question) => {
+              return question.categoryName === category
+            })
+          this.simulator.simulatorStructure.splice(
+            replaceNumberOfQuestions,
+            1,
+            {
+              categoryName: category,
+              number: Number(numberOfQuestions),
+            }
+          )
+        } else {
+          this.simulator.simulatorStructure.push({
+            categoryName: category,
+            number: Number(numberOfQuestions),
+          })
+        }
+      } else {
+        this.simulator.simulatorStructure.push({
+          categoryName: category,
+          number: Number(numberOfQuestions),
+        })
+      }
     },
   },
 }
