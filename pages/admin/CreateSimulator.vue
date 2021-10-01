@@ -174,6 +174,7 @@
 
 <script>
 import CButton from '~/components/global/CButton.vue'
+import { mapActions } from 'vuex'
 export default {
   components: { CButton },
   layout: 'app',
@@ -216,7 +217,7 @@ export default {
   }),
   computed: {
     validSimulator() {
-      
+      console.log('hola')
     },
     simulatorIsValid() {
       return this.answerContent !== ''
@@ -231,10 +232,11 @@ export default {
       }
     },
   },
+  mounted() {
+    this.numberOfQuestionsByCategory()
+  },
   methods: {
-    sendToFirebase() {
-      console.log('hola')
-    },
+    ...mapActions('fireSimulator', ['numberOfQuestionsByCategory']),
     editNumberOfQuestions(index) {
       this.categories[index].state = false
       this.categories[index].number = 0
@@ -281,6 +283,9 @@ export default {
           number: Number(numberOfQuestions),
         })
       }
+    },
+    sendToFirebase() {
+      console.log('Hay que preparar los datos para enviar a firebase')
     },
   },
 }
