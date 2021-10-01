@@ -95,7 +95,7 @@
                         {{ category.number }}
                       </p>
                       <p class="text-lg text-gray-800 font-semibol ml-2">
-                        / {{ categoryNumber }}
+                        / {{ category.counter }}
                       </p>
                     </div>
                     <div class="w-1/2">
@@ -174,37 +174,40 @@
 
 <script>
 import CButton from '~/components/global/CButton.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: { CButton },
   layout: 'app',
   data: () => ({
     descriptionContent: '',
-    categoryNumber: 15,
     categories: [
       {
         name: 'verbal',
         category: 'verbal',
         state: false,
         number: 0,
+        counter: 0
       },
       {
         name: 'numerico',
         category: 'numerico',
         state: false,
         number: 0,
+        counter: 0
       },
       {
         name: 'lógico',
         category: 'logico',
         state: false,
         number: 0,
+        counter: 0
       },
       {
         name: 'atención y concentración',
         category: 'atencion',
         state: false,
         number: 0,
+        counter: 0
       },
     ],
     // OBJETO EN EL QUE SE GUARDAN LOS DATOS A SUBIR
@@ -216,6 +219,7 @@ export default {
     totalAnswer: 0,
   }),
   computed: {
+    ...mapGetters('fireSimulator', ['getSimulatorStructure']),
     validSimulator() {
       console.log('hola')
     },
@@ -232,8 +236,11 @@ export default {
       }
     },
   },
-  mounted() {
+  beforeMounted() {
     this.numberOfQuestionsByCategory()
+  },
+  mounted() {
+    this.setTotalOfQuestionsByCategory()
   },
   methods: {
     ...mapActions('fireSimulator', ['numberOfQuestionsByCategory']),
@@ -282,6 +289,16 @@ export default {
           categoryName: category,
           number: Number(numberOfQuestions),
         })
+      }
+    },
+    setTotalOfQuestionsByCategory() {
+      for(let i = 0; i < this.categories.length; i++) {
+        for(let ii = 0; ii < this.getSimulatorStructure.length; ii++) {
+          if(this.categories[i].category === this.getSimulatorStructure[ii].category) {
+            this.categories[i].counter = Number(this.getSimulatorStructure[ii].counter)
+            console.log(this.categories[i].category, this.getSimulatorStructure[ii].category)
+          }
+        }
       }
     },
     sendToFirebase() {
