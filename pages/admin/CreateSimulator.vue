@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="px-6 py-2 border border-gray-400 rounded-lg shadow bg-white">
-      <h1 class="text-4xl text-gray-700 font-semibold">Crea tú simulador</h1>
+      <h1 class="text-4xl text-gray-700 font-semibold">Crea tu simulador</h1>
       <!-- SECCION DE CREACION DE PREGUNTAS -->
       <div
         class="flex flex-wrap justify-between items-start mt-4 max-w-screen-lg"
@@ -22,6 +22,10 @@
           <div class="w-full">
             <!-- APARECE EDITOR CUANDO NO HAY PREGUNTA GUARDADA -->
             <div v-if="!simulator.editing" class="w-full">
+              <p class="text-lg font-semibold text-gray-800">
+                Título para el simulador
+              </p>
+              <input type="text" v-model="titleContent" class="py-2 px-3 w-full mb-4 border border-gray-300 rounded lg">
               <the-editor v-model="descriptionContent" />
               <div class="w-full lg:w-1/2 mt-2">
                 <c-button
@@ -32,6 +36,11 @@
               </div>
             </div>
             <div v-else class="w-full border border-gray-300 rounded p-3">
+              <div class="border border-gray-300 py-4 px-2 mb-4">
+                <p class="text-gray-800 text-lg font-medium">
+                  {{ titleContent }}
+                </p>
+              </div>
               <div v-html="simulator.description" />
               <div class="w-full lg:w-1/2 mt-2">
                 <c-button
@@ -46,7 +55,7 @@
               Agrega las preguntas
             </p>
             <p class="text-xs text-pink-600 font-light">
-              Agrega al menos 1 categoría y 50 preguntas para un total de 10
+              Agrega al menos 1 categoría y 28 preguntas para un total de 10
               minutos de simulador
             </p>
             <!-- ESCOGER NUMERO DE PREGUNTAS EN CATEGORIA -->
@@ -179,6 +188,7 @@ export default {
   components: { CButton },
   layout: 'app',
   data: () => ({
+    titleContent: '',
     descriptionContent: '',
     categories: [
       {
