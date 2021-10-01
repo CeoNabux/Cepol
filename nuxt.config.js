@@ -23,6 +23,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/clickaway.js',
+    '~/plugins/timer.js',
     '~/plugins/firebase/app.js',
     { src:'~/plugins/vee-validate.js', ssr:'true' }
   ],

@@ -19,7 +19,14 @@
           Tu tiempo restante
         </p>
         <div class="w-1/4 flex flex-col items-center">
-          <p class="text-4xl font-semibold text-gray-800">{{ displayHours }}</p>
+          <client-only>
+            <vac :end-time="new Date().getTime() + 60000">
+              <span slot="process" slot-scope="{ timeObj }">{{
+                `Lefttime: ${timeObj.m}:${timeObj.s}`
+              }}</span>
+              <span slot="finish">Done!</span>
+            </vac>
+          </client-only>
           Horas
         </div>
         <p class="w-1/12 text-4xl font-semibold text-gray-800">:</p>
@@ -61,22 +68,8 @@ export default {
   },
   methods: {
     ...mapActions('fireSimulator', ['setSimulatorTime', 'activeSimulator']),
-    getStart() {
-      const now = new Date()
-      this.start.hours = now.getHours()
-      this.start.minutes = now.getMinutes()
-      this.start.seconds = now.getSeconds()
-      this.start.miliseconds = now.getMilliseconds()
-    },
     startTest() {
-      this.getStart()
-      const time = {
-        hours: this.start.hours,
-        minutes: this.start.minutes,
-        seconds: this.start.seconds,
-        miliseconds: this.start.miliseconds,
-      }
-      this.setSimulatorTime(time)
+      this.setSimulatorTime()
     },
     startSimulator() {
       if (!this.getSimulatorActive) {
