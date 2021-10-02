@@ -230,9 +230,6 @@ export default {
   }),
   computed: {
     ...mapGetters('fireSimulator', ['getSimulatorStructure']),
-    validSimulator() {
-      console.log('hola')
-    },
     simulatorIsValid() {
       return this.simulator.simulatorStructure.length > 0
     },
@@ -246,11 +243,11 @@ export default {
       }
     },
   },
-  beforeMounted() {
+  created() {
     this.numberOfQuestionsByCategory()
   },
   mounted() {
-    this.numberOfQuestionsByCategory()
+    this.setTotalOfQuestionsByCategory()
   },
   methods: {
     ...mapActions('fireSimulator', ['numberOfQuestionsByCategory']),
@@ -306,7 +303,6 @@ export default {
         for(let ii = 0; ii < this.getSimulatorStructure.length; ii++) {
           if(this.categories[i].category === this.getSimulatorStructure[ii].category) {
             this.categories[i].counter = Number(this.getSimulatorStructure[ii].counter)
-            console.log(this.categories[i].category, this.getSimulatorStructure[ii].category)
           }
         }
       }
