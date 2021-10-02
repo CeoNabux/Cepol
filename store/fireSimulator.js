@@ -27,6 +27,7 @@ export const mutations = {
 export const actions = {
   async numberOfQuestionsByCategory({ commit }) {
     try {
+      console.log('Si me estoy ejecutando')
       const questionsCounterRef = collection(fireDataBase, 'categoryCounters')
       const questionsSnapshot = await getDocs(questionsCounterRef)
       questionsSnapshot.forEach((doc) => {

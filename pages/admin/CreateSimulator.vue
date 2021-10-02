@@ -167,10 +167,10 @@
             </p>
             <div class="w-full px-1 mt-2">
               <c-button
-                :disabled="!validSimulator"
+                :disabled="!simulatorIsValid"
                 name="Publicar Simulador"
                 class="bg-gray-300 text-lg text-white"
-                :class="{ 'bg-secondary': validSimulator }"
+                :class="{ 'bg-secondary': simulatorIsValid }"
                 @click="sendToFirebase"
               />
             </div>
@@ -234,7 +234,7 @@ export default {
       console.log('hola')
     },
     simulatorIsValid() {
-      return this.answerContent !== ''
+      return this.simulator.simulatorStructure.length > 0
     },
     totalOfQuestions() {
       if (!this.simulator.simulatorStructure.length) {
@@ -250,7 +250,7 @@ export default {
     this.numberOfQuestionsByCategory()
   },
   mounted() {
-    this.setTotalOfQuestionsByCategory()
+    this.numberOfQuestionsByCategory()
   },
   methods: {
     ...mapActions('fireSimulator', ['numberOfQuestionsByCategory']),
