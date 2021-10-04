@@ -77,7 +77,7 @@
                 Escoge los razonamiento
               </p>
               <div
-                v-if="categories.length"
+                v-if="setCategories"
                 class="w-full justify-center flex flex-col"
               >
                 <div
@@ -235,11 +235,12 @@ export default {
               state: false,
             })
           })
+          return true
         } else {
-          return
+          return false
         }
       } else {
-        return
+        return false
       }
     },
   },
