@@ -34,7 +34,12 @@
               <div class="w-full lg:w-1/2 mt-2">
                 <c-button
                   name="Guardar Descripcion"
-                  class="bg-primary"
+                  class=""
+                  :disabled="!titleAndDescriptionAreValid"
+                  :class="{
+                    'bg-primary': titleAndDescriptionAreValid,
+                    'bg-gray-400': !titleAndDescriptionAreValid,
+                  }"
                   @click="saveDescription"
                 />
               </div>
@@ -121,7 +126,8 @@
                           class="text-xs border"
                           :disabled="category.number > category.counter"
                           :class="{
-                            'bg-secondary text-white border border-white': category.number <= category.counter,
+                            'bg-secondary text-white border border-white':
+                              category.number <= category.counter,
                             'bg-gray-400': category.number > category.counter,
                           }"
                           @click="
@@ -202,10 +208,10 @@ export default {
     // OBJETO EN EL QUE SE GUARDAN LOS DATOS A SUBIR
     simulator: {
       editing: false,
+      title: '',
       description: '',
       simulatorStructure: [],
     },
-    totalAnswer: 0,
   }),
   created() {
     this.fetchCategoriesState()
@@ -213,7 +219,15 @@ export default {
   computed: {
     ...mapGetters('fireSimulator', ['getSimulatorCategories']),
     simulatorIsValid() {
-      return this.simulator.simulatorStructure.length > 0
+      return (
+        this.simulator.simulatorStructure.length === 4 &&
+        this.simulator.description !== '' &&
+        this.simulator.title !== '' &&
+        this.totalOfQuestions > 0
+      )
+    },
+    titleAndDescriptionAreValid() {
+      return this.descriptionContent !== '' && this.titleContent !== ''
     },
     totalOfQuestions() {
       if (!this.simulator.simulatorStructure.length) {
@@ -252,13 +266,11 @@ export default {
     },
     saveDescription() {
       this.simulator.description = this.descriptionContent
+      this.simulator.title = this.titleContent
       this.simulator.editing = true
     },
     editSimulator() {
       this.simulator.editing = false
-    },
-    saveSimulator() {
-      console.log('Guardar simulador')
     },
     getNumberOfQuestions(category, index, numberOfQuestions) {
       this.categories[index].state = true
@@ -266,7 +278,6 @@ export default {
         const questionExist = this.simulator.simulatorStructure.findIndex(
           (item) => item.categoryName === category
         )
-        console.log(questionExist)
         if (questionExist !== -1) {
           const replaceNumberOfQuestions =
             this.simulator.simulatorStructure.indexOf((question) => {
@@ -294,7 +305,7 @@ export default {
       }
     },
     sendToFirebase() {
-      console.log('Hay que preparar los datos para enviar a firebase')
+      console.log(this.simulator)
     },
   },
 }

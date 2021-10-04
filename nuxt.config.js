@@ -11,7 +11,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Somos la academia que te prepara para tu futuro profesional' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Somos la academia que te prepara para tu futuro profesional',
+      },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/images/favicon.png' }],
@@ -25,7 +29,7 @@ export default {
     '~/plugins/clickaway.js',
     '~/plugins/timer.js',
     '~/plugins/firebase/app.js',
-    { src:'~/plugins/vee-validate.js', ssr:'true' }
+    { src: '~/plugins/vee-validate.js', ssr: 'true' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,6 +50,13 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vee-validate']
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+      ],
+    },
+    transpile: ['vee-validate'],
   },
 }
