@@ -45,13 +45,13 @@
               </div>
             </div>
             <div v-else class="w-full border border-gray-300 rounded p-3">
-              <div class="border border-gray-300 py-4 px-2 mb-4">
-                <p class="text-gray-800 text-lg font-medium">
+              <div>
+                <p class="text-secondary text-2xl font-medium">
                   {{ titleContent }}
                 </p>
               </div>
-              <div v-html="simulator.description" />
-              <div class="w-full lg:w-1/2 mt-2">
+              <div v-html="simulator.description" class="my-4" />
+              <div class="w-full lg:w-1/2">
                 <c-button
                   name="Editar"
                   class="bg-white text-secondary border border-secondary"
