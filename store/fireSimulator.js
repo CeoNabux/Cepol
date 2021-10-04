@@ -27,7 +27,6 @@ export const mutations = {
     state.simulatorStructure = payload
   },
   SET_SIMULATORS(state, payload) {
-    console.log(payload)
     state.simulators = payload
   },
   CLEAR_SIMULATORS(state) {
@@ -59,7 +58,7 @@ export const actions = {
     try {
       const simulatorData = {
         title: payload.title,
-        desciption: payload.description,
+        description: payload.description,
         simulatorStructure: payload.simulatorStructure,
         time: payload.time
       }
@@ -79,12 +78,11 @@ export const actions = {
         simulatorData.push({
           id: doc.id,
           title: doc.data().title,
-          desciption: doc.data().description,
+          description: doc.data().description,
           simulatorStructure: doc.data().simulatorStructure,
           time: doc.data().time
         })
       })
-      console.log(simulatorData)
       commit('SET_SIMULATORS', simulatorData)
     }
     catch (error) {

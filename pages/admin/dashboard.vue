@@ -55,10 +55,10 @@
           </div>
         </div>
       </div>
-
     </div>
     <!-- SECCION DE FILTRADO DE PEGUNTAS -->
     <div
+      v-if="setSimulators"
       class="
         mt-6
         w-full
@@ -72,7 +72,7 @@
     >
       <!-- RENDERIZADO DE PREGUNTAS -->
       <div
-        v-for="(simulator, i) in getSimulators"
+        v-for="(simulator, i) in simulators"
         :key="i"
         class="
           w-full
@@ -88,13 +88,16 @@
         "
       >
         <div class="w-full lg:w-1/2">
-          <p class="text-sm font-semibold text-gray-800">
-            {{ simulator.time }}
+          <p class="text-sm font-semibold text-primary">
+            Horas: {{simulator.hours}}, Minutos: {{ simulator.minutes }}, Segundos: {{ simulator.seconds }}
           </p>
-          <div
-            v-html="simulator.title"
-            class="text-base text-gray-800 mt-2"
-          />
+          <p class="text-secondary text-xl font-medium my-2">
+            {{ simulator.title }}
+          </p>
+          <div v-html="simulator.description" class="text-base text-gray-800" />
+          <p class="text-base text-gray-800 font-semibold mt-2">
+            Total de preguntas: {{ simulator.simulatorStructure }}
+          </p>
         </div>
         <div class="w-full lg:w-1/4 mt-4 lg:mt-0 flex flex-wrap">
           <div class="w-full">
@@ -114,11 +117,36 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'app',
+  simulators: [],
   data: () => ({
-    bgImage: require('@/static/images/svg/newLesson.svg')
+    bgImage: require('@/static/images/svg/newLesson.svg'),
+    simulators: [],
   }),
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulators'])
+    ...mapGetters('fireSimulator', ['getSimulators']),
+    setSimulators() {
+      if (this.getSimulators.length) {
+        if (!this.simulators.length) {
+          this.getSimulators.forEach((doc) => {
+            this.simulators.push({
+              id: doc.id,
+              title: doc.title,
+              description: doc.description,
+              simulatorStructure: doc.simulatorStructure.length,
+              hours: parseInt(doc.time / 3600000),
+              minutes: parseInt(doc.time / 60000),
+              seconds: parseInt((doc.time % 60000)/1000),
+            })
+            console.log(this.simulators)
+          })
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
+    },
   },
   created() {
     this.fetchSimulators()
@@ -132,14 +160,13 @@ export default {
       const id = ''
       id = this.getSimulators[index]
       console.log(id)
-    }
+    },
   },
   destroyed() {
     this.clearSimulators()
-  }
+  },
 }
 </script>
-
 
 <style scoped>
 .bg-image {
