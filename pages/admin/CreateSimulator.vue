@@ -212,6 +212,9 @@ export default {
       description: '',
       simulatorStructure: [],
     },
+    time: 0,
+    timePerQuestion: 21.17,
+    milisecond: 1000
   }),
   created() {
     this.fetchCategoriesState()
@@ -259,7 +262,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchCategoriesState']),
+    ...mapActions('fireSimulator', ['fetchCategoriesState', 'postSimulator']),
     editNumberOfQuestions(index) {
       this.categories[index].state = false
       this.categories[index].number = 0
@@ -305,7 +308,17 @@ export default {
       }
     },
     sendToFirebase() {
-      console.log(this.simulator)
+      for (let i = 0; i <  this.simulator.simulatorStructure.length; i++) {
+        this.time = this.time + this.simulator.simulatorStructure[i].number
+      }
+      this.time = this.time  * this.timePerQuestion * this.milisecond
+      const simulatorData = {
+        simulatorStructure: this.simulator.simulatorStructure,
+        title: this.simulator.title,
+        description: this.simulator.description,
+        time: this.time
+      }
+      this.postSimulator(simulatorData)
     },
   },
 }

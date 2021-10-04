@@ -1,4 +1,4 @@
-import { collection, getDocs } from '@firebase/firestore'
+import { collection, getDocs, setDoc, doc } from '@firebase/firestore'
 import { fireDataBase } from '~/plugins/firebase/app'
 
 export const state = () => ({
@@ -44,4 +44,19 @@ export const actions = {
       console.error(error)
     }
   },
+  async postSimulator({ commit }, payload) {
+    try {
+      const simulatorData = {
+        title: payload.title,
+        desciption: payload.description,
+        simulatorStructure: payload.simulatorStructure,
+        time: payload.time
+      }
+      const simulatorRef = doc(collection(fireDataBase, 'simulators'))
+      await setDoc(simulatorRef, payload)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
 }
