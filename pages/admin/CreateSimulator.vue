@@ -316,7 +316,7 @@ export default {
         simulatorStructure: this.simulator.simulatorStructure,
         title: this.simulator.title,
         description: this.simulator.description,
-        time: this.time
+        time: parseInt(this.time)
       }
       this.postSimulator(simulatorData)
     },

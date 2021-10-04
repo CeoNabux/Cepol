@@ -53,7 +53,8 @@ export const actions = {
         time: payload.time
       }
       const simulatorRef = doc(collection(fireDataBase, 'simulators'))
-      await setDoc(simulatorRef, payload)
+      await setDoc(simulatorRef, simulatorData)
+      this.$router.push('dashboard')
     }
     catch (error) {
       console.error(error)
