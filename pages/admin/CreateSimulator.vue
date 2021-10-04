@@ -119,10 +119,10 @@
                         <c-button
                           name="Agregar"
                           class="text-xs border"
-                          :disabled="false"
+                          :disabled="category.number > category.counter"
                           :class="{
-                            'bg-secondary text-white border border-white': true,
-                            'bg-gray-400': false,
+                            'bg-secondary text-white border border-white': category.number <= category.counter,
+                            'bg-gray-400': category.number > category.counter,
                           }"
                           @click="
                             getNumberOfQuestions(
@@ -144,6 +144,7 @@
                   </div>
                 </div>
               </div>
+              <div v-else class="text-gray-400">Estamos cargando</div>
             </div>
             <!-- BOTON PARA AGREGAR RESPUESTA -->
             <div class="w-full flex flex-wrap justify-start items-end mt-8">
