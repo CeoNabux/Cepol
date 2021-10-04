@@ -25,7 +25,11 @@
               <p class="text-lg font-semibold text-gray-800">
                 Título para el simulador
               </p>
-              <input type="text" v-model="titleContent" class="py-2 px-3 w-full mb-4 border border-gray-300 rounded lg">
+              <input
+                type="text"
+                v-model="titleContent"
+                class="py-2 px-3 w-full mb-4 border border-gray-300 rounded lg"
+              />
               <the-editor v-model="descriptionContent" />
               <div class="w-full lg:w-1/2 mt-2">
                 <c-button
@@ -72,7 +76,10 @@
               >
                 Escoge los razonamiento
               </p>
-              <div class="w-full justify-center flex flex-col">
+              <div
+                v-if="categories.length"
+                class="w-full justify-center flex flex-col"
+              >
                 <div
                   v-for="(category, i) in categories"
                   :key="i"
@@ -90,7 +97,7 @@
                   "
                 >
                   <p class="text-xl text-gray-800 w-1/2">
-                    {{ category.name }}
+                    {{ category.category }}
                   </p>
                   <div class="w-1/2 flex justify-end">
                     <div class="w-1/2 flex justify-center items-center">
@@ -112,10 +119,10 @@
                         <c-button
                           name="Agregar"
                           class="text-xs border"
+                          :disabled="false"
                           :class="{
-                            'bg-secondary text-white border border-white':
-                              category.state,
-                            'text-secondary border-secondary': !category.state,
+                            'bg-secondary text-white border border-white': true,
+                            'bg-gray-400': false,
                           }"
                           @click="
                             getNumberOfQuestions(
@@ -190,36 +197,7 @@ export default {
   data: () => ({
     titleContent: '',
     descriptionContent: '',
-    categories: [
-      {
-        name: 'verbal',
-        category: 'verbal',
-        state: false,
-        number: 0,
-        counter: 0
-      },
-      {
-        name: 'numerico',
-        category: 'numerico',
-        state: false,
-        number: 0,
-        counter: 0
-      },
-      {
-        name: 'lógico',
-        category: 'logico',
-        state: false,
-        number: 0,
-        counter: 0
-      },
-      {
-        name: 'atención y concentración',
-        category: 'atencion',
-        state: false,
-        number: 0,
-        counter: 0
-      },
-    ],
+    categories: [],
     // OBJETO EN EL QUE SE GUARDAN LOS DATOS A SUBIR
     simulator: {
       editing: false,
@@ -228,8 +206,11 @@ export default {
     },
     totalAnswer: 0,
   }),
+  created() {
+    this.fetchCategoriesState()
+  },
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulatorStructure']),
+    ...mapGetters('fireSimulator', ['getSimulatorCategories']),
     simulatorIsValid() {
       return this.simulator.simulatorStructure.length > 0
     },
@@ -242,15 +223,27 @@ export default {
           .reduce((prev, next) => prev + next)
       }
     },
-  },
-  created() {
-    this.numberOfQuestionsByCategory()
-  },
-  mounted() {
-    this.setTotalOfQuestionsByCategory()
+    setCategories() {
+      if (this.getSimulatorCategories.length) {
+        if (!this.categories.length) {
+          this.getSimulatorCategories.forEach((doc) => {
+            this.categories.push({
+              category: doc.category,
+              counter: doc.counter,
+              number: 0,
+              state: false,
+            })
+          })
+        } else {
+          return
+        }
+      } else {
+        return
+      }
+    },
   },
   methods: {
-    ...mapActions('fireSimulator', ['numberOfQuestionsByCategory']),
+    ...mapActions('fireSimulator', ['fetchCategoriesState']),
     editNumberOfQuestions(index) {
       this.categories[index].state = false
       this.categories[index].number = 0
@@ -296,15 +289,6 @@ export default {
           categoryName: category,
           number: Number(numberOfQuestions),
         })
-      }
-    },
-    setTotalOfQuestionsByCategory() {
-      for(let i = 0; i < this.categories.length; i++) {
-        for(let ii = 0; ii < this.getSimulatorStructure.length; ii++) {
-          if(this.categories[i].category === this.getSimulatorStructure[ii].category) {
-            this.categories[i].counter = Number(this.getSimulatorStructure[ii].counter)
-          }
-        }
       }
     },
     sendToFirebase() {
