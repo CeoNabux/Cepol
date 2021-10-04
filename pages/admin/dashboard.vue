@@ -46,7 +46,7 @@
               </h2>
               <div class="w-full sm:w-1/2 lg:w-33 mt-4">
                 <c-button
-                  name="Crear preguntas"
+                  name="Crear Simuladores"
                   class="bg-primary mb-1"
                   @click="redirectionToCreateSimulator"
                 />
@@ -55,29 +55,7 @@
           </div>
         </div>
       </div>
-      <!-- FILTRO DE PREGUNTAS POR CATEGORIA -->
-      <div
-        class="w-full bg-white lg:w-3/12 rounded-lg shadow-lg mt-4 lg:mt-0 p-4"
-      >
-        <p class="text-gray-800 font-medium w-full text-center">
-          Filtra por dominio
-        </p>
-        <div
-          v-for="(category, i) in categories"
-          :key="i"
-          class="w-full lg:w-3/4 mb-2 mx-auto"
-        >
-          <c-button
-            :name="category.category"
-            class="text-sm border"
-            :class="{
-              'bg-secondary text-white border border-white': category.state,
-              'text-secondary border-secondary': !category.state,
-            }"
-            @click="getCategory(i)"
-          />
-        </div>
-      </div>
+
     </div>
     <!-- SECCION DE FILTRADO DE PEGUNTAS -->
     <div
@@ -94,7 +72,7 @@
     >
       <!-- RENDERIZADO DE PREGUNTAS -->
       <div
-        v-for="(question, i) in getQuestions"
+        v-for="(simulator, i) in getSimulators"
         :key="i"
         class="
           w-full
@@ -111,19 +89,19 @@
       >
         <div class="w-full lg:w-1/2">
           <p class="text-sm font-semibold text-gray-800">
-            {{ question.question.category }}
+            {{ simulator.time }}
           </p>
           <div
-            v-html="question.question.question"
+            v-html="simulator.title"
             class="text-base text-gray-800 mt-2"
           />
         </div>
         <div class="w-full lg:w-1/4 mt-4 lg:mt-0 flex flex-wrap">
           <div class="w-full">
             <c-button
-              name="Eliminar pregunta"
+              name="Eliminar simulador"
               class="bg-pink-700 text-white"
-              @click="removeQuestion(question.id)"
+              @click="removeSimulator(simulator.id)"
             />
           </div>
         </div>
@@ -133,12 +111,46 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'app',
+  data: () => ({
+    bgImage: require('@/static/images/svg/newLesson.svg')
+  }),
+  computed: {
+    ...mapGetters('fireSimulator', ['getSimulators'])
+  },
+  created() {
+    this.fetchSimulators()
+  },
   methods: {
+    ...mapActions('fireSimulator', ['fetchSimulators', 'clearSimulators']),
     redirectionToCreateSimulator() {
       this.$router.push('/admin/CreateSimulator')
+    },
+    removeSimulator(index) {
+      const id = ''
+      id = this.getSimulators[index]
+      console.log(id)
     }
+  },
+  destroyed() {
+    this.clearSimulators()
   }
 }
 </script>
+
+
+<style scoped>
+.bg-image {
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+@media only screen and (max-width: 640px) {
+  .bg-image {
+    background-size: cover;
+    background-position-x: 50rem;
+  }
+}
+</style>
