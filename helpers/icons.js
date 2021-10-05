@@ -1,4 +1,17 @@
-import { mdiAccount, mdiClose, mdiFacebook, mdiFileEdit, mdiFilePlus, mdiInstagram, mdiLogout, mdiMenu, mdiViewDashboard, mdiWhatsapp } from '@mdi/js'
+import {
+  mdiAccount,
+  mdiClockOutline,
+  mdiClose,
+  mdiFacebook,
+  mdiFileEdit,
+  mdiFileEditOutline,
+  mdiFilePlus,
+  mdiInstagram,
+  mdiLogout,
+  mdiMenu,
+  mdiViewDashboard,
+  mdiWhatsapp,
+} from '@mdi/js'
 
 export default {
   facebook: mdiFacebook,
@@ -10,5 +23,7 @@ export default {
   logout: mdiLogout,
   newLesson: mdiFilePlus,
   dashboard: mdiViewDashboard,
-  simulador: mdiFileEdit
+  simulador: mdiFileEdit,
+  file: mdiFileEditOutline,
+  clock: mdiClockOutline,
 }

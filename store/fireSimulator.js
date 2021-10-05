@@ -4,7 +4,8 @@ import { fireDataBase } from '~/plugins/firebase/app'
 export const state = () => ({
   simulatorActive: false,
   simulatorStructure: [],
-  simulators: []
+  simulators: [],
+  simulating: false
 })
 
 export const getters = {
@@ -16,6 +17,9 @@ export const getters = {
   },
   getSimulators(state) {
     return state.simulators
+  },
+  isSimulating(state) {
+    return state.simulating
   }
 }
 
