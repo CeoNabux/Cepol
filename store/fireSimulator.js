@@ -31,7 +31,7 @@ export const mutations = {
     state.isSimulating = Boolean
   },
   SET_CATEGORIES(state, payload) {
-    state.simulatorStructure = payload
+    state.simulatorCategories = payload
   },
   SET_SIMULATORS(state, payload) {
     state.simulators = payload
