@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data: () => ({
     menuItems: [
@@ -103,6 +104,9 @@ export default {
       { icon: 'simulador', link: 'student', name: 'Simulador' },
     ],
   }),
+  computed: {
+    ...mapGetters('fireAuthentication', ['user'])
+  },
   methods: {
     redirection(link) {
       this.$router.push(link)
