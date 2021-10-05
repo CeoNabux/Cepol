@@ -18,30 +18,18 @@
         <p class="text-base font-medium text-gray-800 w-full text-center">
           Tu tiempo restante
         </p>
-        <div class="w-1/4 flex flex-col items-center">
+        <div class="w-1/3 flex flex-col items-center">
           <client-only>
-            <vac :end-time="new Date().getTime() + 60000">
-              <span slot="process" slot-scope="{ timeObj }">{{
-                `Lefttime: ${timeObj.m}:${timeObj.s}`
-              }}</span>
+            <vac :end-time="new Date().getTime() + time">
+              <span
+                slot="process"
+                slot-scope="{ timeObj }"
+                class="text-secondary text-2xl font-medium"
+                >{{ `${timeObj.h}hrs : ${timeObj.m}min : ${timeObj.s}s` }}</span
+              >
               <span slot="finish">Done!</span>
             </vac>
           </client-only>
-          Horas
-        </div>
-        <p class="w-1/12 text-4xl font-semibold text-gray-800">:</p>
-        <div class="w-1/4 flex flex-col items-center">
-          <p class="text-4xl font-semibold text-gray-800">
-            {{ displayMinutes }}
-          </p>
-          Minutos
-        </div>
-        <p class="w-1/12 text-4xl font-semibold text-gray-800">:</p>
-        <div class="w-1/4 flex flex-col items-center">
-          <p class="text-4xl font-semibold text-gray-800">
-            {{ displaySeconds }}
-          </p>
-          Segundos
         </div>
       </div>
     </div>
@@ -51,18 +39,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  data: () => ({
-    displayDays: 0,
-    displayHours: 0,
-    displayMinutes: 0,
-    displaySeconds: 0,
-    start: {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      miliseconds: 0,
-    },
-  }),
+  props: {
+    time: {
+      type: Number,
+      required: true
+    }
+  },
   computed: {
     ...mapGetters('fireSimulator', ['getSimulatorState']),
   },

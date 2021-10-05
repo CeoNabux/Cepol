@@ -4,7 +4,7 @@
       <!-- LEFT -->
       <div class="w-full lg:w-8/12">
         <!-- CRONOMETRO -->
-        <the-timer />
+        <the-timer :time="simulator[0].time" />
         <!-- VISUALIZACION DE PREGUNTAS -->
         <div class="w-full bg-white shadow-lg rounded-lg py-2 px-4 mt-4">
           Aqui se verian las preguntas
@@ -37,17 +37,18 @@ import TheTimer from '~/components/TheTimer.vue'
 export default {
   components: { TheTimer },
   layout: 'app',
-  validate({query}) {
+  validate({ query }) {
     return query.test
   },
   data: () => ({
-    test: null
+    test: null,
+    simulator: [{ time: 0 }],
   }),
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulatorsById'])
+    ...mapGetters('fireSimulator', ['getSimulatorsById', 'getSimulators']),
   },
   created() {
-    const test = this.$route.query.selectedTest
+    const test = this.$route.query.test
     this.test = test
   },
   mounted() {
@@ -55,13 +56,15 @@ export default {
   },
   methods: {
     validatingTestById() {
-      if(this.getSimulatorsById.includes(this.test)) {
-        console.log('hola')
+      if (this.getSimulatorsById.some((query) => query.id === this.test)) {
+        const simulator = this.getSimulators.filter((test) => {
+          return test.id === this.test
+        })
+        this.simulator = simulator
+      } else {
+        console.log('saludos desde el error')
       }
-      else {
-        console.log('Te saludo desde el error de pagina jajja')
-      }
-    }
-  }
+    },
+  },
 }
 </script>
