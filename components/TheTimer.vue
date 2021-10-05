@@ -3,7 +3,7 @@
     <div class="w-full bg-white shadow-lg rounded-lg py-2 px-4">
       <p class="text-xl text-gray-800 font-semibold">Simulador</p>
       <!-- EMPEZAR SIMULADOR -->
-      <div v-if="!getSimulatorState" class="w-full mx-auto">
+      <div v-if="!isSimulating" class="w-full mx-auto">
         <p class="text-base font-medium text-gray-800 w-full text-center">
           Comenzar simulador
         </p>
@@ -18,7 +18,7 @@
         <p class="text-base font-medium text-gray-800 w-full text-center">
           Tu tiempo restante
         </p>
-        <div class="w-1/3 flex flex-col items-center">
+        <div class="w-1/2 flex flex-col items-center">
           <client-only>
             <vac :end-time="new Date().getTime() + time">
               <span
@@ -27,7 +27,9 @@
                 class="text-secondary text-2xl font-medium"
                 >{{ `${timeObj.h}hrs : ${timeObj.m}min : ${timeObj.s}s` }}</span
               >
-              <span slot="finish">Done!</span>
+              <span slot="finish" class="text-2xl font-medium text-secondary"
+                >Simulador Finalizado</span
+              >
             </vac>
           </client-only>
         </div>
@@ -42,16 +44,16 @@ export default {
   props: {
     time: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulatorState']),
+    ...mapGetters('fireSimulator', ['isSimulating']),
   },
   methods: {
     ...mapActions('fireSimulator', ['startSimulator']),
     startTest() {
-      if (!this.getSimulatorActive) {
+      if (!this.isSimulating) {
         this.startSimulator(true)
       }
     },

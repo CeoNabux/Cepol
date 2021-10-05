@@ -1,17 +1,14 @@
-import { collection, getDocs, setDoc, doc } from '@firebase/firestore'
+import { collection, getDocs, setDoc, doc, getDoc } from '@firebase/firestore'
 import { fireDataBase } from '~/plugins/firebase/app'
 
 export const state = () => ({
-  simulatorActive: false,
   simulatorCategories: [],
   simulators: [],
-  simulating: false
+  isSimulating: false,
+  currentSimulator: {}
 })
 
 export const getters = {
-  getSimulatorState(state) {
-    return state.simulatorActive
-  },
   getSimulatorCategories(state) {
     return state.simulatorCategories
   },
@@ -19,16 +16,19 @@ export const getters = {
     return state.simulators
   },
   isSimulating(state) {
-    return state.simulating
+    return state.isSimulating
   },
   getSimulatorsById(state) {
     return state.simulators.map((simulator) => ({ id: simulator.id }))
+  },
+  getCurrentSimulator(state) {
+    return state.currentSimulator
   }
 }
 
 export const mutations = {
   START_SIMULATOR(state, Boolean) {
-    state.simulatorActive = Boolean
+    state.isSimulating = Boolean
   },
   SET_CATEGORIES(state, payload) {
     state.simulatorStructure = payload
@@ -38,6 +38,9 @@ export const mutations = {
   },
   CLEAR_SIMULATORS(state) {
     state.simulators = []
+  },
+  SET_CURRENT_SIMULATOR(state, payload) {
+    state.currentSimulator = payload
   }
 }
 
@@ -101,5 +104,18 @@ export const actions = {
   },
   startSimulator({commit}, Boolean) {
     commit('START_SIMULATOR', Boolean)
+  },
+  async setCurrentSimulator({ commit }, payload) {
+    try{
+      console.log(payload)
+      const simulatorRef = doc(fireDataBase, 'simulators', payload)
+      const simulatorSnapshot = await getDoc(simulatorRef)
+      const currentSimulator = simulatorSnapshot.data()
+      console.log('saludos desde la traida del test')
+      console.log(currentSimulator)
+      // commit('SET_CURRENT_SIMULATOR', currentSimulator)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
