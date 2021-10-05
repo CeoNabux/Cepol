@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     redirectionToSimulator(index) {
-      this.$router.push(`simulador/${index}`)
+      this.$router.push({path: 'simulador/simulating', query: {test: index}})
     },
   },
 }

@@ -3,14 +3,14 @@
     <div class="w-full bg-white shadow-lg rounded-lg py-2 px-4">
       <p class="text-xl text-gray-800 font-semibold">Simulador</p>
       <!-- EMPEZAR SIMULADOR -->
-      <div v-if="!getSimulatorActive" class="w-full mx-auto">
+      <div v-if="!getSimulatorState" class="w-full mx-auto">
         <p class="text-base font-medium text-gray-800 w-full text-center">
           Comenzar simulador
         </p>
         <c-button
           name="Empezar Simulador"
           class="bg-green-700 mt-4"
-          @click="startSimulator"
+          @click="startTest"
         />
       </div>
       <!-- SIMULADOR INICIALIZADO -->
@@ -64,17 +64,13 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulatorActive']),
+    ...mapGetters('fireSimulator', ['getSimulatorState']),
   },
   methods: {
-    ...mapActions('fireSimulator', ['setSimulatorTime', 'activeSimulator']),
+    ...mapActions('fireSimulator', ['startSimulator']),
     startTest() {
-      this.setSimulatorTime()
-    },
-    startSimulator() {
       if (!this.getSimulatorActive) {
-        this.activeSimulator(true)
-        this.startTest()
+        this.startSimulator(true)
       }
     },
   },

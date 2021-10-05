@@ -3,29 +3,32 @@ import { fireDataBase } from '~/plugins/firebase/app'
 
 export const state = () => ({
   simulatorActive: false,
-  simulatorStructure: [],
+  simulatorCategories: [],
   simulators: [],
   simulating: false
 })
 
 export const getters = {
-  getSimulatorActive(state) {
+  getSimulatorState(state) {
     return state.simulatorActive
   },
   getSimulatorCategories(state) {
-    return state.simulatorStructure
+    return state.simulatorCategories
   },
   getSimulators(state) {
     return state.simulators
   },
   isSimulating(state) {
     return state.simulating
+  },
+  getSimulatorsById(state) {
+    return state.simulators.map((simulator) => ({ id: simulator.id }))
   }
 }
 
 export const mutations = {
-  ACTIVE_SIMULATOR(state, payload) {
-    state.simulatorActive = payload
+  START_SIMULATOR(state, Boolean) {
+    state.simulatorActive = Boolean
   },
   SET_CATEGORIES(state, payload) {
     state.simulatorStructure = payload
@@ -95,5 +98,8 @@ export const actions = {
   },
   clearSimulators({commit}) {
     commit('CLEAR_SIMULATORS')
+  },
+  startSimulator({commit}, Boolean) {
+    commit('START_SIMULATOR', Boolean)
   }
 }

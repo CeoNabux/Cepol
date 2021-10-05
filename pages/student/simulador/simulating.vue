@@ -32,9 +32,36 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import TheTimer from '~/components/TheTimer.vue'
 export default {
   components: { TheTimer },
   layout: 'app',
+  validate({query}) {
+    return query.test
+  },
+  data: () => ({
+    test: null
+  }),
+  computed: {
+    ...mapGetters('fireSimulator', ['getSimulatorsById'])
+  },
+  created() {
+    const test = this.$route.query.selectedTest
+    this.test = test
+  },
+  mounted() {
+    this.validatingTestById()
+  },
+  methods: {
+    validatingTestById() {
+      if(this.getSimulatorsById.includes(this.test)) {
+        console.log('hola')
+      }
+      else {
+        console.log('Te saludo desde el error de pagina jajja')
+      }
+    }
+  }
 }
 </script>
