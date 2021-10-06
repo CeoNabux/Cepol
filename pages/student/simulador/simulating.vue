@@ -78,7 +78,7 @@ export default {
           return test.id === this.test
         })
         this.simulator = simulator
-        this.setCurrentSimulator(this.simulator[0].id)
+        this.setCurrentSimulator(this.simulator[0].simulatorStructure)
       } else {
         console.log('saludos desde el error')
       }
