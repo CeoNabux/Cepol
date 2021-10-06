@@ -13,6 +13,7 @@
       <!-- RIGTH -->
       <!-- PANEL DE NAVAGACION DE PREGUNTAS -->
       <div
+        v-if="isSimulating"
         class="
           w-full
           lg:w-1/4
@@ -25,15 +26,25 @@
           lg:mt-0
         "
       >
+        <p class="text-xl text-primary font-semibold mb-2">
+          Escoge una pregunta
+        </p>
         <div
-          v-for="(category, i) in getCurrentSimulator.simulatorSrtucture"
+          v-for="(categoryQuestions, i) in getCurrentSimulator"
           :key="i"
-          class="w-full"
+          class="w-full mb-2"
         >
-          <p class="text-gray-800 font-medium">{{ category.categoryName }}</p>
-          <div class="flex flex-wrap w-full justify-between items-center">
-            <nuxt-link class="w-3 h-3 rounded-full bg-secondary">
-              {{}}
+          <p class="text-gray-500 font-medium text-lg">
+            {{ categoryQuestions.category }}
+          </p>
+          <div class="flex flex-wrap w-full justify-start items-center">
+            <nuxt-link
+              :to="question.question"
+              v-for="(question, ii) in categoryQuestions.questions"
+              :key="ii"
+              class="w-5 h-5 mr-2 text-xs rounded-full bg-secondary shadow text-white flex justify-center items-center"
+            >
+              {{ ii+1 }}
             </nuxt-link>
           </div>
         </div>
