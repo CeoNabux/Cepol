@@ -77,7 +77,7 @@ export default {
   data: () => ({
     test: null,
     simulator: [{ time: 0 }],
-    questionSelected: ''
+    questionSelected: {}
   }),
   computed: {
     ...mapGetters('fireSimulator', [
