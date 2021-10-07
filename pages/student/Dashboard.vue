@@ -5,12 +5,17 @@
         Este es tu dashboard aqui tambien iremos poniendo notas
       </h1>
       <div
-        v-if="setSimulators"
-        class="mt-4 flex justify-center items-center flex-wrap"
+        v-if="!getSimulators.length"
+        class="mt-4 flex justify-center items-center"
       >
+        <p class="text-secondary font-medium text-2xl">
+          Estamos cargando los simuladores
+        </p>
+      </div>
+      <div v-else class="mt-4 flex justify-center items-center flex-wrap">
         <!-- AQUI VA EL SIMULADOR -->
         <div
-          v-for="(simulator, i) in simulators"
+          v-for="(simulator, i) in getSimulators"
           :key="i"
           class="w-full lg:w-1/2"
         >
@@ -18,10 +23,10 @@
             :id="simulator.id"
             :title="simulator.title"
             :description="simulator.description"
-            :simulatorStructure="simulator.simulatorStructure"
-            :hours="simulator.hours"
-            :minutes="simulator.minutes"
-            :seconds="simulator.seconds"
+            :simulatorStructure="simulator.simulatorStructure.length"
+            :hours="parseInt(simulator.hours / 3600000)"
+            :minutes="parseInt(simulator.time / 60000)"
+            :seconds="parseInt((simulator.time % 60000) / 1000)"
             class="mx-auto"
           />
         </div>
@@ -38,34 +43,8 @@ export default {
   components: {
     SimulatorCard,
   },
-  data: () => ({
-    simulators: [],
-  }),
   computed: {
     ...mapGetters('fireSimulator', ['getSimulators', 'isSimulating']),
-    setSimulators() {
-      if (this.getSimulators.length) {
-        if (!this.simulators.length) {
-          this.getSimulators.forEach((doc) => {
-            this.simulators.push({
-              id: doc.id,
-              title: doc.title,
-              description: doc.description,
-              simulatorStructure: doc.simulatorStructure.length,
-              time: doc.time,
-              hours: parseInt(doc.time / 3600000),
-              minutes: parseInt(doc.time / 60000),
-              seconds: parseInt((doc.time % 60000) / 1000),
-            })
-          })
-          return true
-        } else {
-          return false
-        }
-      } else {
-        return false
-      }
-    },
   },
   mounted() {
     this.fetchSimulators()
