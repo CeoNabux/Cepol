@@ -19,10 +19,14 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'app',
   data: () => ({
     nota: 730,
   }),
+  computed: {
+    
+  }
 }
 </script>
