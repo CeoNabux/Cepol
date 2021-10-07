@@ -139,9 +139,33 @@ export const actions = {
             getters.getCurrentSimulator[i].questions[ii].question ===
             getters.getSimulatorAnswers[iii].question
           ) {
-            console.log(getters.getCurrentSimulator[i].questions[ii].options ,
-              getters.getSimulatorAnswers[iii].options)
-            count = count + 1
+            console.log(
+              getters.getCurrentSimulator[i].questions[ii].options,
+              getters.getSimulatorAnswers[iii].options
+            )
+
+
+            const comparingOptions = (objc1, objc2) =>
+              Object.keys(objc1).length === Object.keys(objc2).length &&
+              Object.keys(objc1).every((p) => objc1[p] === objc2[p])
+
+
+
+            const comparingAnswer = (simulatorOptions, studentOptions) =>
+              simulatorOptions.length === studentOptions.length &&
+              simulatorOptions.every((o, idx) =>
+                comparingOptions(o, studentOptions[idx])
+              )
+
+
+            const correctAnswer = comparingAnswer(
+              getters.getCurrentSimulator[i].questions[ii].options,
+              getters.getSimulatorAnswers[iii].options
+            )
+            console.log(correctAnswer)
+            if (correctAnswer === true) {
+              count = count + 1
+            }
           }
         }
       }
