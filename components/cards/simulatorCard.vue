@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full h-52 py-2 px-4 rounded-xl border border-primary shadow-lg">
+    <div class="w-full h-72 md:h-64 lg:h-52 py-2 md:py-1 lg:py-2 px-4 rounded-xl border border-primary shadow-lg flex flex-col justify-between">
       <div class="w-full flex justify-between items-start sm:items-center">
         <!-- LEFT CONTENT -->
         <div class="w-3/5 h-full flex flex-col justify-between">
