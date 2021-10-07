@@ -20,7 +20,11 @@
         </p>
         <div class="w-1/2 flex flex-col items-center">
           <client-only>
-            <vac :end-time="new Date().getTime() + time">
+            <vac
+              ref="print"
+              :end-time="new Date().getTime() + time"
+              @finish="(vac) => timesUp()"
+            >
               <span
                 slot="process"
                 slot-scope="{ timeObj }"
@@ -57,6 +61,10 @@ export default {
         this.startSimulator(true)
       }
     },
+    timesUp() {
+      this.startSimulator(false)
+      this.$router.push('score')
+    }
   },
 }
 </script>
