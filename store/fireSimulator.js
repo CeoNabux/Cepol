@@ -42,6 +42,9 @@ export const mutations = {
   START_SIMULATOR(state, Boolean) {
     state.isSimulating = Boolean
   },
+  FINISH_SIMULATOR(state, Boolean) {
+    state.isSimulating = Boolean
+  },
   SET_CATEGORIES(state, payload) {
     state.simulatorCategories = payload
   },
@@ -123,6 +126,29 @@ export const actions = {
   startSimulator({ commit }, Boolean) {
     commit('START_SIMULATOR', Boolean)
   },
+  finishSimulator({ commit, getters }, Boolean) {
+    let count = 0
+    for (let i = 0; i < getters.getCurrentSimulator.length; i++) {
+      for (
+        let ii = 0;
+        ii < getters.getCurrentSimulator[i].questions.length;
+        ii++
+      ) {
+        for (let iii = 0; iii < getters.getSimulatorAnswers.length; iii++) {
+          if (
+            getters.getCurrentSimulator[i].questions[ii].question ===
+            getters.getSimulatorAnswers[iii].question
+          ) {
+            console.log(getters.getCurrentSimulator[i].questions[ii].options ,
+              getters.getSimulatorAnswers[iii].options)
+            count = count + 1
+          }
+        }
+      }
+    }
+    console.log(count)
+    commit('FINISH_SIMULATOR', Boolean)
+  },
   async setCurrentSimulator({ commit }, payload) {
     try {
       const questionsByCategory = []
@@ -167,14 +193,13 @@ export const actions = {
     const exist = getters.getSimulatorAnswers.findIndex(
       (question) => question.question === payload.question
     )
-    console.log(exist)
-    if(exist!==-1) {
+    if (exist !== -1) {
       const answerUpdated = {
         options: payload.options,
         index: exist,
       }
       commit('UPDATE_ANSWER', answerUpdated)
-    } else{
+    } else {
       const answer = {
         question: payload.question,
         options: payload.options,

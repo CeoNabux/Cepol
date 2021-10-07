@@ -88,7 +88,7 @@ export default {
       const options = []
       this.questionData.options.forEach((option) => {
         options.push({
-          option: option.text,
+          text: option.text,
           state: false,
         })
       })

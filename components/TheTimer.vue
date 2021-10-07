@@ -55,14 +55,14 @@ export default {
     ...mapGetters('fireSimulator', ['isSimulating']),
   },
   methods: {
-    ...mapActions('fireSimulator', ['startSimulator']),
+    ...mapActions('fireSimulator', ['startSimulator', 'finishSimulator']),
     startTest() {
       if (!this.isSimulating) {
         this.startSimulator(true)
       }
     },
     timesUp() {
-      this.startSimulator(false)
+      this.finishSimulator(false)
       this.$router.push('score')
     }
   },
