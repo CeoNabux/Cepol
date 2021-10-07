@@ -1,9 +1,10 @@
 <template>
-  <div class="w-full border border-gray-300 px-2 py-3">
+  <div class="w-full px-2 py-3">
+    {{ questionData }}
     <!-- RECIBIMOS LA PREGUNTA -->
     <div class="flex justify-between items-start w-full">
       <div
-        v-html="question"
+        v-html="question.text"
         class="text-gray-800 font-medium text-lg w-full lg:w-3/4"
       />
       <!-- IMAGEN DE LA PREGUNTA -->
@@ -12,13 +13,24 @@
       </figure> -->
     </div>
     <!-- RECIBIMOS OPCIONES DE RESPUESTA -->
-    <div class="w-full border border-gray-300 px-2 py-3 mt-4">
+    <div class="w-full py-3 mt-4">
       <div
-        v-for="(option, i) in optionsArray"
+        v-for="(option, i) in question.options"
         :key="i"
-        class="border border-gray-200 shadow rounded-lg flex flex-wrap"
+        class="
+          mb-2
+          px-3
+          py-4
+          border border-gray-200
+          shadow-md
+          rounded-lg
+          flex flex-wrap
+        "
       >
-        <div v-html="option.text" class="text-gray-800 font-medium text-base w-full lg:w-3/4" />
+        <div
+          v-html="option.text"
+          class="text-gray-800 font-medium text-base w-full lg:w-3/4"
+        />
         <!-- <figure class="w-full fles justify-center items-start">
           <img
             :src="option.image"
@@ -34,18 +46,16 @@
 <script>
 export default {
   props: {
-    questionsArray: {
+    questionData: {
       type: String,
       required: true,
     },
-    question: {
-      type: String,
-      required: true
-    },
-    image: {
-      type: String,
-      required: null
-    }
   },
+  data: () => ({
+    question: {
+      text: 'Soy una pregunta',
+      options: [{ text: 'hola' }, { text: 'como' }],
+    },
+  }),
 }
 </script>

@@ -10,7 +10,7 @@
           v-if="isSimulating"
           class="w-full bg-white shadow-lg rounded-lg py-2 px-4 mt-4"
         >
-          <nuxt-child />
+          <nuxt-child :questionData="question" />
         </div>
       </div>
       <!-- RIGTH -->
@@ -41,11 +41,7 @@
             {{ categoryQuestions.category }}
           </p>
           <div class="flex flex-wrap w-full justify-start items-center">
-            <nuxt-link
-              :to="{
-                path: routePath,
-                query: { question: categoryQuestions.id },
-              }"
+            <button
               v-for="(question, ii) in categoryQuestions.questions"
               :key="ii"
               class="
@@ -61,9 +57,10 @@
                 justify-center
                 items-center
               "
+              @click="getQuestion(i, ii)"
             >
               {{ ii + 1 }}
-            </nuxt-link>
+            </button>
           </div>
         </div>
       </div>
@@ -80,11 +77,8 @@ export default {
   data: () => ({
     test: null,
     simulator: [{ time: 0 }],
+    questionSelected: ''
   }),
-  async asyncData(context) {
-    const simulatorParams = context.params.id
-    console.log(simulatorParams)
-  },
   computed: {
     ...mapGetters('fireSimulator', [
       'getSimulatorsById',
@@ -92,6 +86,9 @@ export default {
       'isSimulating',
       'getCurrentSimulator',
     ]),
+    question() {
+      return this.questionSelected
+    },
   },
   created() {
     const test = this.$route.params.id
@@ -112,6 +109,25 @@ export default {
         this.setCurrentSimulator(this.simulator[0].simulatorStructure)
       } else {
         console.log('saludos desde el error')
+      }
+    },
+    getQuestion(i, ii) {
+      const questionSelected = {
+        question: this.getCurrentSimulator[i].questions[ii].question,
+        image: this.getCurrentSimulator[i].questions[ii].image,
+        options: this.getCurrentSimulator[i].questions[ii].options
+      }
+      const firstQuestion = {
+        question: this.getCurrentSimulator[0].questions[0].question,
+        image: this.getCurrentSimulator[0].questions[0].image,
+        options: this.getCurrentSimulator[0].questions[0].options
+      }
+      if(i == undefined && i == null) {
+        console.log(firstQuestion)
+        return this.questionSelected = firstQuestion
+      } else {
+        console.log(questionSelected)
+        return this.questionSelected = questionSelected
       }
     },
   },
