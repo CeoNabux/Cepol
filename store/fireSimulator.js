@@ -15,6 +15,7 @@ export const state = () => ({
   isSimulating: false,
   currentSimulator: [],
   currentSimulatorAnswers: [],
+  score: 0,
 })
 
 export const getters = {
@@ -35,6 +36,9 @@ export const getters = {
   },
   getSimulatorAnswers(state) {
     return state.currentSimulatorAnswers
+  },
+  getScore(state) {
+    return state.score
   },
 }
 
@@ -64,6 +68,9 @@ export const mutations = {
   UPDATE_ANSWER(state, payload) {
     console.log('actualizando respuesta', payload)
     state.currentSimulatorAnswers[payload.index].options = payload.options
+  },
+  SCORE_TEST(state, payload) {
+    state.score = payload
   },
 }
 
@@ -139,17 +146,9 @@ export const actions = {
             getters.getCurrentSimulator[i].questions[ii].question ===
             getters.getSimulatorAnswers[iii].question
           ) {
-            console.log(
-              getters.getCurrentSimulator[i].questions[ii].options,
-              getters.getSimulatorAnswers[iii].options
-            )
-
-
             const comparingOptions = (objc1, objc2) =>
               Object.keys(objc1).length === Object.keys(objc2).length &&
               Object.keys(objc1).every((p) => objc1[p] === objc2[p])
-
-
 
             const comparingAnswer = (simulatorOptions, studentOptions) =>
               simulatorOptions.length === studentOptions.length &&
@@ -157,12 +156,11 @@ export const actions = {
                 comparingOptions(o, studentOptions[idx])
               )
 
-
             const correctAnswer = comparingAnswer(
               getters.getCurrentSimulator[i].questions[ii].options,
               getters.getSimulatorAnswers[iii].options
             )
-            console.log(correctAnswer)
+
             if (correctAnswer === true) {
               count = count + 1
             }
@@ -170,7 +168,11 @@ export const actions = {
         }
       }
     }
-    console.log(count)
+    const averageScorePerAnswer = 3.53
+    const freePoints = 400
+    const score = freePoints + (count * averageScorePerAnswer)
+    console.log(score)
+    commit('SCORE_TEST', score)
     commit('FINISH_SIMULATOR', Boolean)
   },
   async setCurrentSimulator({ commit }, payload) {
