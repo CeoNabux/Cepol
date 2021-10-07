@@ -170,7 +170,7 @@ export const actions = {
     }
     const averageScorePerAnswer = 3.53
     const freePoints = 400
-    const score = freePoints + (count * averageScorePerAnswer)
+    const score = Math.trunc(freePoints + (count * averageScorePerAnswer))
     console.log(score)
     commit('SCORE_TEST', score)
     commit('FINISH_SIMULATOR', Boolean)
