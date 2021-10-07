@@ -1,6 +1,9 @@
 <template>
   <div class="w-full px-2 py-3">
-    <p v-if="!Object.keys(questionData).length" class="text-center text-gray-500 text-3xl">
+    <p
+      v-if="!Object.keys(questionData).length"
+      class="text-center text-gray-500 text-3xl"
+    >
       Escoge una pregunta del panel
     </p>
     <div v-else class="w-full">
@@ -12,7 +15,7 @@
         />
         <!-- IMAGEN DE LA PREGUNTA -->
         <!-- <figure class="w-full flex justify-center items-center">
-        <img src="" alt="" class="w-full">
+        <img src="questionData.image" alt="" class="w-full">
       </figure> -->
       </div>
       <!-- RECIBIMOS OPCIONES DE RESPUESTA -->
@@ -41,6 +44,16 @@
             class="w-full"
           />
         </figure> -->
+          <!-- BOTON DE ELIMINAR RESPUESTA -->
+          <div class="w-full flex flex-wrap justify-evenly items-center mt-2">
+            <div class="w-full lg:w-5/12">
+              <c-button
+                name="Marcar Correcta"
+                class="text-base text-white bg-yellow-600"
+                @click="getAnswer(i)"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -48,6 +61,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     questionData: {
@@ -55,5 +69,32 @@ export default {
       required: null,
     },
   },
+  data: () => ({
+    answer: {},
+    question: '',
+    options: []
+  }),
+  computed: {
+    ...mapGetters('fireSimulator', ['getCurrentSimulator', 'getSimulatorAnswers'])
+  },
+  methods: {
+    ...mapActions('fireSimulator', ['setAnswer']),
+    getAnswer(index) {
+      const question = this.questionData.question
+      const options = []
+      this.questionData.options.forEach((option) => {
+        options.push({
+          option: option.text,
+          state: false
+        })
+      })
+      options[index].state = true
+      const answer = {
+        question: question,
+        options: options
+      }
+      this.setAnswer(answer)
+    }
+  }
 }
 </script>

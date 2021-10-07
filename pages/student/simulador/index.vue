@@ -10,7 +10,7 @@
       >
         <!-- AQUI VA EL SIMULADOR -->
         <div
-          v-for="(simulator, i) in simulators"
+          v-for="(simulator, i) in getSimulators"
           :key="i"
           class="w-full lg:w-1/2"
         >

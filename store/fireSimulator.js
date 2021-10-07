@@ -13,7 +13,8 @@ export const state = () => ({
   simulatorCategories: [],
   simulators: [],
   isSimulating: false,
-  currentSimulator: {},
+  currentSimulator: [],
+  currentSimulatorAnswers: [],
 })
 
 export const getters = {
@@ -32,6 +33,9 @@ export const getters = {
   getCurrentSimulator(state) {
     return state.currentSimulator
   },
+  getSimulatorAnswers(state) {
+    return state.currentSimulatorAnswers
+  },
 }
 
 export const mutations = {
@@ -49,6 +53,14 @@ export const mutations = {
   },
   SET_CURRENT_SIMULATOR(state, payload) {
     state.currentSimulator = payload
+  },
+  ADD_ANSWER(state, payload) {
+    console.log('agregando respuesta', payload)
+    state.currentSimulatorAnswers.push(payload)
+  },
+  UPDATE_ANSWER(state, payload) {
+    console.log('actualizando respuesta', payload)
+    state.currentSimulatorAnswers[payload.index].options = payload.options
   },
 }
 
@@ -115,7 +127,7 @@ export const actions = {
     try {
       const questionsByCategory = []
       const questionsData = []
-      for(let i = 0; i < payload.length; i++) {
+      for (let i = 0; i < payload.length; i++) {
         const questionsRef = collection(fireDataBase, 'questions')
         const questionsQuery = query(
           questionsRef,
@@ -129,20 +141,19 @@ export const actions = {
             options: doc.data().answers,
             question: doc.data().question,
             image: doc.data().image,
-            category: doc.data().category
+            category: doc.data().category,
           })
         })
         questionsByCategory.push({
           category: payload[i].categoryName,
-          questions: []
+          questions: [],
         })
       }
-      for(let i = 0; i < questionsByCategory.length; i++) {
-        for(let ii = 0; ii < questionsData.length; ii++) {
-          if(questionsByCategory[i].category === questionsData[ii].category) {
+      for (let i = 0; i < questionsByCategory.length; i++) {
+        for (let ii = 0; ii < questionsData.length; ii++) {
+          if (questionsByCategory[i].category === questionsData[ii].category) {
             questionsByCategory[i].questions.push(questionsData[ii])
-          }
-          else {
+          } else {
             console.log('Este elemento aun no ha sido agregado')
           }
         }
@@ -150,6 +161,25 @@ export const actions = {
       commit('SET_CURRENT_SIMULATOR', questionsByCategory)
     } catch (error) {
       console.error(error)
+    }
+  },
+  setAnswer({ commit, getters }, payload) {
+    const exist = getters.getSimulatorAnswers.findIndex(
+      (question) => question.question === payload.question
+    )
+    console.log(exist)
+    if(exist!==-1) {
+      const answerUpdated = {
+        options: payload.options,
+        index: exist,
+      }
+      commit('UPDATE_ANSWER', answerUpdated)
+    } else{
+      const answer = {
+        question: payload.question,
+        options: payload.options,
+      }
+      commit('ADD_ANSWER', answer)
     }
   },
 }
