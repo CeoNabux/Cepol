@@ -77,14 +77,13 @@ import TheTimer from '~/components/TheTimer.vue'
 export default {
   components: { TheTimer },
   layout: 'app',
+  validate({ query }) {
+    return query.test
+  },
   data: () => ({
     test: null,
     simulator: [{ time: 0 }],
   }),
-  async asyncData(context) {
-    const simulatorParams = context.params.id
-    console.log(simulatorParams)
-  },
   computed: {
     ...mapGetters('fireSimulator', [
       'getSimulatorsById',
@@ -93,8 +92,11 @@ export default {
       'getCurrentSimulator',
     ]),
   },
+  async asyncData({ params }) {
+    console.log(params)
+  },
   created() {
-    const test = this.$route.params.id
+    const test = this.$route.query.test
     console.log(test)
     this.test = test
   },
