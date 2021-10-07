@@ -6,8 +6,11 @@
         <!-- CRONOMETRO -->
         <the-timer :time="simulator[0].time" />
         <!-- VISUALIZACION DE PREGUNTAS -->
-        <div class="w-full bg-white shadow-lg rounded-lg py-2 px-4 mt-4">
-          Aqui se verian las preguntas
+        <div
+          v-if="isSimulating"
+          class="w-full bg-white shadow-lg rounded-lg py-2 px-4 mt-4"
+        >
+          <nuxt-child />
         </div>
       </div>
       <!-- RIGTH -->
@@ -39,12 +42,27 @@
           </p>
           <div class="flex flex-wrap w-full justify-start items-center">
             <nuxt-link
-              :to="question.question"
+              :to="{
+                path: routePath,
+                query: { question: categoryQuestions.id },
+              }"
               v-for="(question, ii) in categoryQuestions.questions"
               :key="ii"
-              class="w-5 h-5 mr-2 text-xs rounded-full bg-secondary shadow text-white flex justify-center items-center"
+              class="
+                w-5
+                h-5
+                mr-2
+                text-xs
+                rounded-full
+                bg-secondary
+                shadow
+                text-white
+                flex
+                justify-center
+                items-center
+              "
             >
-              {{ ii+1 }}
+              {{ ii + 1 }}
             </nuxt-link>
           </div>
         </div>
@@ -74,8 +92,12 @@ export default {
       'getCurrentSimulator',
     ]),
   },
+  async asyncData({ params }) {
+    console.log(params)
+  },
   created() {
     const test = this.$route.query.test
+    console.log(test)
     this.test = test
   },
   mounted() {

@@ -125,6 +125,7 @@ export const actions = {
         const questionsSnapshot = await getDocs(questionsQuery)
         questionsSnapshot.forEach((doc) => {
           questionsData.push({
+            id: doc.id,
             options: doc.data().answers,
             question: doc.data().question,
             image: doc.data().image,

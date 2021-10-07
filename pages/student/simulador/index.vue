@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="px-6 py-2 border border-gray-400 rounded-lg shadow bg-white">
       <h1 class="text-4xl text-gray-700 font-semibold">
-        Este es tu dashboard aqui tambien iremos poniendo notas
+        Simuladores disponibles
       </h1>
       <div
         v-if="setSimulators"
