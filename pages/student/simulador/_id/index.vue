@@ -72,10 +72,14 @@ export default {
   data: () => ({
     answer: {},
     question: '',
-    options: []
+    options: [],
+    states: [],
   }),
   computed: {
-    ...mapGetters('fireSimulator', ['getCurrentSimulator', 'getSimulatorAnswers'])
+    ...mapGetters('fireSimulator', [
+      'getCurrentSimulator',
+      'getSimulatorAnswers',
+    ]),
   },
   methods: {
     ...mapActions('fireSimulator', ['setAnswer']),
@@ -85,16 +89,28 @@ export default {
       this.questionData.options.forEach((option) => {
         options.push({
           option: option.text,
-          state: false
+          state: false,
         })
       })
       options[index].state = true
       const answer = {
         question: question,
-        options: options
+        options: options,
       }
+      if (!this.states.length) {
+        for (let i = 0; i < this.questionData.options.length; i++) {
+          this.states.push(false)
+        }
+      }
+      this.mark(index)
       this.setAnswer(answer)
-    }
-  }
+    },
+    mark(index) {
+      for (let i = 0; i < this.questionData.options.length; i++) {
+        this.states[i] = false
+      }
+      return this.states[index] = true
+    },
+  },
 }
 </script>
