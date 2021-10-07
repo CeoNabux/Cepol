@@ -1,7 +1,7 @@
 <template>
   <div class="w-full px-2 py-3">
-    <p v-if="!Object.keys(questionData).length" class="text-gray-500 text-3xl">
-      No has esocgido una pregunta del panel
+    <p v-if="!Object.keys(questionData).length" class="text-center text-gray-500 text-3xl">
+      Escoge una pregunta del panel
     </p>
     <div v-else class="w-full">
       <!-- RECIBIMOS LA PREGUNTA -->

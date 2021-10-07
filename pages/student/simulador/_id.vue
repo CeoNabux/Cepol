@@ -92,7 +92,6 @@ export default {
   },
   created() {
     const test = this.$route.params.id
-    console.log(test)
     this.test = test
   },
   mounted() {
@@ -108,7 +107,7 @@ export default {
         this.simulator = simulator
         this.setCurrentSimulator(this.simulator[0].simulatorStructure)
       } else {
-        console.log('saludos desde el error')
+        return
       }
     },
     getQuestion(i, ii) {
@@ -117,16 +116,9 @@ export default {
         image: this.getCurrentSimulator[i].questions[ii].image,
         options: this.getCurrentSimulator[i].questions[ii].options
       }
-      const firstQuestion = {
-        question: this.getCurrentSimulator[0].questions[0].question,
-        image: this.getCurrentSimulator[0].questions[0].image,
-        options: this.getCurrentSimulator[0].questions[0].options
-      }
       if(i == undefined && i == null) {
-        console.log(firstQuestion)
-        return this.questionSelected = firstQuestion
+        return
       } else {
-        console.log(questionSelected)
         return this.questionSelected = questionSelected
       }
     },
