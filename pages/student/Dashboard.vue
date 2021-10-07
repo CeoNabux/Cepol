@@ -24,7 +24,7 @@
             :title="simulator.title"
             :description="simulator.description"
             :simulatorStructure="simulator.simulatorStructure.length"
-            :hours="parseInt(simulator.hours / 3600000)"
+            :hours="parseInt(simulator.time / 3600000)"
             :minutes="parseInt(simulator.time / 60000)"
             :seconds="parseInt((simulator.time % 60000) / 1000)"
             class="mx-auto"

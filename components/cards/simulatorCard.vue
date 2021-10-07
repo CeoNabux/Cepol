@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full py-2 px-4 rounded-xl border border-primary shadow-lg">
+    <div class="w-full h-52 py-2 px-4 rounded-xl border border-primary shadow-lg">
       <div class="w-full flex justify-between items-start sm:items-center">
         <!-- LEFT CONTENT -->
         <div class="w-3/5 h-full flex flex-col justify-between">
@@ -9,7 +9,7 @@
           </p>
           <div
             v-html="description"
-            class="my-4 text-sm text-gray-600 font-light"
+            class="my-2 text-sm text-gray-600 font-light"
           />
           <div class="w-full flex items-center mb-2">
             <div class="w-4 h-4 mr-2">
