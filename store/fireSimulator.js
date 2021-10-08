@@ -65,7 +65,6 @@ export const mutations = {
     state.currentSimulatorAnswers.push(payload)
   },
   UPDATE_ANSWER(state, payload) {
-    console.log('actualizando respuesta', payload)
     state.currentSimulatorAnswers[payload.index].options = payload.options
   },
   SCORE_TEST(state, payload) {
@@ -170,7 +169,6 @@ export const actions = {
     const averageScorePerAnswer = 3.53
     const freePoints = 400
     const score = Math.trunc(freePoints + (count * averageScorePerAnswer))
-    console.log(score)
     commit('SCORE_TEST', score)
     commit('FINISH_SIMULATOR', Boolean)
     commit('CLEAR_SIMULATOR')
@@ -206,7 +204,7 @@ export const actions = {
           if (questionsByCategory[i].category === questionsData[ii].category) {
             questionsByCategory[i].questions.push(questionsData[ii])
           } else {
-            console.log('Este elemento aun no ha sido agregado')
+            return
           }
         }
       }
