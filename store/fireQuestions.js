@@ -1,5 +1,6 @@
 import { setDoc, doc, getDocs, increment, collection, query, where, deleteDoc, updateDoc } from "firebase/firestore"
-import { fireDataBase } from "~/plugins/firebase/app"
+import { ref, uploadBytes } from 'firebase/storage'
+import { fireDataBase, fireStorage } from "~/plugins/firebase/app"
 
 export const state = () => ({
   questions: [],
@@ -31,16 +32,25 @@ export const mutations = {
 export const actions = {
   async saveQuestionInformation({ dispatch, commit, state }, payload) {
     try {
+      const mainImage = payload.image
       const question = {
         question: payload.text,
         answers: payload.answers,
-        image: payload.image,
         category: payload.category,
       }
       const questionRef = doc(collection(fireDataBase, 'questions'))
-      await setDoc(questionRef, question)
-      commit('COUNT_CATEGORY', payload.category)
-      dispatch('addCounter')
+      const id = questionRef.id
+      const filename = mainImage.name
+      const ext = filename.slice(filename.lastIndexOf('.'))
+      const imageRef = ref(fireStorage , 'questionsImage' + id + ext)
+      const imageRefNav = ref(imageRef)
+      console.log(imageRef)
+      uploadBytes(imageRef, mainImage).then((snapshot) => {
+        console.log('archivo subido')
+      })
+      // await setDoc(questionRef, question)
+      // commit('COUNT_CATEGORY', payload.category)
+      // dispatch('addCounter')
     }
     catch (error) {
       console.error(error)

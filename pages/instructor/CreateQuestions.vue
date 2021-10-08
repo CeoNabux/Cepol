@@ -23,7 +23,52 @@
             <!-- APARECE EDITOR CUANDO NO HAY PREGUNTA GUARDADA -->
             <div v-if="!question.editing" class="w-full">
               <the-editor v-model="questionContent" />
-              <div class="w-full lg:w-1/2 mt-2">
+
+              <div class="container mt-6 px-0">
+                <label
+                  class="
+                    w-64
+                    flex flex-col
+                    items-center
+                    px-4
+                    py-6
+                    bg-secondary
+                    rounded-md
+                    shadow-md
+                    tracking-wide
+                    uppercase
+                    border border-blue
+                    cursor-pointer
+                    hover:bg-white hover:text-secondary
+                    text-white
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
+                  >Sube tu imagen
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    @change="onChange"
+                  />
+                </label>
+                <div
+                  v-if="question.question.image.imageUrl"
+                  class="
+                    w-64
+                    flex
+                    justify-center
+                    items-center
+                    border border-gray-300
+                    p-2
+                    rounded-sm
+                  "
+                >
+                  <img :src="question.question.image.imageUrl" />
+                </div>
+              </div>
+              <div class="w-full lg:w-1/3 mt-2">
                 <c-button
                   name="Guardar pregunta"
                   class="bg-primary"
@@ -33,6 +78,20 @@
             </div>
             <div v-else class="w-full border border-gray-300 rounded p-3">
               <div v-html="question.question.text" />
+              <div
+                v-if="question.question.image.imageUrl"
+                class="
+                  w-64
+                  flex
+                  justify-center
+                  items-center
+                  border border-gray-300
+                  p-2
+                  rounded-sm
+                "
+              >
+                <img :src="question.question.image.imageUrl" />
+              </div>
               <div class="w-full lg:w-1/2 mt-2">
                 <c-button
                   name="Editar"
@@ -165,7 +224,10 @@
               <c-button
                 :name="category.name"
                 class="text-xs border"
-                :class="{ 'bg-secondary text-white border border-white': category.state, 'text-secondary border-secondary': !category.state }"
+                :class="{
+                  'bg-secondary text-white border border-white': category.state,
+                  'text-secondary border-secondary': !category.state,
+                }"
                 @click="getCategory(i)"
               />
             </div>
@@ -215,7 +277,10 @@ export default {
       question: {
         edit: false,
         text: '',
-        imageUrl: '',
+        image: {
+          imageUrl: '',
+          imageObject: '',
+        },
       },
       answers: [],
     },
@@ -265,6 +330,12 @@ export default {
       }
       this.question.answers[index].state = true
     },
+    onChange(event) {
+      const file = event.target.files[0]
+      console.log(file)
+      this.question.question.image.imageObject = file
+      this.question.question.image.imageUrl = URL.createObjectURL(file)
+    },
     // ELIMINAMOS LA RESPUESTA DE LA LISTA EXISTENTE
     deleteAnswer(index) {
       this.question.answers.splice(index, 1)
@@ -282,15 +353,16 @@ export default {
     sendToFirebase() {
       const question = {
         text: this.question.question.text,
-        image: this.question.question.imageUrl,
+        image: this.question.question.image.imageObject,
         answers: this.question.answers,
-        category: this.question.category
+        category: this.question.category,
       }
       this.saveQuestionInformation(question)
       this.questionContent = ''
       this.answerContent = ''
       this.question.question.text = ''
-      this.question.question.imageUrl = ''
+      this.question.question.image.imageObject = ''
+      this.question.question.image.imageUrl = ''
       this.question.answers = []
       this.question.category = ''
       this.question.editing = false
