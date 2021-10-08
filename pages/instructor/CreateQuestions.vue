@@ -141,7 +141,7 @@
                   />
                 </label>
                 <div
-                  v-if="question.answerImage.imageUrl"
+                  v-if="answerImage.imageUrl"
                   class="
                     w-64
                     flex
@@ -152,7 +152,7 @@
                     rounded-sm
                   "
                 >
-                  <img :src="question.answerImage.imageUrl" />
+                  <img :src="answerImage.imageUrl" />
                 </div>
               </div>
             </div>
@@ -401,6 +401,7 @@ export default {
         this.getImages(this.question.answerImage.imageObject)
       }
     },
+    // TOMAMOS LAS IMAGENES DEL ARRAY CORRESPONDIENTE
     getImages(imageFile) {
       const imageObject = imageFile
       const imageUrl = URL.createObjectURL(
@@ -432,6 +433,7 @@ export default {
     onChangeAnswer(event) {
       const file = event.target.files[0]
       const imageObject = file
+      this.answerImage.imageUrl = URL.createObjectURL(file)
       return (this.question.answerImage.imageObject = imageObject)
     },
     // ELIMINAMOS LA RESPUESTA DE LA LISTA EXISTENTE
