@@ -100,6 +100,7 @@
                 />
               </div>
             </div>
+            <!-- SECCION PARA AGREGAR RESPUESTAS -->
             <div class="w-full h-px bg-gray-200 mt-6" />
             <p class="text-xl text-gray-700 font-medium mt-6">
               Agrega las opciones de respuesta
@@ -110,6 +111,50 @@
             <!-- AGREGAR RESPUESTA -->
             <div class="w-full my-4">
               <the-editor v-model="answerContent" />
+              <div class="flex justify-between items-end mt-4">
+                <label
+                  class="
+                    w-64
+                    flex flex-col
+                    items-center
+                    px-4
+                    py-6
+                    bg-secondary
+                    rounded-md
+                    shadow-md
+                    tracking-wide
+                    uppercase
+                    border border-blue
+                    cursor-pointer
+                    hover:bg-white hover:text-secondary
+                    text-white
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
+                  >Sube tu imagen
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    @change="onChangeAnswer"
+                  />
+                </label>
+                <div
+                  v-if="answerImage.imageUrl"
+                  class="
+                    w-64
+                    flex
+                    justify-center
+                    items-center
+                    border border-gray-300
+                    p-2
+                    rounded-sm
+                  "
+                >
+                  <img :src="answerImage.imageUrl" />
+                </div>
+              </div>
             </div>
             <!-- LISTA DE RESPUESTAS -->
             <div v-if="question.answers.length" class="w-full mt-8">
@@ -136,6 +181,20 @@
                       {{ i + 1 }})
                     </p>
                     <div v-html="answer.text" />
+                    <div
+                      v-if="answer.imageUrl"
+                      class="
+                        w-64
+                        flex
+                        justify-center
+                        items-center
+                        border border-gray-300
+                        p-2
+                        rounded-sm
+                      "
+                    >
+                      <img :src="answer.imageUrl" />
+                    </div>
                   </div>
                   <!-- BOTON DE ELIMINAR RESPUESTA -->
                   <div
@@ -248,6 +307,10 @@ export default {
     questionContent: '',
     questionImage: '',
     answerContent: '',
+    answerImage: {
+      imageObject: '',
+      imageUrl: '',
+    },
     categories: [
       {
         name: 'verbal',
@@ -295,7 +358,10 @@ export default {
       )
     },
     answerIsValid() {
-      return this.answerContent !== ''
+      return (
+        (this.answerContent !== '' && this.answerImage.imageUrl.length === 0) ||
+        (this.answerContent === '' && this.answerImage.imageUrl.length !== 0)
+      )
     },
     correctAnswerVerified() {
       for (let i = 0; i < this.question.answers.length; i++) {
@@ -332,9 +398,14 @@ export default {
     },
     onChange(event) {
       const file = event.target.files[0]
-      console.log(file)
       this.question.question.image.imageObject = file
       this.question.question.image.imageUrl = URL.createObjectURL(file)
+    },
+    onChangeAnswer(event) {
+      const file = event.target.files[0]
+      this.answerImage.imageObject = file
+      this.answerImage.imageUrl = URL.createObjectURL(file)
+      console.log(this.answerImage)
     },
     // ELIMINAMOS LA RESPUESTA DE LA LISTA EXISTENTE
     deleteAnswer(index) {
