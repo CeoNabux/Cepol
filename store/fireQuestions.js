@@ -85,10 +85,9 @@ export const actions = {
         category: payload.category,
         image: url,
       }
-      console.log(questionText)
-      // await setDoc(questionRef, questionText)
-      // commit('COUNT_CATEGORY', payload.category)
-      // dispatch('addCounter')
+      await setDoc(questionRef, questionText)
+      commit('COUNT_CATEGORY', payload.category)
+      dispatch('addCounter')
     } catch (error) {
       console.error(error)
     }
