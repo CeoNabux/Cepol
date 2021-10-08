@@ -42,7 +42,6 @@ export const mutations = {
 export const actions = {
   async saveQuestionInformation({ dispatch, commit, state }, payload) {
     try {
-      console.log(payload)
       const questionRef = doc(collection(fireDataBase, 'questions'))
       let url
       const answerOptions = []
