@@ -141,7 +141,7 @@
                   />
                 </label>
                 <div
-                  v-if="answerImage.imageUrl"
+                  v-if="question.answerImage.imageUrl"
                   class="
                     w-64
                     flex
@@ -152,7 +152,7 @@
                     rounded-sm
                   "
                 >
-                  <img :src="answerImage.imageUrl" />
+                  <img :src="question.answerImage.imageUrl" />
                 </div>
               </div>
             </div>
@@ -180,9 +180,12 @@
                     <p class="text-gray-700 text-base font-semibold mr-2">
                       {{ i + 1 }})
                     </p>
-                    <div v-html="answer.text" />
                     <div
-                      v-if="answer.imageUrl"
+                      v-if="typeof answer.text === 'string'"
+                      v-html="answer.text"
+                    />
+                    <div
+                      v-else
                       class="
                         w-64
                         flex
@@ -193,7 +196,7 @@
                         rounded-sm
                       "
                     >
-                      <img :src="answer.imageUrl" />
+                      <img :src="answer.text.imageUrl" />
                     </div>
                   </div>
                   <!-- BOTON DE ELIMINAR RESPUESTA -->
@@ -308,8 +311,8 @@ export default {
     questionImage: '',
     answerContent: '',
     answerImage: {
-      imageObject: '',
-      imageUrl: '',
+      imageObject: null,
+      imageUrl: null,
     },
     categories: [
       {
@@ -345,6 +348,10 @@ export default {
           imageObject: '',
         },
       },
+      answerImage: {
+        imageUrl: null,
+        imageObject: null,
+      },
       answers: [],
     },
   }),
@@ -359,8 +366,9 @@ export default {
     },
     answerIsValid() {
       return (
-        (this.answerContent !== '' && this.answerImage.imageUrl.length === 0) ||
-        (this.answerContent === '' && this.answerImage.imageUrl.length !== 0)
+        (this.answerContent !== '' &&
+          this.question.answerImage.imageUrl === null) ||
+        (this.answerContent === '' && this.question.answerImage.imageUrl !== 0)
       )
     },
     correctAnswerVerified() {
@@ -386,8 +394,22 @@ export default {
     },
     // GUARDAMOS LAS RESPUESTA QUE SE VAN CREANDO
     saveAnswer() {
-      this.question.answers.push({ text: this.answerContent, state: false })
-      this.answerContent = ''
+      if (this.answerContent !== '') {
+        this.question.answers.push({ text: this.answerContent, state: false })
+        this.answerContent = ''
+      }
+      const imageObject = this.question.answerImage.imageObject
+      const imageUrl = URL.createObjectURL(
+        this.question.answerImage.imageObject
+      )
+      const newImage = {
+        imageObject: imageObject,
+        imageUrl: imageUrl,
+      }
+      this.question.answers.push({
+        text: newImage,
+        state: false,
+      })
     },
     // SELECCIONAMOS LA RESPUESTA CORRECTA
     rightAnswer(index) {
@@ -396,16 +418,17 @@ export default {
       }
       this.question.answers[index].state = true
     },
+    // TOMAMOS IMAGEN DE PREGUNTA
     onChange(event) {
       const file = event.target.files[0]
-      this.question.question.image.imageObject = file
-      this.question.question.image.imageUrl = URL.createObjectURL(file)
+      this.question.answerImage.imageObject = file
+      this.question.answerImage.imageUrl = URL.createObjectURL(file)
     },
+    // TOMAMOS LA IMAGEN DE LA RESPUESTA
     onChangeAnswer(event) {
       const file = event.target.files[0]
-      this.answerImage.imageObject = file
-      this.answerImage.imageUrl = URL.createObjectURL(file)
-      console.log(this.answerImage)
+      const imageObject = file
+      return (this.question.answerImage.imageObject = imageObject)
     },
     // ELIMINAMOS LA RESPUESTA DE LA LISTA EXISTENTE
     deleteAnswer(index) {
