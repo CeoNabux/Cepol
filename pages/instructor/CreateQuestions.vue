@@ -452,7 +452,7 @@ export default {
     // ENVIAMOS LA INFORMACION GUARDADA EN FIREQUESTIONS DE VUEX
     sendToFirebase() {
       const question = {
-        text: this.question.question.text,
+        question: this.question.question.text,
         image: this.question.question.image.imageObject,
         answers: this.question.answers,
         category: this.question.category,

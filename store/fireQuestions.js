@@ -44,23 +44,51 @@ export const actions = {
     try {
       console.log(payload)
       const questionRef = doc(collection(fireDataBase, 'questions'))
-      const id = questionRef.id
-      const mainImage = payload.image
-      const filename = mainImage.name
-      const ext = filename.slice(filename.lastIndexOf('.'))
-      const imageRef = ref(fireStorage, 'questionsImage/' + id + ext)
-      await uploadBytes(imageRef, mainImage)
-      const url = await getDownloadURL(imageRef)
-      console.log(url)
+      let url
+      const answerOptions = []
+      let image
+      let imageName
+      let answerUrl
+      if (payload.image instanceof File) {
+        const id = questionRef.id
+        const mainImage = payload.image
+        const filename = mainImage.name
+        const ext = filename.slice(filename.lastIndexOf('.'))
+        const imageRef = ref(fireStorage, 'questionsImage/' + id + ext)
+        await uploadBytes(imageRef, mainImage)
+        url = await getDownloadURL(imageRef)
+      } else {
+        url = payload.image
+      }
+      for (let i = 0; i < payload.answers.length; i++) {
+        if (payload.answers[i].text.imageObject instanceof File) {
+          image = payload.answers[i].text.imageObject
+          imageName = payload.answers[i].text.imageObject.name
+          const state = payload.answers[i].state
+          const answerImageRef = ref(fireStorage, 'answersImage/' + imageName)
+          await uploadBytes(answerImageRef, image)
+          answerUrl = await getDownloadURL(answerImageRef)
+          answerOptions.push({
+            text: answerUrl,
+            state: state,
+          })
+        } else {
+          const text = payload.answers[i].text
+          const state = payload.answers[i].state
+          answerOptions.push({ state: state, text: text })
+        }
+      }
+
       const questionText = {
-        question: payload.text,
-        answers: payload.answers,
+        question: payload.question,
+        answers: answerOptions,
         category: payload.category,
         image: url,
       }
-      await setDoc(questionRef, questionText)
-      commit('COUNT_CATEGORY', payload.category)
-      dispatch('addCounter')
+      console.log(questionText)
+      // await setDoc(questionRef, questionText)
+      // commit('COUNT_CATEGORY', payload.category)
+      // dispatch('addCounter')
     } catch (error) {
       console.error(error)
     }
