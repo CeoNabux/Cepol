@@ -17,7 +17,7 @@
         <div
           v-for="(simulator, i) in getSimulators"
           :key="i"
-          class="w-full lg:w-1/2"
+          class="w-full lg:w-1/2 p-2"
         >
           <simulator-card
             :id="simulator.id"
