@@ -397,10 +397,14 @@ export default {
       if (this.answerContent !== '') {
         this.question.answers.push({ text: this.answerContent, state: false })
         this.answerContent = ''
+      } else{
+        this.getImages(this.question.answerImage.imageObject)
       }
-      const imageObject = this.question.answerImage.imageObject
+    },
+    getImages(imageFile) {
+      const imageObject = imageFile
       const imageUrl = URL.createObjectURL(
-        this.question.answerImage.imageObject
+        imageFile
       )
       const newImage = {
         imageObject: imageObject,
