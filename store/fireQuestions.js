@@ -1,16 +1,26 @@
-import { setDoc, doc, getDocs, increment, collection, query, where, deleteDoc, updateDoc } from "firebase/firestore"
-import { ref, uploadBytes } from 'firebase/storage'
-import { fireDataBase, fireStorage } from "~/plugins/firebase/app"
+import {
+  setDoc,
+  doc,
+  getDocs,
+  increment,
+  collection,
+  query,
+  where,
+  deleteDoc,
+  updateDoc,
+} from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { fireDataBase, fireStorage } from '~/plugins/firebase/app'
 
 export const state = () => ({
   questions: [],
-  categoryToCount: ''
+  categoryToCount: '',
 })
 
 export const getters = {
   getQuestions(state) {
     return state.questions
-  }
+  },
 }
 
 export const mutations = {
@@ -21,89 +31,96 @@ export const mutations = {
     state.questions = []
   },
   ERASE_QUESTION(state, payload) {
-    const toErase = state.questions.find((question) => question.id === payload )
+    const toErase = state.questions.find((question) => question.id === payload)
     state.questions.splice(toErase, 1)
   },
   COUNT_CATEGORY(state, payload) {
     state.categoryToCount = payload
-  }
+  },
 }
 
 export const actions = {
   async saveQuestionInformation({ dispatch, commit, state }, payload) {
     try {
+      console.log(payload)
+      const questionRef = doc(collection(fireDataBase, 'questions'))
+      const id = questionRef.id
       const mainImage = payload.image
-      const question = {
+      const filename = mainImage.name
+      const ext = filename.slice(filename.lastIndexOf('.'))
+      const imageRef = ref(fireStorage, 'questionsImage/' + id + ext)
+      await uploadBytes(imageRef, mainImage)
+      const url = await getDownloadURL(imageRef)
+      console.log(url)
+      const questionText = {
         question: payload.text,
         answers: payload.answers,
         category: payload.category,
+        image: url,
       }
-      const questionRef = doc(collection(fireDataBase, 'questions'))
-      const id = questionRef.id
-      const filename = mainImage.name
-      const ext = filename.slice(filename.lastIndexOf('.'))
-      const imageRef = ref(fireStorage , 'questionsImage' + id + ext)
-      const imageRefNav = ref(imageRef)
-      console.log(imageRef)
-      uploadBytes(imageRef, mainImage).then((snapshot) => {
-        console.log('archivo subido')
-      })
-      // await setDoc(questionRef, question)
-      // commit('COUNT_CATEGORY', payload.category)
-      // dispatch('addCounter')
-    }
-    catch (error) {
+      await setDoc(questionRef, questionText)
+      commit('COUNT_CATEGORY', payload.category)
+      dispatch('addCounter')
+    } catch (error) {
       console.error(error)
     }
   },
   async fetchQuestions({ commit }) {
     commit('ERASE_QUESTIONS')
-    try{
+    try {
       const questionQuery = query(collection(fireDataBase, 'questions'))
       const questionSnapshot = await getDocs(questionQuery)
       questionSnapshot.forEach((doc) => {
         commit('SET_QUESTIONS', {
           id: doc.id,
-          question: doc.data()
+          question: doc.data(),
         })
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   },
   async fetchByCategory({ commit }, payload) {
     commit('ERASE_QUESTIONS')
-    try{
-      const questionQuery = query(collection(fireDataBase, 'questions'), where('category', '==', payload))
+    try {
+      const questionQuery = query(
+        collection(fireDataBase, 'questions'),
+        where('category', '==', payload)
+      )
       const questionSnapshot = await getDocs(questionQuery)
       questionSnapshot.forEach((doc) => {
         commit('SET_QUESTIONS', {
           id: doc.id,
-          question: doc.data()
+          question: doc.data(),
         })
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   },
   async addCounter({ state }) {
-    try{
-      console.log('comienza el try', state.categoryToCount)
-      const counterRef = doc(fireDataBase, 'categoryCounters', state.categoryToCount )
+    try {
+      const counterRef = doc(
+        fireDataBase,
+        'categoryCounters',
+        state.categoryToCount
+      )
       await updateDoc(counterRef, {
-        counter: increment(1)
+        counter: increment(1),
       })
     } catch (error) {
       console.error(error)
     }
   },
   async subtractCounter({ state }) {
-    try{
-      const counterRef = doc(fireDataBase, 'categoryCounters', state.categoryToCount )
+    try {
+      const counterRef = doc(
+        fireDataBase,
+        'categoryCounters',
+        state.categoryToCount
+      )
       await updateDoc(counterRef, {
-        counter: increment(-1)
+        counter: increment(-1),
       })
     } catch (error) {
       console.error(error)
@@ -114,9 +131,8 @@ export const actions = {
       await deleteDoc(doc(fireDataBase, 'questions', payload))
       dispatch('subtractCounter')
       commit('ERASE_QUESTION', payload)
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
-  }
+  },
 }

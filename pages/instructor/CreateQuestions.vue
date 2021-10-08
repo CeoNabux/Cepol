@@ -426,8 +426,8 @@ export default {
     // TOMAMOS IMAGEN DE PREGUNTA
     onChange(event) {
       const file = event.target.files[0]
-      this.question.answerImage.imageObject = file
-      this.question.answerImage.imageUrl = URL.createObjectURL(file)
+      this.question.question.image.imageObject = file
+      this.question.question.image.imageUrl = URL.createObjectURL(file)
     },
     // TOMAMOS LA IMAGEN DE LA RESPUESTA
     onChangeAnswer(event) {
