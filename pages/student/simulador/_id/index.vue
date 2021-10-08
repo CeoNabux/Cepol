@@ -14,9 +14,9 @@
           class="text-gray-800 font-medium text-lg w-full lg:w-3/4"
         />
         <!-- IMAGEN DE LA PREGUNTA -->
-        <!-- <figure class="w-full flex justify-center items-center">
-        <img src="questionData.image" alt="" class="w-full">
-      </figure> -->
+        <figure class="w-full flex justify-center items-center">
+          <img :src="questionData.image" alt="" class="w-full" />
+        </figure>
       </div>
       <!-- RECIBIMOS OPCIONES DE RESPUESTA -->
       <div class="w-full py-3 mt-4">
@@ -34,16 +34,13 @@
           "
         >
           <div
+            v-if="option.text.substring(0, 6) !== 'https:'"
             v-html="option.text"
             class="text-gray-800 font-medium text-base w-full lg:w-3/4"
           />
-          <!-- <figure class="w-full fles justify-center items-start">
-          <img
-            :src="option.image"
-            alt="cepol-opcion"
-            class="w-full"
-          />
-        </figure> -->
+          <figure v-else class="w-full fles justify-center items-start">
+            <img :src="option.text" alt="cepol-opcion" class="w-full" />
+          </figure>
           <!-- BOTON DE ELIMINAR RESPUESTA -->
           <div class="w-full flex flex-wrap justify-evenly items-center mt-2">
             <div class="w-full lg:w-5/12">
@@ -109,7 +106,7 @@ export default {
       for (let i = 0; i < this.questionData.options.length; i++) {
         this.states[i] = false
       }
-      return this.states[index] = true
+      return (this.states[index] = true)
     },
   },
 }
