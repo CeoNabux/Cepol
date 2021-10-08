@@ -55,14 +55,13 @@ export const mutations = {
   SET_SIMULATORS(state, payload) {
     state.simulators = payload
   },
-  CLEAR_SIMULATORS(state) {
-    state.simulators = []
+  CLEAR_SIMULATOR(state) {
+    state.currentSimulator = []
   },
   SET_CURRENT_SIMULATOR(state, payload) {
     state.currentSimulator = payload
   },
   ADD_ANSWER(state, payload) {
-    console.log('agregando respuesta', payload)
     state.currentSimulatorAnswers.push(payload)
   },
   UPDATE_ANSWER(state, payload) {
@@ -174,6 +173,7 @@ export const actions = {
     console.log(score)
     commit('SCORE_TEST', score)
     commit('FINISH_SIMULATOR', Boolean)
+    commit('CLEAR_SIMULATOR')
   },
   async setCurrentSimulator({ commit }, payload) {
     try {
