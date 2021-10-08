@@ -9,7 +9,7 @@
         <!-- VISUALIZACION DE PREGUNTAS -->
         <div
           v-if="isSimulating"
-          class="w-full bg-white shadow-lg rounded-lg py-2 px-4 mt-4"
+          class="w-full py-2 px-4 mt-4"
         >
           <nuxt-child :questionData="question" />
         </div>

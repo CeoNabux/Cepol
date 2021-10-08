@@ -2,24 +2,29 @@
   <div class="w-full px-2 py-3">
     <p
       v-if="!Object.keys(questionData).length"
-      class="text-center text-gray-500 text-3xl"
+      class="h-72 text-center text-gray-500 text-3xl py-3 px-2 bg-white border border-gray-200 rounded-lg"
     >
       Escoge una pregunta del panel
     </p>
     <div v-else class="w-full">
       <!-- RECIBIMOS LA PREGUNTA -->
-      <div class="flex justify-between items-start w-full">
+      <div
+        class="w-full rounded-lg border bg-white border-gray-200 shadow-md mb-4 px-2 py-3"
+      >
         <div
           v-html="questionData.question"
-          class="text-gray-800 font-medium text-lg w-full lg:w-3/4"
+          class="text-gray-800 font-medium text-xl w-full lg:w-3/4 underline"
         />
         <!-- IMAGEN DE LA PREGUNTA -->
-        <figure class="w-full flex justify-center items-center">
+        <figure class="w-full lg:w-1/2 flex justify-center items-center">
           <img :src="questionData.image" alt="" class="w-full" />
         </figure>
       </div>
       <!-- RECIBIMOS OPCIONES DE RESPUESTA -->
-      <div class="w-full py-3 mt-4">
+      <div class="w-full mt-4 bg-green-50 rounded-lg py-4 px-2">
+        <p class="text-2xl font-medium text-secondary mb-4">
+          Escoge tu respuesta
+        </p>
         <div
           v-for="(option, i) in questionData.options"
           :key="i"
@@ -28,6 +33,7 @@
             px-3
             py-4
             border border-gray-200
+            bg-white
             shadow-md
             rounded-lg
             flex flex-wrap
@@ -38,7 +44,7 @@
             v-html="option.text"
             class="text-gray-800 font-medium text-base w-full lg:w-3/4"
           />
-          <figure v-else class="w-full fles justify-center items-start">
+          <figure v-else class="w-48 fles justify-center items-start">
             <img :src="option.text" alt="cepol-opcion" class="w-full" />
           </figure>
           <!-- BOTON DE ELIMINAR RESPUESTA -->
