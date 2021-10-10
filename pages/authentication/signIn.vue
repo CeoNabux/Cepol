@@ -98,7 +98,7 @@
         <div class="w-full lg:w-32 mx-auto mt-4">
           <c-button
             :disabled="!formIsValid"
-            name="Regístrate"
+            name="Inicia sesion"
             class="text-white"
             :class="[
               { 'bg-gray-400': !formIsValid },
