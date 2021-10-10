@@ -86,6 +86,7 @@ export default {
       'getSimulators',
       'isSimulating',
       'getCurrentSimulator',
+      'getScore'
     ]),
     question() {
       return this.questionSelected
@@ -97,6 +98,7 @@ export default {
   },
   mounted() {
     this.validatingTestById()
+    this.redirectionToDashboard()
   },
   methods: {
     ...mapActions('fireSimulator', ['setCurrentSimulator']),
@@ -123,6 +125,11 @@ export default {
         return this.questionSelected = questionSelected
       }
     },
+    redirectionToDashboard() {
+      if(this.getScore >= 400) {
+        this.$router.push('/student/simulador')
+      }
+    }
   },
 }
 </script>

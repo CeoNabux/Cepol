@@ -70,6 +70,9 @@ export const mutations = {
   SCORE_TEST(state, payload) {
     state.score = payload
   },
+  SET_SCORE_TO_SIMULATE(state) {
+    state.score = 0
+  },
 }
 
 export const actions = {
@@ -168,7 +171,7 @@ export const actions = {
     }
     const averageScorePerAnswer = 3.53
     const freePoints = 400
-    const score = Math.trunc(freePoints + (count * averageScorePerAnswer))
+    const score = Math.trunc(freePoints + count * averageScorePerAnswer)
     commit('SCORE_TEST', score)
     commit('FINISH_SIMULATOR', Boolean)
     commit('CLEAR_SIMULATOR')
@@ -232,5 +235,8 @@ export const actions = {
       }
       commit('ADD_ANSWER', answer)
     }
+  },
+  setScoreForANewSimulator({ commit }) {
+    commit('SET_SCORE_TO_SIMULATE')
   },
 }

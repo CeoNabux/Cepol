@@ -4,15 +4,15 @@
       <h1 class="text-4xl text-gray-700 font-semibold">
         Simuladores disponibles
       </h1>
-      <div v-if="!getSimulators.length" class="mt-4 flex justify-center items-center">
+      <div
+        v-if="!getSimulators.length"
+        class="mt-4 flex justify-center items-center"
+      >
         <p class="text-secondary font-medium text-2xl">
           Estamos cargando los simuladores
         </p>
       </div>
-      <div
-        v-else
-        class="mt-4 flex justify-center items-center flex-wrap"
-      >
+      <div v-else class="mt-4 flex justify-center items-center flex-wrap">
         <!-- AQUI VA EL SIMULADOR -->
         <div
           v-for="(simulator, i) in getSimulators"
@@ -24,7 +24,7 @@
             :title="simulator.title"
             :description="simulator.description"
             :simulatorStructure="simulator.simulatorStructure.length"
-            :hours="parseInt(simulator.time/3600000)"
+            :hours="parseInt(simulator.time / 3600000)"
             :minutes="parseInt(simulator.time / 60000)"
             :seconds="parseInt((simulator.time % 60000) / 1000)"
             class="mx-auto"
@@ -47,13 +47,22 @@ export default {
     simulators: [],
   }),
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulators', 'isSimulating']),
+    ...mapGetters('fireSimulator', [
+      'getSimulators',
+      'isSimulating',
+      'getScore',
+    ]),
+    score() {
+      if(this.getScore > 0) {
+        this.setScoreForANewSimulator()
+      }
+    }
   },
   mounted() {
     this.fetchSimulators()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators']),
+    ...mapActions('fireSimulator', ['fetchSimulators', 'setScoreForANewSimulator']),
   },
 }
 </script>
