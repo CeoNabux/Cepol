@@ -138,7 +138,7 @@ export default {
   watch: {
     user(value) {
       if (value !== undefined && value !== null) {
-        this.$router.push('/admin/dashboard')
+        this.$router.push('/student/dashboard')
       }
     },
   },
