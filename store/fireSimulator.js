@@ -203,11 +203,13 @@ export const actions = {
         for (let ii = 0; ii < questionsData.length; ii++) {
           if (questionsByCategory[i].category === questionsData[ii].category) {
             questionsByCategory[i].questions.push(questionsData[ii])
-          } else {
-            return
           }
         }
       }
+      // for (let i = 0; i < questionsByCategory.length; i++) {
+      //   if(questionsByCategory[i].)
+      // }
+      console.log(questionsByCategory)
       commit('SET_CURRENT_SIMULATOR', questionsByCategory)
     } catch (error) {
       console.error(error)
