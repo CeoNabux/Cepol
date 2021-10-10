@@ -107,6 +107,15 @@ export default {
   computed: {
     ...mapGetters('fireAuthentication', ['user'])
   },
+  watch: {
+    user(value) {
+      if (value !== undefined && value !== null) {
+        this.$router.push('/student/dashboard')
+      } else {
+        this.$router.push('/')
+      }
+    },
+  },
   methods: {
     redirection(link) {
       this.$router.push(link)

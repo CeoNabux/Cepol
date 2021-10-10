@@ -66,7 +66,7 @@ export const actions = {
         registeredNotes: [],
       }
       commit('SET_LOADING', false)
-      commit('SET_USER', newUser)
+      this.$router.push('signIn')
     } catch (error) {
       commit('SET_LOADING', false)
       commit('SET_ERROR', error)
