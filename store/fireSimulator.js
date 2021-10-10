@@ -70,7 +70,7 @@ export const mutations = {
   SCORE_TEST(state, payload) {
     state.score = payload
   },
-  SET_SCORE_TO_SIMULATE(state) {
+  RESET_SCORE(state) {
     state.score = 0
   },
 }
@@ -236,7 +236,7 @@ export const actions = {
       commit('ADD_ANSWER', answer)
     }
   },
-  setScoreForANewSimulator({ commit }) {
-    commit('SET_SCORE_TO_SIMULATE')
+  resetScore({ commit }) {
+    commit('RESET_SCORE')
   },
 }

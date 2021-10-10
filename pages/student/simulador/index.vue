@@ -54,7 +54,7 @@ export default {
     ]),
     score() {
       if(this.getScore > 0) {
-        this.setScoreForANewSimulator()
+        this.resetScore()
       }
     }
   },
@@ -62,7 +62,7 @@ export default {
     this.fetchSimulators()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators', 'setScoreForANewSimulator']),
+    ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore']),
   },
 }
 </script>
