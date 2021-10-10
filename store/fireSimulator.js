@@ -209,11 +209,9 @@ export const actions = {
           }
         }
       }
-      // for (let i = 0; i < questionsByCategory.length; i++) {
-      //   if(questionsByCategory[i].)
-      // }
-      console.log(questionsByCategory)
-      commit('SET_CURRENT_SIMULATOR', questionsByCategory)
+      const questionsSet = questionsByCategory.filter((questionToRemove) => questionToRemove.questions.length !== 0)
+      console.log(questionsSet)
+      commit('SET_CURRENT_SIMULATOR', questionsSet)
     } catch (error) {
       console.error(error)
     }
