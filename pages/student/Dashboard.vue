@@ -44,13 +44,18 @@ export default {
     SimulatorCard,
   },
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulators', 'isSimulating']),
+    ...mapGetters('fireSimulator', ['getSimulators', 'isSimulating', 'getScore']),
+    score() {
+      if(this.getScore > 0) {
+        this.resetScore()
+      }
+    }
   },
   mounted() {
     this.fetchSimulators()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators']),
+    ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore']),
   },
 }
 </script>

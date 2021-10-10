@@ -126,8 +126,8 @@ export default {
       }
     },
     redirectionToDashboard() {
-      if(this.getScore >= 400) {
-        this.$router.push('/student/simulador')
+      if(this.getScore > 0) {
+        this.$router.push('/student/dashboard')
       }
     }
   },
