@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-screen-2xl mx-auto relative">
+  <div class="w-full mx-auto relative">
     <div
       class="
         w-full
@@ -66,7 +66,7 @@ export default {}
 .shape-container {
   content: '';
   width: 100%;
-  height: 400px;
+  height: 600px;
 }
 .triangle-left {
   width: 0;
