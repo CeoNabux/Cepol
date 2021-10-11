@@ -10,10 +10,10 @@
         <h2 class="mb-6 text-gray-800 text-center font-semibold text-4xl">
           Modalidades de aprendizaje
         </h2>
-        <div class="w-full">
+        <div class="w-full px-4">
           <!-- SECCION DE CLASES EN LINEA -->
           <div class="flex flex-wrap justify-center items-center w-full">
-            <div class="w-full lg:w-2/5">
+            <div class="w-full lg:w-2/5 mb-4 lg:mb-0">
               <p class="text-3xl text-secondary font-semibold">Síncrono</p>
               <p class="text-xl font-light mt-2 mb-8">
                 Clases con horario establecido
@@ -23,12 +23,11 @@
               </div>
             </div>
             <!-- SECCION DE ILUSTRACIONES DE CLASES PRESENCIALES -->
-            <div class="w-full lg:w-2/5 flex justify-evenly items-center">
-              <div class="w-full lg:w-48">
+            <div class="w-full lg:w-2/5 flex flex-wrap justify-evenly items-center">
+              <div class="w-48">
                 <figure
                   class="
                     h-52
-                    w-full
                     border border-primary
                     rounded-lg
                     p-1
@@ -49,11 +48,10 @@
                   </div>
                 </figure>
               </div>
-              <div class="w-full lg:w-48">
+              <div class="w-48 mt-4 sm:mt-0">
                 <figure
                   class="
                     h-52
-                    w-full
                     border border-primary
                     rounded-lg
                     p-1
@@ -81,29 +79,29 @@
           <div
             class="
               flex flex-row-reverse
-              mt-28
-              flex-wrap-reverse
+              mt-16
+              lg:mt-28
+              flex-wrap
               justify-center
               items-center
               w-full
             "
           >
-            <div class="w-full lg:w-2/5">
+            <div class="w-full lg:w-2/5 mb-4 lg:mb-0">
               <p class="text-3xl text-secondary font-semibold">Asíncrono</p>
               <p class="text-xl font-light mt-2 mb-8">
                 Clases cuando quieras, donde quieras
               </p>
               <div class="w-full lg:w-2/3">
-                <c-button name="Saber por clases síncronas" class="bg-primary" />
+                <c-button name="Saber por clases asíncronas" class="bg-primary" />
               </div>
             </div>
             <!-- SECCION DE ILUSTRACIONES EN CLASES EN LINEA -->
-            <div class="w-full lg:w-2/5 flex justify-start items-center">
-              <div class="w-full lg:w-48 ml-3">
+            <div class="w-full lg:w-2/5 flex justify-center lg:justify-start items-center">
+              <div class="w-48 ml-3">
                 <figure
                   class="
                     h-52
-                    w-full
                     border border-primary
                     rounded-lg
                     p-1
