@@ -4,6 +4,7 @@
       <the-hero />
       <the-services />
       <the-testimonies :array="studentsTestimonies" />
+      <the-blog-section :array="posts" />
     </div>
   </div>
 </template>
@@ -12,12 +13,14 @@
 import TheHero from '@/components/index/TheHero.vue'
 import TheServices from '~/components/index/TheServices.vue'
 import TheTestimonies from '~/components/index/TheTestimonies.vue'
+import TheBlogSection from '~/components/index/TheBlogSection.vue'
 export default {
   layout: 'default',
   components: {
     TheHero,
     TheTestimonies,
     TheServices,
+    TheBlogSection,
   },
   data: () => ({
     studentsTestimonies: [
@@ -29,6 +32,18 @@ export default {
       {
         name: 'Luis',
         testimony: 'Esta es una descripcion de lo bien que la pase dentro de la academia de cepol',
+        image: require('@/static/images/people/chico-hero-cepol.png')
+      },
+    ],
+    posts: [
+      {
+        title: 'Luis',
+        abstract: 'Esta es una descripcion de lo bien que la pase dentro de la academia de cepol',
+        image: require('@/static/images/people/chico-hero-cepol.png')
+      },
+      {
+        title: 'Luis',
+        abstract: 'Esta es una descripcion de lo bien que la pase dentro de la academia de cepol',
         image: require('@/static/images/people/chico-hero-cepol.png')
       },
     ],
