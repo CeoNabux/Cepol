@@ -5,12 +5,14 @@
       <the-services />
       <the-testimonies :array="studentsTestimonies" />
       <the-blog-section :array="posts" />
+      <the-schools />
     </div>
   </div>
 </template>
 
 <script>
 import TheHero from '@/components/index/TheHero.vue'
+import TheSchools from '@/components/index/TheSchools.vue'
 import TheServices from '~/components/index/TheServices.vue'
 import TheTestimonies from '~/components/index/TheTestimonies.vue'
 import TheBlogSection from '~/components/index/TheBlogSection.vue'
@@ -18,6 +20,7 @@ export default {
   layout: 'default',
   components: {
     TheHero,
+    TheSchools,
     TheTestimonies,
     TheServices,
     TheBlogSection,
