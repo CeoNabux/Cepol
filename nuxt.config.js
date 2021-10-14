@@ -29,6 +29,8 @@ export default {
     '~/plugins/clickaway.js',
     '~/plugins/timer.js',
     '~/plugins/firebase/app.js',
+    '~/plugins/map.js',
+    { src: '~/plugins/google-maps.js', ssr: false },
     { src: '~/plugins/vee-validate.js', ssr: 'true' },
   ],
 
@@ -58,5 +60,8 @@ export default {
       ],
     },
     transpile: ['vee-validate'],
+  },
+  env: {
+    GOOGLE_MAPS: 'AIzaSyBQc4P1XMeB7jtTzLzSXpdYv-C5CVjd1-c',
   },
 }
