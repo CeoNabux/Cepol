@@ -22,7 +22,9 @@
     "vee-validate": "^3.4.13",
     "vue-awesome-countdown": "^1.1.4",
     "vue-awesome-swiper": "^4.1.1",
-    "vue-clickaway": "^2.2.2"
+    "vue-browser-geolocation": "^1.8.0",
+    "vue-clickaway": "^2.2.2",
+    "vue2-google-maps": "^0.10.7"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
