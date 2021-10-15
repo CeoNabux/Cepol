@@ -110,6 +110,7 @@ export default {
     user(value) {
       if (value !== undefined && value !== null) {
         this.$router.push('/student/dashboard')
+        console.log('estamos coneectados')
       } else {
         this.$router.push('/')
       }
