@@ -97,7 +97,7 @@ export const actions = {
     }
   },
   async signUserOut({ commit }) {
-    await signOut()
+    await fireAuth.signOut()
     commit('SET_USER', null)
   },
   clearError({ commit }) {

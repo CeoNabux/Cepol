@@ -7,6 +7,7 @@
 <script>
 import TheProfile from '@/components/TheProfile'
 export default {
+  layout: 'app',
   components: {
     TheProfile
   }
