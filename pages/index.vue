@@ -6,7 +6,7 @@
       <the-testimonies :array="studentsTestimonies" />
       <the-blog-section :array="posts" />
       <the-schools />
-      <the-map />
+      <!-- <the-contact-section /> -->
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ import TheSchools from '@/components/index/TheSchools.vue'
 import TheServices from '~/components/index/TheServices.vue'
 import TheTestimonies from '~/components/index/TheTestimonies.vue'
 import TheBlogSection from '~/components/index/TheBlogSection.vue'
-import TheMap from '~/components/global/TheMap.vue'
+import TheContactSection from '~/components/index/TheContactSection.vue'
 export default {
   layout: 'default',
   components: {
@@ -25,8 +25,8 @@ export default {
     TheSchools,
     TheTestimonies,
     TheServices,
-    TheMap,
     TheBlogSection,
+    TheContactSection,
   },
   data: () => ({
     studentsTestimonies: [
