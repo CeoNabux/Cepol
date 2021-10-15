@@ -61,6 +61,7 @@
                 justify-center
                 items-center
               "
+              @click="signOut"
             >
               Cerrar sesion
               <div class="w-6 h-6 ml-2">
@@ -228,6 +229,7 @@ export default {
   },
   methods: {
     ...mapActions('config_drawer', ['activeMenu']),
+    ...mapActions('fireAuthentication', ['signUserOut']),
     getMenu() {
       if (!this.showMenu) {
         this.activeMenu(true)
@@ -246,6 +248,10 @@ export default {
     },
     signInRedirection() {
       this.$router.push('/authentication/signIn')
+    },
+    signOut() {
+      this.signUserOut()
+      this.$router.push('/')
     }
   },
 }

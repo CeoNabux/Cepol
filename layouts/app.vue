@@ -99,9 +99,8 @@ export default {
   data: () => ({
     menuItems: [
       { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
-      { icon: 'newLesson', link: 'questions', name: 'Crear Preguntas' },
+      { icon: 'simulador', link: 'simulador', name: 'Simulador' },
       { icon: 'account', link: 'profile', name: 'Perfil' },
-      { icon: 'simulador', link: 'student', name: 'Simulador' },
     ],
   }),
   computed: {

@@ -2,6 +2,7 @@ import { fireAuth } from '~/plugins/firebase/app'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from '@firebase/auth'
 
 // CREANDO LOS ESTADOS PARA LA AUTENTICACION
@@ -94,6 +95,10 @@ export const actions = {
       commit('SET_ERROR', error)
       console.error(error)
     }
+  },
+  async signUserOut({ commit }) {
+    await signOut()
+    commit('SET_USER', null)
   },
   clearError({ commit }) {
     commit('CLEAR_ERROR')
