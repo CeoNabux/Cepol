@@ -75,16 +75,23 @@ export default {
     birthday: null,
   }),
   computed: {
-    ...mapGetters('fireAuthentication', ['user'])
+    ...mapGetters('fireAuthentication', ['user']),
+    ...mapGetters('fireUsers', ['getUserData'])
   },
   mounted() {
     this.fetchUserData(this.user)
+    this.updateData()
   },
   methods: {
     ...mapActions('fireAuthentication', ['signUserOut']),
     ...mapActions('fireUsers', ['uploadUserData', 'fetchUserData']),
     signOut() {
       this.signUserOut()
+    },
+    updateData() {
+      this.name = this.getUserData.name,
+      this.lastname = this.getUserData.lastname,
+      this.birthday = this.getUserData.birthdate
     },
     saveDataUser() {
       const today = new Date()
@@ -98,7 +105,8 @@ export default {
         name: this.name,
         lastname: this.lastname,
         age: age,
-        id: this.user.id
+        id: this.user.id,
+        birthdate: this.birthday
       }
       this.uploadUserData(userData)
     },

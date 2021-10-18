@@ -22,8 +22,7 @@ export const getters = {
 export const mutations = {
   SET_USER_DATA(state, payload) {
     // RECIBIMOS LA INFORMACION QUE EXISTE DEL USUARIO
-    console.log(payload)
-    // state.userData = payload
+    state.userData = payload
   },
 }
 
@@ -43,6 +42,7 @@ export const actions = {
         age: payload.age,
         name: payload.name,
         lastname: payload.lastname,
+        birthdate: payload.birthdate
       })
     } catch (error) {
       console.error(error)
