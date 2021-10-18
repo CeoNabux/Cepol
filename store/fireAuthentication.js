@@ -76,6 +76,9 @@ export const actions = {
       console.error(error)
     }
   },
+
+
+  //SE CREO UNA FUNCION PARA CREAR A LOS USUARIOS QUE SON ADMINS
   async signAdminUp({ commit }, payload) {
     commit('SET_LOADING', true)
     commit('CLEAR_ERROR')
@@ -99,6 +102,9 @@ export const actions = {
       console.error(error)
     }
   },
+
+
+  // PEDIMOS EL INICIO DE SESION DE LO USUARIOS
   async signUserIn({ commit }, payload) {
     commit('SET_LOADING', true)
     commit('CLEAR_ERROR')
@@ -121,6 +127,8 @@ export const actions = {
       console.error(error)
     }
   },
+
+  //CERRAMOS LA SESION DE LOS USUARIOS
   async signUserOut({ commit }) {
     await fireAuth.signOut()
     commit('SET_USER', null)
