@@ -1,9 +1,11 @@
 import { fireAuth } from '~/plugins/firebase/app'
+import { fireFunctions } from '~/plugins/firebase/app'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from '@firebase/auth'
+import { httpsCallable } from '@firebase/functions'
 
 // CREANDO LOS ESTADOS PARA LA AUTENTICACION
 export const state = () => ({
@@ -66,6 +68,29 @@ export const actions = {
         id: user.user.uid,
         registeredNotes: [],
       }
+      commit('SET_LOADING', false)
+      this.$router.push('signIn')
+    } catch (error) {
+      commit('SET_LOADING', false)
+      commit('SET_ERROR', error)
+      console.error(error)
+    }
+  },
+  async signAdminUp({ commit }, payload) {
+    commit('SET_LOADING', true)
+    commit('CLEAR_ERROR')
+    const role = {
+      admin: true
+    }
+    try {
+      const auth = fireAuth
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        payload.email,
+        payload.password,
+      )
+      const setAdmin = httpsCallable(fireFunctions, 'setAdmin')
+      await setAdmin({uid: user.user.uid})
       commit('SET_LOADING', false)
       this.$router.push('signIn')
     } catch (error) {
