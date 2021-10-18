@@ -44,8 +44,6 @@
       />
       <!-- INICIO DE LA TARJETA -->
       <h3 class="text-lg font-semibold text-gray-600 mb-4">Regístrate con</h3>
-      <!-- BOTON DE GOOGLE -->
-      aqui va el boton de google
       <div class="flex justify-center items-center w-10/12">
         <div class="h-px w-1/3 bg-gray-400" />
         <p class="text-gray-400 mx-2">o</p>
@@ -103,11 +101,6 @@
           placeholder="UnPasswordLargoEsMasSeguro"
         />
         <span class="text-pink-700 text-sm">{{ passwordConfirmed }}</span>
-        <!-- LOADER -->
-        <!-- <div class="mx-auto my-2">
-          <loading :loading="loading" />
-        </div> -->
-        <!-- BOTON DE ACCION -->
         <div class="w-full lg:w-32 mx-auto mt-4">
           <c-button
             :disabled="!formIsValid"
