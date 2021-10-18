@@ -67,15 +67,19 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data: () => ({
     name: '',
     lastname: '',
     birthday: null,
   }),
+  computed: {
+    ...mapGetters('fireAuthentication', ['user'])
+  },
   methods: {
     ...mapActions('fireAuthentication', ['signUserOut']),
+    ...mapActions('fireUsers', ['uploadUserData']),
     signOut() {
       this.signUserOut()
     },
@@ -90,9 +94,10 @@ export default {
       const userData = {
         name: this.name,
         lastname: this.lastname,
-        age: age
+        age: age,
+        id: this.user.id
       }
-      console.log(userData)
+      this.uploadUserData(userData)
     },
   },
 }
