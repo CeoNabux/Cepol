@@ -175,13 +175,9 @@ export default {
   methods: {
     ...mapActions('fireAuthentication', ['signAdminUp']),
     signUp() {
-      const role = {
-        admin: true
-      }
       this.signAdminUp({
         email: this.email,
         password: this.password,
-        role: role
       })
     },
     getBack() {
