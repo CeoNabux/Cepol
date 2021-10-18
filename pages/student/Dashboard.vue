@@ -6,7 +6,11 @@
       </h1>
       <div class="w-full my-8">
         <client-only>
-          <line-chart :data="chartData" :options="options" :styles="chartStyles"></line-chart>
+          <line-chart
+            :data="chartData"
+            :options="options"
+            :styles="chartStyles"
+          ></line-chart>
         </client-only>
       </div>
       <div
@@ -53,27 +57,36 @@ export default {
       datasets: [
         {
           label: 'Simulaciones Transformar',
-          backgroundColor: '#f87979',
-          data: [45, 55, 48, 35, 12],
-        },
-        {
-          label: 'Simulaciones Transformar',
-          backgroundColor: '#20063d',
-          data: [35, 25, 48, 35, 12],
+          borderColor: '#ffa420',
+          backgroundColor: '#FBC05D',
+          data:  [{x: 10, y: 20}, {x: 15, y: 100}, {x: 20, y: 10}],
         },
       ],
-      responsive: true
+      responsive: true,
     },
     options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+            min: 0,
+            max: 100
+          },
+        ],
+      },
+      animations: {
+        tension: {
+          duration: 1000,
+          easing: 'linear',
+          from: 1,
+          to: 0,
+          loop: true,
         },
-        maintainAspectRatio: false
-    }
+      },
+      maintainAspectRatio: false,
+    },
   }),
   computed: {
     ...mapGetters('fireSimulator', [
@@ -91,9 +104,9 @@ export default {
     chartStyles() {
       return {
         height: 350 + 'px',
-        position: 'relative'
+        position: 'relative',
       }
-    }
+    },
   },
   mounted() {
     this.fetchSimulators()
@@ -110,5 +123,3 @@ export default {
   },
 }
 </script>
-
-
