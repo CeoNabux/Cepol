@@ -77,9 +77,12 @@ export default {
   computed: {
     ...mapGetters('fireAuthentication', ['user'])
   },
+  mounted() {
+    this.fetchUserData(this.user)
+  },
   methods: {
     ...mapActions('fireAuthentication', ['signUserOut']),
-    ...mapActions('fireUsers', ['uploadUserData']),
+    ...mapActions('fireUsers', ['uploadUserData', 'fetchUserData']),
     signOut() {
       this.signUserOut()
     },
