@@ -54,6 +54,7 @@ export const mutations = {
 
 //SE CREARON LAS FUNCIONES QUE PERMITEN HACER
 // LOGEO Y REGISTRO DE USUARIOS
+// SE CREA UN DOCUMENTO POR USUARIO CREADO
 
 export const actions = {
   async signUserUp({ commit }, payload) {
@@ -76,7 +77,6 @@ export const actions = {
         registeredNotes: [],
         institution: ''
       })
-      console.log(userCollection)
       commit('SET_LOADING', false)
       this.$router.push('signIn')
     } catch (error) {
