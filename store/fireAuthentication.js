@@ -1,4 +1,6 @@
 import { fireAuth } from '~/plugins/firebase/app'
+import { fireDataBase } from '~/plugins/firebase/app'
+import { addDoc, collection } from '@firebase/firestore'
 import { fireFunctions } from '~/plugins/firebase/app'
 import {
   createUserWithEmailAndPassword,
@@ -64,10 +66,17 @@ export const actions = {
         payload.email,
         payload.password
       )
-      const newUser = {
-        id: user.user.uid,
+      const uid = user.user.uid
+      const userCollection = await addDoc(collection(fireDataBase, 'users'), {
+        uidRole: uid,
+        name: '',
+        lastname: '',
+        email: payload.email,
+        age: 0,
         registeredNotes: [],
-      }
+        institution: ''
+      })
+      console.log(userCollection)
       commit('SET_LOADING', false)
       this.$router.push('signIn')
     } catch (error) {
