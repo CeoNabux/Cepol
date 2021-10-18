@@ -26,7 +26,18 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'app',
   computed: {
-    ...mapGetters('fireSimulator', ['getScore'])
+    ...mapGetters('fireSimulator', ['getScore']),
+    ...mapGetters('fireAuthentication', ['user'])
+  },
+  methods: {
+    ...mapActions('fireUsers', ['addScore']),
+    saveScore() {
+      const userData = {
+        uid: this.uder.id,
+        score: this.getScore
+      }
+      this.addScore(userData)
+    }
   }
 }
 </script>
