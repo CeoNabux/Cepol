@@ -5,7 +5,9 @@
         Bienvenido {{ getUserData.name }}
       </h1>
       <div class="w-full my-8">
-        <!-- <line-chart :data='chartData'></line-chart> -->
+        <client-only>
+          <line-chart :data="chartData" :options="options" :styles="chartStyles"></line-chart>
+        </client-only>
       </div>
       <div
         v-if="!getSimulators.length"
@@ -47,7 +49,31 @@ export default {
     SimulatorCard,
   },
   data: () => ({
-    chartData: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]]
+    chartData: {
+      datasets: [
+        {
+          label: 'Simulaciones Transformar',
+          backgroundColor: '#f87979',
+          data: [45, 55, 48, 35, 12],
+        },
+        {
+          label: 'Simulaciones Transformar',
+          backgroundColor: '#20063d',
+          data: [35, 25, 48, 35, 12],
+        },
+      ],
+      responsive: true
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        maintainAspectRatio: false
+    }
   }),
   computed: {
     ...mapGetters('fireSimulator', [
@@ -62,6 +88,12 @@ export default {
         this.resetScore()
       }
     },
+    chartStyles() {
+      return {
+        height: 350 + 'px',
+        position: 'relative'
+      }
+    }
   },
   mounted() {
     this.fetchSimulators()
@@ -78,3 +110,5 @@ export default {
   },
 }
 </script>
+
+

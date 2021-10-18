@@ -31,6 +31,7 @@ export default {
     '~/plugins/firebase/app.js',
     '~/plugins/map.js',
     { src: '~/plugins/google-maps.js', ssr: false },
+    { src: '~/plugins/chart.js', mode: 'client' },
     { src: '~/plugins/vee-validate.js', ssr: 'true' },
   ],
 
