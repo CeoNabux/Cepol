@@ -1,6 +1,47 @@
 <template>
-  <div class="w-full">
-    <div class="px-6 py-2 border border-gray-400 rounded-lg shadow bg-white">
+  <div class="w-full relative">
+    <!-- ESTE ES EL CARGANDO -->
+    <div
+      v-if="getLoading"
+      class="
+        py-4
+        px-2
+        w-40
+        h-48
+        sm:w-64
+        sm:h-48
+        absolute
+        z-10
+        bg-white
+        shadow-lg
+        rounded-lg
+        top-1/2
+        left-1/3
+        sm:left-1/3
+        flex
+        flex-col
+        justify-between
+        items-center
+      "
+    >
+      <p class="text-xl text-primary font-medium text-center">
+        Guardando
+      </p>
+      <loading :loading="getLoading" />
+    </div>
+    <!-- CONTENEDOR PRINCIPAL DE LA VISTA -->
+    <div
+      class="
+        relative
+        px-6
+        py-2
+        border border-gray-400
+        rounded-lg
+        shadow
+        bg-white
+      "
+    >
+      <!-- ESTA ES LA PANTALLA CON LOS FORMULARIOS -->
       <div class="w-full flex justify-end items-center">
         <div class="w-32">
           <c-button
@@ -68,7 +109,9 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Loading from './global/Loading.vue'
 export default {
+  components: { Loading },
   data: () => ({
     name: '',
     lastname: '',
@@ -76,7 +119,7 @@ export default {
   }),
   computed: {
     ...mapGetters('fireAuthentication', ['user']),
-    ...mapGetters('fireUsers', ['getUserData'])
+    ...mapGetters('fireUsers', ['getUserData', 'getLoading']),
   },
   mounted() {
     this.fetchUserData(this.user)
@@ -89,9 +132,9 @@ export default {
       this.signUserOut()
     },
     updateData() {
-      this.name = this.getUserData.name,
-      this.lastname = this.getUserData.lastname,
-      this.birthday = this.getUserData.birthdate
+      ;(this.name = this.getUserData.name),
+        (this.lastname = this.getUserData.lastname),
+        (this.birthday = this.getUserData.birthdate)
     },
     saveDataUser() {
       const today = new Date()
@@ -106,7 +149,7 @@ export default {
         lastname: this.lastname,
         age: age,
         id: this.user.id,
-        birthdate: this.birthday
+        birthdate: this.birthday,
       }
       this.uploadUserData(userData)
     },

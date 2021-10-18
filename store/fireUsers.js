@@ -11,12 +11,16 @@ import {
 
 export const state = () => ({
   userData: {},
+  loading: false
 })
 
 export const getters = {
   getUserData(state) {
     return state.userData
   },
+  getLoading(state) {
+    return state.loading
+  }
 }
 
 export const mutations = {
@@ -24,11 +28,15 @@ export const mutations = {
     // RECIBIMOS LA INFORMACION QUE EXISTE DEL USUARIO
     state.userData = payload
   },
+  SET_LOADING(state, payload) {
+    state.loading = payload
+  }
 }
 
 export const actions = {
   async uploadUserData({ commit }, payload) {
     // RECIBIMOS LA INFORMACION DEL PERFIL PARA ACTUALIZAR LA DATA
+    commit('SET_LOADING', true)
     try {
       let userUid
       const userRef = collection(fireDataBase, 'users')
@@ -44,6 +52,7 @@ export const actions = {
         lastname: payload.lastname,
         birthdate: payload.birthdate
       })
+      commit('SET_LOADING', false)
     } catch (error) {
       console.error(error)
     }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading" class="w-full">
+  <div v-if="loading" class="w-full flex justify-center items-center">
     <half-circle-spinner
       :animation-duration="1000"
       :size="60"
