@@ -54,12 +54,13 @@ export default {
   },
   data: () => ({
     chartData: {
+      labels: ['Simulacion 4', 'Simulacion 3', 'Simulacion 2', 'Simulacion 1'],
       datasets: [
         {
           label: 'Simulaciones Transformar',
           borderColor: '#ffa420',
-          backgroundColor: '#FBC05D',
-          data:  [{x: 10, y: 20}, {x: 15, y: 100}, {x: 20, y: 10}],
+          backgroundColor: 'transparent',
+          data: [40, 39, 10, 40]
         },
       ],
       responsive: true,
@@ -72,7 +73,7 @@ export default {
               beginAtZero: true,
             },
             min: 0,
-            max: 100
+            max: 1000,
           },
         ],
       },
