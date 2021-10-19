@@ -99,7 +99,7 @@
       <!-- CUARTA SECCION DE SERVICIOS -->
       <div class="w-full px-4 mt-16 mb-12">
         <div class="mt-2 w-full">
-          <h2 class="text-5xl text-center font-bold text-gray-600">
+          <h2 class="text-5xl text-center font-bold text-secondary">
             CEPOL COMING SOON
           </h2>
           <figure class="w-full flex justify-center items-center">
