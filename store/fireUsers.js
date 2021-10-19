@@ -41,12 +41,10 @@ export const mutations = {
   SET_NEW_SCORE(state, payload) {
     // RECIBIMOS UNA NUEVA NOTA
     state.registeredNotes.push(payload)
-    state.registeredNotes.reverse()
   },
   SET_SCORES(state, payload) {
     // RECIBIMOS LOS DATOS DE LA BASE DE DATOS
     state.registeredNotes = payload
-    state.registeredNotes.reverse()
   },
   SET_UID(state, payload) {
     //RECIBIMOS EL UID PARA REUTILIZARLOS PARA LLEVAR

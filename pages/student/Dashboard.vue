@@ -129,7 +129,6 @@ export default {
       this.chartData.datasets[0].data.forEach((score, index) => {
         this.chartData.labels.push(`simulador ${index + 1}`)
       })
-      this.chartData.labels.reverse()
     }
   },
 }
