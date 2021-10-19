@@ -43,7 +43,6 @@
         :text="error.message"
       />
       <h3 class="text-lg font-semibold text-gray-600 mb-4">Inicia Sesion</h3>
-      aqui va el boton de google
       <div class="flex justify-center items-center w-10/12">
         <div class="h-px w-1/3 bg-gray-400" />
         <p class="text-gray-400 mx-2">o</p>
@@ -90,6 +89,9 @@
           />
           <span class="text-pink-700 text-sm">{{ errors[0] }}</span>
         </ValidationProvider>
+        <nuxt-link to="signUp" class="text-sm text-primary underline">
+          ¿Aún no tienes cuenta? Regístrate
+        </nuxt-link>
         <!-- LOADER -->
         <div class="mx-auto my-2">
           <loading :loading="loading" />
