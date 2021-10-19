@@ -4,7 +4,34 @@
       <h1 class="text-4xl text-secondary font-semibold">
         Bienvenido {{ getUserData.name }}
       </h1>
-      <div class="w-full my-8">
+      <!-- MOSTRAMOS BOTON Y CARTEL VACIO EN CASO
+      DE NO TENER DATOS -->
+      <div
+        v-if="!chartData.datasets[0].data.length"
+        class="
+          w-full
+          py-8
+          bg-gray-200
+          shadow-lg
+          my-8
+          flex
+          flex-col
+          justify-center
+          items-center
+        "
+      >
+        <p class="text-gray-400 text-xl font-medium">Aun no tenemos puntajes</p>
+        <p class="text-secondary font-medium mb-8">Simula ya!</p>
+        <div class="w-32">
+          <c-button
+            name="Simula ahora"
+            class="bg-secondary"
+            @click="redirectToSimulator"
+          />
+        </div>
+      </div>
+      <!-- MOSTRAMOS LA DATA EN CASO DE QUE EXISTA -->
+      <div v-else class="w-full my-8">
         <client-only>
           <line-chart
             :data="chartData"
@@ -47,10 +74,12 @@
 <script>
 import SimulatorCard from '@/components/cards/simulatorCard.vue'
 import { mapGetters, mapActions } from 'vuex'
+import CButton from '~/components/global/CButton.vue'
 export default {
   layout: 'app',
   components: {
     SimulatorCard,
+    CButton,
   },
   data: () => ({
     chartData: {
@@ -60,7 +89,7 @@ export default {
           label: 'Simulaciones Transformar',
           borderColor: '#ffa420',
           backgroundColor: 'transparent',
-          data: null
+          data: [],
         },
       ],
       responsive: true,
@@ -122,6 +151,8 @@ export default {
         this.fetchUserData(this.user.id)
       }
     },
+    //TOMAMOS EL PUNTAJE DE LOS ULTIMOS 4 SIMULADORES/
+    //Y LOS PRESENTAMOS
     scoresHistory() {
       const scoreHistory = this.getScores
       scoreHistory.slice(scoreHistory.length - 4, 0)
@@ -129,7 +160,10 @@ export default {
       this.chartData.datasets[0].data.forEach((score, index) => {
         this.chartData.labels.push(`simulador ${index + 1}`)
       })
-    }
+    },
+    redirectToSimulator() {
+      this.$router.push('simulador')
+    },
   },
 }
 </script>
