@@ -204,13 +204,13 @@ export default {
     menu() {
       let menuItems = [
         { name: 'Inicio', link: '/' },
-        { name: 'Blog', link: '/blog' },
+        // { name: 'Blog', link: '/blog' },
         { name: 'Servicios', link: '/services' },
         { name: 'Contáctos', link: '/contacts' },
       ]
       if (this.userIsAuthenticated) {
         let menuItems = [
-          { name: 'Blog', link: '/blog' },
+          // { name: 'Blog', link: '/blog' },
           { name: 'Dashboard', link: '/dashboard' },
           { name: 'Simulador', link: '/simulador' },
           { name: 'Servicios', link: '/services' },
