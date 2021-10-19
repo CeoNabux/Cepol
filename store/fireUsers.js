@@ -7,6 +7,7 @@ import {
   getDocs,
   getDoc,
   collection,
+  arrayUnion
 } from '@firebase/firestore'
 
 export const state = () => ({
@@ -40,10 +41,12 @@ export const mutations = {
   SET_NEW_SCORE(state, payload) {
     // RECIBIMOS UNA NUEVA NOTA
     state.registeredNotes.push(payload)
+    state.registeredNotes.reverse()
   },
   SET_SCORES(state, payload) {
     // RECIBIMOS LOS DATOS DE LA BASE DE DATOS
     state.registeredNotes = payload
+    state.registeredNotes.reverse()
   },
   SET_UID(state, payload) {
     //RECIBIMOS EL UID PARA REUTILIZARLOS PARA LLEVAR
@@ -99,12 +102,18 @@ export const actions = {
   },
   async addScore({ commit, getters }, payload) {
     try {
-      const uid = getters.userUid
-      const userRef = doc(fireDataBase, 'users', uid)
-      await updateDoc(userRef, {
-        registeredNotes: arrayUnion(payload),
+      let userUid
+      const userRef = collection(fireDataBase, 'users')
+      const userQuery = query(userRef, where('uidRole', '==', payload.uid))
+      const querySnapshot = await getDocs(userQuery)
+      querySnapshot.forEach((doc) => {
+        userUid = doc.id
       })
-      commit('SET_NEW_SCORE', payload)
+      const docRef = doc(fireDataBase, 'users', userUid)
+      await updateDoc(docRef, {
+        registeredNotes: arrayUnion(payload.score),
+      })
+      commit('SET_NEW_SCORE', payload.score)
     } catch (error) {
       console.error(error)
     }

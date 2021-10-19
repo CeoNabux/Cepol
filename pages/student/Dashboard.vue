@@ -54,13 +54,13 @@ export default {
   },
   data: () => ({
     chartData: {
-      labels: ['Simulacion 4', 'Simulacion 3', 'Simulacion 2', 'Simulacion 1'],
+      labels: [],
       datasets: [
         {
           label: 'Simulaciones Transformar',
           borderColor: '#ffa420',
           backgroundColor: 'transparent',
-          data: [40, 39, 10, 40]
+          data: null
         },
       ],
       responsive: true,
@@ -112,6 +112,7 @@ export default {
   mounted() {
     this.fetchSimulators()
     this.getData()
+    this.scoresHistory()
   },
   methods: {
     ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore']),
@@ -121,6 +122,15 @@ export default {
         this.fetchUserData(this.user.id)
       }
     },
+    scoresHistory() {
+      const scoreHistory = this.getScores
+      scoreHistory.slice(scoreHistory.length - 4, 0)
+      this.chartData.datasets[0].data = scoreHistory
+      this.chartData.datasets[0].data.forEach((score, index) => {
+        this.chartData.labels.push(`simulador ${index + 1}`)
+      })
+      this.chartData.labels.reverse()
+    }
   },
 }
 </script>

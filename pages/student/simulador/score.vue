@@ -29,11 +29,14 @@ export default {
     ...mapGetters('fireSimulator', ['getScore']),
     ...mapGetters('fireAuthentication', ['user'])
   },
+  mounted() {
+    this.saveScore()
+  },
   methods: {
     ...mapActions('fireUsers', ['addScore']),
     saveScore() {
       const userData = {
-        uid: this.uder.id,
+        uid: this.user.id,
         score: this.getScore
       }
       this.addScore(userData)
