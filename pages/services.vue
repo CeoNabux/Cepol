@@ -14,7 +14,7 @@
         "
       >
         <div class="w-full lg:w-1/2">
-          <h2 class="text-primary text-3xl font-semibold mb-4">
+          <h2 class="text-primary text-5xl font-semibold mb-4">
             Examen transformar
           </h2>
           <p class="text-lg text-gray-700 font-medium">
@@ -47,7 +47,7 @@
         "
       >
         <div class="w-full lg:w-1/2">
-          <h2 class="text-primary text-3xl font-semibold mb-4">
+          <h2 class="text-primary text-5xl font-semibold mb-4">
             Preuniversitario
           </h2>
           <p class="text-lg text-gray-700 font-medium">
@@ -86,7 +86,7 @@
             mx-auto
           "
         >
-          <h2 class="text-primary text-3xl font-semibold mt-2 mb-4">
+          <h2 class="text-primary text-5xl font-semibold mt-2 mb-4">
             Orientación Vocacional
           </h2>
           <p class="text-lg text-gray-700 font-medium">
@@ -119,7 +119,7 @@
             mx-auto
           "
         >
-          <h3 class="text-primary text-3xl font-semibold mt-2 mb-4">
+          <h3 class="text-primary text-5xl font-semibold mt-2 mb-4">
             Escuelas de tecnologías
           </h3>
           <p class="text-lg text-gray-700 font-medium">
