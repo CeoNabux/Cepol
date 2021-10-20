@@ -18,7 +18,7 @@
         <h1 class="w-full text-center lg:text-left text-5xl sm:text-6xl md:text-7xl text-gray-700 font-semibold">
           Prepárate para tu futuro
         </h1>
-        <p class="w-3/4 text-center lg:text-left text-2xl text-blue-600 font-light my-12 leading-7 mx-auto lg:mx-0">
+        <p class="w-3/4 text-center lg:text-left text-2xl text-gray-700 font-light my-12 leading-7 mx-auto lg:mx-0">
           Cepol busca ayudarte con las habilidades que necesitas para triunfar
           en tu vida profesional <span class="text-secondary leading-tight text-3xl font-semibold">.</span>
         </p>

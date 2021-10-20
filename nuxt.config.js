@@ -39,8 +39,15 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: [
+    '@nuxtjs/google-fonts'
+  ],
 
+  googleFonts: {
+    families: {
+      Lato: [100, 300, 400, 700, 900]
+    }
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/tailwindcss',

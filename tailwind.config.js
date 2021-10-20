@@ -9,6 +9,9 @@ module.exports = {
       },
       inset: {
         '100': '100%'
+      },
+      fontFamily: {
+        'sans': ['Lato', 'sans-serif']
       }
     },
   },
