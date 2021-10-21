@@ -44,8 +44,15 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import SwiperClass, {
+  Navigation,
+  Pagination /* add some modules if you need */,
+} from 'swiper'
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
 import PostPreview from '@/components/cards/PostPreview.vue'
+SwiperClass.use([Navigation, Pagination])
+
 export default {
   props: {
     array: {
@@ -57,6 +64,9 @@ export default {
     PostPreview,
     Swiper,
     SwiperSlide,
+  },
+  directives: {
+    swiper: directive,
   },
   data: () => ({
     swiperOption: {
