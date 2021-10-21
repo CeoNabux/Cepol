@@ -19,6 +19,7 @@
     "epic-spinners": "^1.1.0",
     "firebase": "^9.0.2",
     "hchs-vue-charts": "^1.2.8",
+    "katex": "^0.13.18",
     "nuxt": "^2.15.7",
     "swiper": "^6.6.2",
     "vee-validate": "^3.4.13",
@@ -27,6 +28,7 @@
     "vue-browser-geolocation": "^1.8.0",
     "vue-chartjs": "^3.5.1",
     "vue-clickaway": "^2.2.2",
+    "vue-quill-editor": "^3.0.6",
     "vue2-google-maps": "^0.10.7"
   },
   "devDependencies": {

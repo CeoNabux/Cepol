@@ -204,7 +204,7 @@ export default {
     menu() {
       let menuItems = [
         { name: 'Inicio', link: '/' },
-        // { name: 'Blog', link: '/blog' },
+        { name: 'Blog', link: '/blog' },
         { name: 'Servicios', link: '/services' },
         { name: 'Contáctos', link: '/contacts' },
       ]
