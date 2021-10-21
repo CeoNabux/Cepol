@@ -3,7 +3,17 @@
     <h2 class="text-gray-800 text-center font-semibold text-4xl">
       Nuestro blog
     </h2>
-    <p class="text-gray-800 w-full md:w-1/2 text-xl text-center mt-4 mb-16 mx-auto">
+    <p
+      class="
+        text-gray-800
+        w-full
+        md:w-1/2
+        text-xl text-center
+        mt-4
+        mb-16
+        mx-auto
+      "
+    >
       Una invitación de seguimiento a CEPOL a travé de la visualización de los
       posts publicados
     </p>
@@ -35,7 +45,6 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
 import PostPreview from '@/components/cards/PostPreview.vue'
 export default {
   props: {
@@ -47,7 +56,7 @@ export default {
   components: {
     PostPreview,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   data: () => ({
     swiperOption: {

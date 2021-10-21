@@ -30,7 +30,11 @@
             :delete-instance-on-destroy="true"
             :cleanup-styles-on-destroy="true"
           >
-            <swiper-slide v-for="(testimony, i) in array" :key="i" class="w-full md:w-3/4">
+            <swiper-slide
+              v-for="(testimony, i) in array"
+              :key="i"
+              class="w-full md:w-3/4"
+            >
               <testimoni-card
                 :name="testimony.name"
                 :testimony="testimony.testimony"
@@ -47,7 +51,6 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
 import TestimoniCard from '../cards/TestimoniCard.vue'
 export default {
   props: {

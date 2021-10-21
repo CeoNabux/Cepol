@@ -1,5 +1,6 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
+  ssr: false,
   target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -22,7 +23,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/css/swiper', '~/assets/css/tailwind'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -30,23 +31,21 @@ export default {
     '~/plugins/timer.js',
     '~/plugins/firebase/app.js',
     '~/plugins/map.js',
-    { src: '~/plugins/google-maps.js', ssr: false },
-    { src: '~/plugins/chart.js', mode: 'client' },
-    { src: '~/plugins/vee-validate.js', ssr: 'true' },
+    '~/plugins/google-maps.js',
+    '~/plugins/chart.js',
+    '~/plugins/vee-validate.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    '@nuxtjs/google-fonts'
-  ],
+  buildModules: ['@nuxtjs/google-fonts'],
 
   googleFonts: {
     families: {
-      Lato: [100, 300, 400, 700, 900]
-    }
+      Lato: [100, 300, 400, 700, 900],
+    },
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
