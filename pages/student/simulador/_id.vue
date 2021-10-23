@@ -4,8 +4,8 @@
       <!-- LEFT -->
       <div class="w-full lg:w-8/12">
         <!-- CRONOMETRO -->
-        <!-- <the-timer :time="simulator[0].time" /> -->
-        <the-timer :time="15000" />
+        <the-timer :time="simulator[0].time" />
+        <!-- <the-timer :time="15000" /> -->
         <!-- VISUALIZACION DE PREGUNTAS -->
         <div
           v-if="isSimulating"

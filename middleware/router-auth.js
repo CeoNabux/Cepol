@@ -1,15 +1,9 @@
 export default function ({ store, redirect, error, route }) {
-  // console.log('user', store.state.user)
-  if (!isAuthenticated(store.state.user) && requireAuthentication(route))
-    redirect('/')
-  // /login
-  else if (!isAdmin(store.state.user) && requireAdmin(route))
-    // redirect('/error_admin_only')
-    // redirect('/error', { code: 'require_admin' })
-    error({
-      statusCode: 401,
-      message: 'Only Admin is allowed to access this page',
-    })
+  if(!store.state.fireAuthentication.user) {
+    console.log(store.state.fireAuthentication.user)
+  } else if(!store.state.fireAuthentication.user && isAdmin(store.state.fireAuthentication.user)) {
+    redirect('/admin')
+  }
 }
 
 function isAuthenticated(user) {
@@ -18,13 +12,25 @@ function isAuthenticated(user) {
 
 function requireAuthentication(route) {
   // return !['/', '/about', '/login'].includes(route.path) // || !route.path.startswith('/error_')
-  return ['/console'].includes(route.path)
+  return ['/'].includes(route.path)
 }
 
 function isAdmin(user) {
-  return user && user.admin
+  return user && user.role.admin
+}
+function isStudent(user) {
+  return user && user.role.student
+}
+function isInstructor(user) {
+  return user && user.role.instructor
 }
 
 function requireAdmin(route) {
   return ['/admin'].includes(route.path)
+}
+function requireStudent(route) {
+  return ['/student'].includes(route.path)
+}
+function requireInstructor(route) {
+  return ['/instructor'].includes(route.path)
 }

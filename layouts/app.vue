@@ -96,6 +96,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  middleware: 'router-auth',
   data: () => ({
     menuItems: [
       { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
@@ -108,10 +109,14 @@ export default {
   },
   watch: {
     user(value) {
-      if (value !== undefined && value !== null) {
+      if (value !== undefined && value !== null && user.role.student) {
         this.$router.push('/student/dashboard')
-        console.log('estamos coneectados')
-      } else {
+      } else if (value !== undefined && value !== null && user.role.instructor) {
+        this.$router.push('/instructor/questions')
+      } else if (value !== undefined && value !== null && user.role.admin) {
+        this.$router.push('/admin/dashboard')
+      }
+      else {
         this.$router.push('/')
       }
     },

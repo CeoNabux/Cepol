@@ -9,6 +9,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  middleware: 'router-auth',
   computed: {
     ...mapGetters('fireAuthentication', ['user'])
   }
