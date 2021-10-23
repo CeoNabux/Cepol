@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  getIdTokenResult,
 } from '@firebase/auth'
 import { httpsCallable } from '@firebase/functions'
 
@@ -117,6 +118,7 @@ export const actions = {
   async signUserIn({ commit }, payload) {
     commit('SET_LOADING', true)
     commit('CLEAR_ERROR')
+    let role
     try {
       const auth = fireAuth
       const user = await signInWithEmailAndPassword(
@@ -124,9 +126,21 @@ export const actions = {
         payload.email,
         payload.password
       )
+      const userId = await fireAuth.currentUser.getIdTokenResult()
+      if (userId.claims.admin) {
+        const admin = userId.claims.admin
+        role = {admin}
+      } else if (userId.claims.student) {
+        const student = userId.claims.student
+        role = {student}
+      } else {
+        const instructor = userId.claims.instructor
+        role = {instructor}
+      }
+      console.log(role)
       const newUser = {
         id: user.user.uid,
-        registeredNotes: [],
+        role: role,
       }
       commit('SET_LOADING', false)
       commit('SET_USER', newUser)
