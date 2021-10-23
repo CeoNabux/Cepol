@@ -137,7 +137,6 @@ export const actions = {
         const instructor = userId.claims.instructor
         role = {instructor}
       }
-      console.log(role)
       const newUser = {
         id: user.user.uid,
         role: role,
