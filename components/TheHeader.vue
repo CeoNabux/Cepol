@@ -241,13 +241,13 @@ export default {
       this.activeMenu(false)
     },
     signUpRedirection() {
-      this.$router.push('/authentication/signUp')
+      this.$router.push('/signUp')
     },
     profileRedirection() {
       this.$router.push('/profile')
     },
     signInRedirection() {
-      this.$router.push('/authentication/signIn')
+      this.$router.push('/signIn')
     },
     signOut() {
       this.signUserOut()

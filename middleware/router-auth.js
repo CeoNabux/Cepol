@@ -4,6 +4,11 @@ export default function ({ store, redirect, error, route }) {
   ) {
     redirect('/')
   }
+  else if(!isAuthenticated(store.state.fireAuthentication.user) && !isInApp(route.path)) {
+    const path = isUserRole(store.state.fireAuthentication.user)
+    redirect(`${path}/dashboard`)
+  }
+  return
 }
 
 function isInApp(userRoute) {
@@ -16,4 +21,14 @@ function isInApp(userRoute) {
 function isAuthenticated(user) {
   const superUser = user === null || user=== undefined
   return superUser
+}
+
+function isUserRole(user) {
+  if (user.role.student) {
+    return 'student'
+  } else if(user.role.admin) {
+    return 'admin'
+  } else {
+    return 'instructor'
+  }
 }
