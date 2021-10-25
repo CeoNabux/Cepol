@@ -12,6 +12,9 @@
         <p class="text-grayy-800 text-base">
           {{ abstract }}
         </p>
+        <div class="w-full mt-4">
+          <c-button name="Leer más" class="bg-primary" @click="redirectToPost" />
+        </div>
       </div>
     </div>
   </div>
@@ -32,6 +35,15 @@ export default {
       type: String,
       required: true
     },
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    redirectToPost() {
+      this.router.push(`blog/${id}`)
+    }
   }
 }
 </script>
