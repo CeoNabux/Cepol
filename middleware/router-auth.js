@@ -1,32 +1,36 @@
 export default function ({ store, redirect, error, route }) {
-  if(!store.state.fireAuthentication.user) {
-    console.log(store.state.fireAuthentication.user)
-  } else if(!store.state.fireAuthentication.user && isAdmin(store.state.fireAuthentication.user)) {
-    redirect('/admin')
+  if (
+    isInApp(route.path) && isAuthenticated(store.state.fireAuthentication.user)
+  ) {
+    redirect('/')
   }
+  else if(!isAuthenticated(store.state.fireAuthentication.user) && !isInApp(route.path)) {
+    const path = isUserRole(store.state.fireAuthentication.user)
+    redirect(`${path}/dashboard`)
+  }
+  return
 }
+
+function isInApp(userRoute) {
+  const pathsUrl = ['student', 'instructor', 'admin']
+  const result = pathsUrl.some(pathUrl => userRoute.includes(pathUrl))
+  return result
+}
+
 
 function isAuthenticated(user) {
-  return user
+  const superUser = user === null || user=== undefined
+  return superUser
 }
 
-function requireAuthentication(route) {
-  // return !['/', '/about', '/login'].includes(route.path) // || !route.path.startswith('/error_')
-  return ['/'].includes(route.path)
-}
-
-function isAdmin(user) {
-  return user && user.role.admin
-}
-function isStudent(user) {
-  return user && user.role.student
-}
-function isInstructor(user) {
-  return user && user.role.instructor
-}
-
-function requireAdmin(route) {
-  return ['/admin'].includes(route.path)
+function isUserRole(user) {
+  if (user.role.student) {
+    return 'student'
+  } else if(user.role.admin) {
+    return 'admin'
+  } else {
+    return 'instructor'
+  }
 }
 function requireStudent(route) {
   return ['/student'].includes(route.path)

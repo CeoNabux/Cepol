@@ -23,7 +23,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['quill/dist/quill.snow.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -34,6 +34,7 @@ export default {
     '~/plugins/google-maps.js',
     '~/plugins/chart.js',
     '~/plugins/vee-validate.js',
+    '~/plugins/vue-quill-editor.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

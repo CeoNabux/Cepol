@@ -128,10 +128,7 @@ export default {
   computed: {
     ...mapGetters('fireAuthentication', ['loading', 'error']),
     formIsValid() {
-      return (
-        this.email !== '' &&
-        this.password !== ''
-      )
+      return this.email !== '' && this.password !== ''
     },
     user() {
       return this.$store.getters['fireAuthentication/user']
@@ -140,7 +137,20 @@ export default {
   watch: {
     user(value) {
       if (value !== undefined && value !== null) {
-        this.$router.push('/student/dashboard')
+        let path
+        if (value.role.student) {
+          path = 'student'
+          console.log('Estamos en student')
+          this.$router.push(`${path}/dashboard`)
+        } else if (value.role.admin) {
+          console.log('Estamos en admin')
+          path = 'admin'
+          this.$router.push(`${path}/dashboard`)
+        } else {
+          path = 'instructor'
+          console.log('Estamos en instructor')
+          this.$router.push(`${path}/dashboard`)
+        }
       }
     },
   },
@@ -157,7 +167,7 @@ export default {
     },
     onDismissed() {
       this.$store.dispatch('fireAuthentication/clearError')
-    }
+    },
   },
 }
 </script>
