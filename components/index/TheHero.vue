@@ -15,28 +15,107 @@
     >
       <!-- CONTENIDO -->
       <div class="flex flex-col w-full lg:w-2/5">
-        <h1 class="w-full text-center lg:text-left text-5xl sm:text-6xl md:text-7xl text-gray-700 font-semibold">
+        <h1
+          class="
+            w-full
+            text-center
+            lg:text-left
+            text-5xl
+            sm:text-6xl
+            md:text-7xl
+            text-gray-700
+            font-semibold
+          "
+        >
           Prepárate para tu futuro
         </h1>
-        <p class="w-3/4 text-center lg:text-left text-2xl text-gray-700 font-light my-12 leading-7 mx-auto lg:mx-0">
+        <p
+          class="
+            w-3/4
+            text-center
+            lg:text-left
+            text-2xl text-gray-700
+            font-light
+            my-12
+            leading-7
+            mx-auto
+            lg:mx-0
+          "
+        >
           Cepol busca ayudarte con las habilidades que necesitas para triunfar
-          en tu vida profesional <span class="text-secondary leading-tight text-3xl font-semibold">.</span>
+          en tu vida profesional
+          <span class="text-secondary leading-tight text-3xl font-semibold"
+            >.</span
+          >
         </p>
-        <button class="rounded bg-secondary p-4 w-full h-12 text-white flex justify-center items-center text-lg font-semibold">
-          Este es un boton jaja
+        <button
+          class="
+            rounded
+            bg-secondary
+            p-4
+            w-full
+            h-12
+            text-white
+            flex
+            justify-center
+            items-center
+            text-lg
+            font-semibold
+          "
+          @click="redirectToServices"
+        >
+          Conoce nuestros cursos
         </button>
       </div>
       <!-- IMAGEN -->
-      <div class="w-full hidden lg:w-2/5 lg:flex justify-center items-center p-1">
+      <div
+        class="w-full hidden lg:w-2/5 lg:flex justify-center items-center p-1"
+      >
         <div class="w-full flex justify-center items-center relative h-full">
-          <figure class="w-full h-full flex items-center justify-center absolute top-7 left-0 z-0">
-            <img src="@/static/images/svg/blob-blue.svg" alt="hero-cepol" class="w-full" />
+          <figure
+            class="
+              w-full
+              h-full
+              flex
+              items-center
+              justify-center
+              absolute
+              top-7
+              left-0
+              z-0
+            "
+          >
+            <img
+              src="@/static/images/svg/blob-blue.svg"
+              alt="hero-cepol"
+              class="w-full"
+            />
           </figure>
-          <figure class="w-full h-full flex items-center justify-center absolute top-0 left-0 z-10">
-            <img src="@/static/images/svg/blob-green.svg" alt="hero-cepol" class="w-full"/>
+          <figure
+            class="
+              w-full
+              h-full
+              flex
+              items-center
+              justify-center
+              absolute
+              top-0
+              left-0
+              z-10
+            "
+          >
+            <img
+              src="@/static/images/svg/blob-green.svg"
+              alt="hero-cepol"
+              class="w-full"
+            />
           </figure>
           <figure class="w-full flex items-center justify-center z-20 mask">
-            <img src="@/static/images/people/chico-hero-cepol.png" alt="hero-cepol" class="w-full" />
+            <img
+              src="@/static/images/people/chico-hero-cepol.png"
+              alt="hero-cepol"
+              class="w-full"
+            />
           </figure>
         </div>
       </div>
@@ -59,7 +138,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    redirectToServices() {
+      this.$router.push('services')
+    }
+  }
+}
 </script>
 
 <style scoped>
