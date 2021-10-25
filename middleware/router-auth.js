@@ -1,13 +1,19 @@
 export default function ({ store, redirect, error, route }) {
   if (
-    (route.path.includes('student') &&
-      store.state.fireAuthentication.user === null) ||
-    store.state.fireAuthentication.user === undefined
+    isInApp(route.path) && isAuthenticated(store.state.fireAuthentication.user)
   ) {
     redirect('/')
   }
 }
 
+function isInApp(userRoute) {
+  const pathsUrl = ['student', 'instructor', 'admin']
+  const result = pathsUrl.some(pathUrl => userRoute.includes(pathUrl))
+  return result
+}
 
 
-
+function isAuthenticated(user) {
+  const superUser = user === null || user=== undefined
+  return superUser
+}
