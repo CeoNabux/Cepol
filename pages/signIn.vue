@@ -168,15 +168,6 @@ export default {
     onDismissed() {
       this.$store.dispatch('fireAuthentication/clearError')
     },
-    isUserRole(user) {
-      if (user.role.student) {
-        return 'student'
-      } else if (user.role.admin) {
-        return 'admin'
-      } else {
-        return 'instructor'
-      }
-    },
   },
 }
 </script>

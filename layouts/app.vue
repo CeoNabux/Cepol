@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col-reverse lg:flex-row min-h-screen bg-blue-900 relative">
+  <div
+    class="flex flex-col-reverse lg:flex-row min-h-screen bg-blue-900 relative"
+  >
     <!-- SIDEBBAR -->
     <div
       class="
@@ -23,10 +25,7 @@
         transform
         transition
         duration-500
-        lg:sticky
-        lg:top-0
-        lg:left-0
-        lg:h-screen
+        lg:sticky lg:top-0 lg:left-0 lg:h-screen
         open
       "
     >
@@ -48,7 +47,7 @@
         "
       >
         <button
-          v-for="(item, i) in menuItems"
+          v-for="(item, i) in menu"
           :key="i"
           class="
             w-8
@@ -96,15 +95,35 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  data: () => ({
-    menuItems: [
-      { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
-      { icon: 'simulador', link: 'simulador', name: 'Simulador' },
-      { icon: 'account', link: 'profile', name: 'Perfil' },
-    ],
-  }),
   computed: {
-    ...mapGetters('fireAuthentication', ['user'])
+    ...mapGetters('fireAuthentication', ['user']),
+    menu() {
+      let menuItems = [
+        { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
+        { icon: 'simulador', link: 'simulador', name: 'Simulador' },
+        { icon: 'account', link: 'profile', name: 'Perfil' },
+      ]
+      if (this.userRole === 'admin') {
+        let menuItems = [
+          { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
+          { icon: 'simulador', link: 'simulador', name: 'Simulador' },
+          // { icon: 'account', link: 'profile', name: 'Perfil' },
+        ]
+        return menuItems
+      } else if (this.userRole === 'instructor') {
+        let menuItems = [
+          { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
+          // { icon: 'simulador', link: 'simulador', name: 'Simulador' },
+          // { icon: 'account', link: 'profile', name: 'Perfil' },
+        ]
+        return menuItems
+      }
+      return menuItems
+    },
+    userRole() {
+      const role = this.isUserRole(this.user)
+      return role
+    },
   },
   watch: {
     user(value) {
@@ -119,6 +138,15 @@ export default {
   methods: {
     redirection(link) {
       this.$router.push(link)
+    },
+    isUserRole(user) {
+      if (user.role.student) {
+        return 'student'
+      } else if (user.role.admin) {
+        return 'admin'
+      } else {
+        return 'instructor'
+      }
     },
   },
 }
