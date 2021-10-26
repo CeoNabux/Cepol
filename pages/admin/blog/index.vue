@@ -8,6 +8,7 @@
         px-2
         pt-4
         py-2
+        pb-4
         border border-gray-400
         rounded-lg
         shadow
