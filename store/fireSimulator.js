@@ -58,6 +58,9 @@ export const mutations = {
   CLEAR_SIMULATOR(state) {
     state.currentSimulator = []
   },
+  CLEAR_SIMULATORS(state) {
+    state.currentSimulator = []
+  },
   SET_CURRENT_SIMULATOR(state, payload) {
     state.currentSimulator = payload
   },
