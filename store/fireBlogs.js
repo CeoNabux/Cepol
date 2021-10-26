@@ -5,7 +5,8 @@ import {
   doc,
   collection,
   updateDoc,
-  addDoc,
+  query,
+  where
 } from '@firebase/firestore'
 import { getDownloadURL, uploadBytes, ref } from '@firebase/storage'
 
@@ -27,7 +28,7 @@ export const mutations = {
   },
   // recibimos los posts que traemos desde firebase
   ADD_POSTS(state, payload) {
-    state.post = payload
+    state.posts = payload
   },
   LOADING(state, payload) {
     state.loading = payload
@@ -57,10 +58,12 @@ export const actions = {
         postData: payload.postData,
         image: url,
         published: false,
+        id: id,
       }
       await setDoc(postRef, {
         post,
       })
+      commit('ADD_POST', post)
       commit('LOADING', true)
     } catch (error) {
       console.error(error)
