@@ -151,7 +151,7 @@ export default {
     edited: false,
   }),
   computed: {
-    ...mapGetters('fireBlogs', ['loading']),
+    ...mapGetters('fireBlogs', ['isLoading']),
     postIsValid() {
       return (
         this.image.imageUrl !== '' &&
@@ -164,7 +164,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('fireBlogs', ['savePost']),
+    ...mapActions('fireBlogs', ['savePost', 'publishPost']),
     // DETECTAMOS LOS CAMBIOS DE LA IMAGEN
     onChange(event) {
       const file = event.target.files[0]
@@ -185,7 +185,7 @@ export default {
     // PUBLICAMOS LA INFORMACION
     publishData() {
       if (this.edited) {
-        console.log('por publicar')
+        this.publishPost()
         this.edited = false
       }
     },
