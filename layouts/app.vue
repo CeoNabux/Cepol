@@ -106,8 +106,8 @@ export default {
       if (this.userRole === 'admin') {
         let menuItems = [
           { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
-          { icon: 'simulador', link: 'simulador', name: 'Simulador' },
-          // { icon: 'account', link: 'profile', name: 'Perfil' },
+          { icon: 'post', link: 'blog', name: 'Blog' },
+          { icon: 'account', link: 'profile', name: 'Perfil' },
         ]
         return menuItems
       } else if (this.userRole === 'instructor') {

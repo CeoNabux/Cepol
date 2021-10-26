@@ -30,8 +30,8 @@
                     w-64
                     flex flex-col
                     items-center
-                    px-4
-                    py-6
+                    px-2
+                    py-2
                     bg-secondary
                     rounded-md
                     shadow-md
