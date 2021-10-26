@@ -18,12 +18,30 @@
       <h1 class="text-gray-700 text-3xl font-medium mb-8">
         Empecemos a escribir algo increíble
       </h1>
+      <!-- CONTENEDOR PARA SUBIR EL TITULO -->
+      <div class="w-full mb-6">
+        <p class="mb-2 text-xl text-gray-700 font-medium">
+          Coloca un título increíble
+        </p>
+        <input
+          v-model="title"
+          type="text"
+          class="
+            py-1
+            px-2
+            w-2/3
+            border border-gray-400
+            rounded-lg
+            focus:border-secondary
+          "
+        />
+      </div>
       <!-- CONTENEDOR PARA SUBIR TU IMAGEN -->
       <div class="w-full mb-6">
         <p class="text-gray-700 text-medium text-xl">
           Sube una imagen que describa tu blog
         </p>
-        <div class="container mt-6 px-0">
+        <div class="container mt-2 px-0">
           <label
             class="
               w-64
@@ -91,8 +109,7 @@
       class="
         w-full
         mt-2
-        lg:mt-0
-        lg:w-1/3
+        lg:mt-0 lg:w-1/3
         px-2
         pt-4
         py-2
@@ -121,9 +138,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'app',
   data: () => ({
+    title: '',
     editorData: '',
     image: {
       imageUrl: '',
@@ -132,28 +151,38 @@ export default {
     edited: false,
   }),
   computed: {
+    ...mapGetters('fireBlogs', ['loading']),
     postIsValid() {
-      return this.image.imageUrl !== '' && this.editorData !== ''
+      return (
+        this.image.imageUrl !== '' &&
+        this.editorData !== '' &&
+        this.title !== ''
+      )
     },
     postSaved() {
       return this.edited !== false
     },
   },
   methods: {
-    saveData() {
-      const editorData = {
-        image: this.image.imageObject,
-        post: this.editorData,
-        published: false,
-      }
-      this.edited = true
-      console.log(editorData)
-    },
+    ...mapActions('fireBlogs', ['savePost']),
+    // DETECTAMOS LOS CAMBIOS DE LA IMAGEN
     onChange(event) {
       const file = event.target.files[0]
       this.image.imageObject = file
       this.image.imageUrl = URL.createObjectURL(file)
     },
+    // GUARDAMOS LA INFORMACION DEL POST SIN PUBLICARLO
+    saveData() {
+      const editorData = {
+        title: this.title,
+        image: this.image.imageObject,
+        postData: this.editorData,
+        published: false,
+      }
+      this.edited = true
+      this.savePost(editorData)
+    },
+    // PUBLICAMOS LA INFORMACION
     publishData() {
       if (this.edited) {
         console.log('por publicar')
