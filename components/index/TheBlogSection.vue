@@ -33,8 +33,8 @@
         >
           <post-preview
             :title="post.title"
-            :abstract="post.abstract"
             :image="post.image"
+            :id="post.id"
           />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>

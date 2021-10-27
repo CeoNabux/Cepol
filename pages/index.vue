@@ -4,7 +4,7 @@
       <the-hero />
       <the-services />
       <the-testimonies :array="studentsTestimonies" />
-      <the-blog-section :array="posts" />
+      <the-blog-section :array="getPosts" />
       <the-schools />
       <!-- <the-contact-section /> -->
     </div>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import TheHero from '@/components/index/TheHero.vue'
 import TheSchools from '@/components/index/TheSchools.vue'
 import TheServices from '~/components/index/TheServices.vue'
@@ -41,18 +42,15 @@ export default {
         image: require('@/static/images/people/chico-hero-cepol.png')
       },
     ],
-    posts: [
-      {
-        title: 'Luis',
-        abstract: 'Esta es una descripcion de lo bien que la pase dentro de la academia de cepol',
-        image: require('@/static/images/people/chico-hero-cepol.png')
-      },
-      {
-        title: 'Luis',
-        abstract: 'Esta es una descripcion de lo bien que la pase dentro de la academia de cepol',
-        image: require('@/static/images/people/chico-hero-cepol.png')
-      },
-    ],
   }),
+  computed: {
+    ...mapGetters('fireBlogs', ['getPosts'])
+  },
+  created() {
+    this.fetchPosts()
+  },
+  methods: {
+    ...mapActions('fireBlogs', ['fetchPosts'])
+  }
 }
 </script>

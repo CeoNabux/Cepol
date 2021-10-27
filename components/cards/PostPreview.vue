@@ -9,11 +9,8 @@
       </figure>
       <div class="w-1/2 py-2 px-4 gradiente rounded-lg">
         <p class="text-xl font-medium text-gray-800">{{ title }}</p>
-        <p class="text-grayy-800 text-base">
-          {{ abstract }}
-        </p>
         <div class="w-full mt-4">
-          <c-button name="Leer más" class="bg-primary" @click="redirectToPost" />
+          <c-button name="Leer más" class="bg-primary" @click="redirectToPost(id)" />
         </div>
       </div>
     </div>
@@ -28,10 +25,6 @@ export default {
       required: true
     },
     image: {
-      type: String,
-      required: true
-    },
-    abstract: {
       type: String,
       required: true
     },
