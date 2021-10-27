@@ -103,7 +103,7 @@
                     w-24
                     h-24
                     sm:w-36 sm:h-36
-                    rounded-r-3xl rounded-br-3xl
+                    rounded-b-3xl rounded-tr-3xl
                   "
                 >
                   <div class="w-9 md:w-full flex justify-center items-center">
