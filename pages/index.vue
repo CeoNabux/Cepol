@@ -4,7 +4,7 @@
       <the-hero />
       <the-services />
       <the-testimonies :array="studentsTestimonies" />
-      <the-blog-section :array="getPublishedPosts" />
+      <the-blog-section :array="getPublishedPosts.slice(0, 4)" />
       <the-schools />
       <!-- <the-contact-section /> -->
     </div>
@@ -47,10 +47,15 @@ export default {
     ...mapGetters('fireBlogs', ['getPublishedPosts'])
   },
   created() {
-    this.fetchPublishedPost()
+    this.renderPosts()
   },
   methods: {
-    ...mapActions('fireBlogs', ['fetchPublishedPost'])
+    ...mapActions('fireBlogs', ['fetchPublishedPost']),
+    renderPosts() {
+      if(!this.getPublishedPosts.length) {
+        this.fetchPublishedPost()
+      }
+    }
   }
 }
 </script>

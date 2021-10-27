@@ -1,16 +1,22 @@
 <template>
   <div class="bg-gradient-to-tr from-white to-secondary">
     <div class="w-full max-w-screen-2xl mx-auto">
-      <div
-        v-if="post.length"
-        class="w-full h-40 relative bg-image"
-        :style="{ backgroundImage: 'url(' + post[0].image + ')' }"
-      >
-        <div class="w-full relative top-0 left-0">
-          <div class="absolute px-2 py-1 gradiente top-1/3">
-            <h1 class="text-secondary text-3xl font-semibold tex-center">
-              {{ post[0].title }}
-            </h1>
+      <div v-if="post.length" class="w-full relative">
+        <div
+          class="w-full h-60 py-4 bg-image"
+          :style="{ backgroundImage: 'url(' + post[0].image + ')' }"
+        >
+          <div class="w-full h-full md:w-1/2 flex justify-center items-center">
+            <div class="px-2 py-1 gradiente rounded">
+              <h1 class="text-primary text-3xl font-semibold tex-center">
+                {{ post[0].title }}
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div class="w-full flex justify-center items-center">
+          <div class="w-full absolute bottom-1 bg-white rounded mx-auto md:w-3/4 p-4">
+            <div v-html="post[0].postData" class="w-full mx-auto"></div>
           </div>
         </div>
       </div>
