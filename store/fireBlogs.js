@@ -22,7 +22,8 @@ export const state = () => ({
   posts: [],
   loading: false,
   postEditing: '',
-  lastDoc: ''
+  lastDoc: '',
+  publishedPosts: []
 })
 
 export const getters = {
@@ -37,6 +38,9 @@ export const getters = {
   },
   getLastDoc(state) {
     return state.lastDoc
+  },
+  getPublishedPosts(state) {
+    return state.publishedPosts
   }
 }
 
@@ -48,6 +52,10 @@ export const mutations = {
   // recibimos los posts que traemos desde firebase
   ADD_POSTS(state, payload) {
     state.posts = payload
+  },
+  // recibimos solo los posts publicados
+  ADD_PUBLISHED_POSTS(state, payload) {
+    state.publishedPosts.push(payload)
   },
   LOADING(state, payload) {
     state.loading = payload
@@ -153,5 +161,13 @@ export const actions = {
   },
   resetEditingPost({ commit }) {
     commit('EDITING_POST', '')
+  },
+  async fetchPublishedPost({ commit }) {
+    const postsRefs = collection(fireDataBase, 'posts')
+    const firstQuery = query(postsRefs, where('published', '==', true) ,limit(5))
+    const postsSnapshot = await getDocs(firstQuery)
+    postsSnapshot.forEach((doc) => {
+      commit('ADD_PUBLISHED_POSTS', doc.data())
+    })
   }
 }
