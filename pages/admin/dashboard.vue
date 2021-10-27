@@ -136,8 +136,12 @@ export default {
   created() {
     this.fetchSimulators()
   },
+  mounted() {
+    this.resetEditingPost()
+  },
   methods: {
     ...mapActions('fireSimulator', ['fetchSimulators', 'clearSimulators']),
+    ...mapActions('fireBlogs', ['resetEditingPost']),
     redirectionToCreateSimulator() {
       this.$router.push('/admin/CreateSimulator')
     },

@@ -120,8 +120,11 @@ export default {
   created() {
     this.fetchPosts()
   },
+  mounted() {
+    this.resetEditingPost()
+  },
   methods: {
-    ...mapActions('fireBlogs', ['fetchPosts']),
+    ...mapActions('fireBlogs', ['fetchPosts', 'resetEditingPost']),
     handlePagination() {
       this.fetchPosts()
     },

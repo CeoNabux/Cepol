@@ -142,7 +142,6 @@ export const actions = {
       documentSnapshot.forEach((doc) => {
         posts.push(doc.data())
       })
-      console.log(posts)
       commit('ADD_POSTS', posts)
     } else {
       // const nextDocQuery = query(postRefs, startAfter(lastPost), limit(5))
