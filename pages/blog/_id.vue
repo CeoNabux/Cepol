@@ -1,5 +1,61 @@
 <template>
-  <div>
-    Estamos dentro de un post
+  <div class="bg-gradient-to-tr from-white to-secondary">
+    <div class="w-full max-w-screen-2xl mx-auto">
+      <div
+        v-if="post.length"
+        class="w-full h-40 relative bg-image"
+        :style="{ backgroundImage: 'url(' + post[0].image + ')' }"
+      >
+        <div class="w-full relative top-0 left-0">
+          <div class="absolute px-2 py-1 gradiente top-1/3">
+            <h1 class="text-secondary text-3xl font-semibold tex-center">
+              {{ post[0].title }}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  data: () => ({
+    postRoute: '',
+    post: [],
+  }),
+  computed: {
+    ...mapGetters('fireBlogs', ['getPublishedPosts']),
+  },
+  mounted() {
+    this.postRoute = this.$route.params.id
+    this.getPostDetail()
+  },
+  methods: {
+    getPostDetail() {
+      const post = this.getPublishedPosts.filter(
+        (post) => post.id === this.postRoute
+      )
+      this.post = post
+    },
+  },
+}
+</script>
+
+<style scoped>
+.bg-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.gradiente {
+  background: linear-gradient(
+    94.68deg,
+    rgba(255, 255, 255, 0.42) -0.65%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: drop-shadow(0 px 4 px 12 px rgba(0, 0, 0, 0.09));
+  border-radius: 8 px;
+}
+</style>
