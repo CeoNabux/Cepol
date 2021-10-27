@@ -8,6 +8,8 @@ import {
   query,
   getDoc,
   where,
+  limit,
+  startAfter
 } from '@firebase/firestore'
 import {
   getDownloadURL,
@@ -20,6 +22,7 @@ export const state = () => ({
   posts: [],
   loading: false,
   postEditing: '',
+  lastDoc: ''
 })
 
 export const getters = {
@@ -32,6 +35,9 @@ export const getters = {
   getEditingPost(state) {
     return state.postEditing
   },
+  getLastDoc(state) {
+    return state.lastDoc
+  }
 }
 
 export const mutations = {
@@ -50,15 +56,13 @@ export const mutations = {
     // recibimos el id del documento en edicion
     state.postEditing = payload
   },
+  // recibimos el ultimo documento del fetch previo
+  SET_LAST_DOC(state, payload) {
+    state.lastDoc = payload
+  }
 }
 
 export const actions = {
-  async fetchPosts({ commit }, payload) {
-    try {
-    } catch (error) {
-      console.error
-    }
-  },
   async savePost({ commit, getters }, payload) {
     commit('LOADING', true)
     try {
@@ -73,17 +77,20 @@ export const actions = {
         const imageRefs = ref(fireStorage, 'posts/' + id + imageNameExt)
         await uploadBytes(imageRefs, image)
         const url = await getDownloadURL(imageRefs)
-        const post = {
+        await setDoc(postRef, {
           title: payload.title,
           postData: payload.postData,
           image: url,
           published: false,
           id: id,
-        }
-        await setDoc(postRef, {
-          post,
         })
-        commit('ADD_POST', post)
+        commit('ADD_POST', {
+          title: payload.title,
+          postData: payload.postData,
+          image: url,
+          published: false,
+          id: id,
+        })
         commit('EDITING_POST', id)
         commit('LOADING', false)
       }
@@ -96,16 +103,13 @@ export const actions = {
         const id = postEditing
         const imageRefs = ref(fireStorage, 'posts/' + id + imageNameExt)
         await deleteObject(imageRefs)
-        await uploadBytes(imageRefs)
+        await uploadBytes(imageRefs, image)
         const url = await getDownloadURL(imageRefs)
-        const post = {
+        await updateDoc(docRef, {
           title: payload.title,
           postData: payload.postData,
           image: url,
           published: false,
-        }
-        await updateDoc(docRef, {
-          post,
         })
         commit('LOADING', false)
       }
@@ -118,13 +122,37 @@ export const actions = {
       commit('LOADING', true)
       const postId = getters.getEditingPost
       const docRef = doc(fireDataBase, 'posts', postId)
-      const published = {
+      await updateDoc(docRef, {
         published: true,
-      }
-      await updateDoc(docRef, published)
+      })
       commit('LOADING', false)
+      commit('EDITING_POST', '')
+      this.$router.push('blog')
     } catch (error) {
       console.error(error)
     }
   },
+  async fetchPosts({ commit, getters }) {
+    const postRefs = collection(fireDataBase, 'posts')
+    const lastPost = getters.getLastDoc
+    if(lastPost === '') {
+      const firstDocQuery = query(postRefs, limit(5))
+      const documentSnapshot = await getDocs(firstDocQuery)
+      const posts = []
+      documentSnapshot.forEach((doc) => {
+        posts.push(doc.data())
+      })
+      console.log(posts)
+      commit('ADD_POSTS', posts)
+    } else {
+      // const nextDocQuery = query(postRefs, startAfter(lastPost), limit(5))
+      // const documentSnapshot = await getDocs(nextDocQuery)
+      // console.log(documentSnapshot)
+      // commit('ADD_POSTS', documentSnapshot)
+      console.log('aun no estamos aqui')
+    }
+  },
+  resetEditingPost({ commit }) {
+    commit('EDITING_POST', '')
+  }
 }
