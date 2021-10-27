@@ -34,7 +34,7 @@ export default {
     }
   },
   methods: {
-    redirectToPost() {
+    redirectToPost(id) {
       this.$router.push(`blog/${id}`)
     }
   }
