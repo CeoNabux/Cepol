@@ -76,7 +76,6 @@ export default {
     answer: {},
     question: '',
     options: [],
-    states: [],
   }),
   computed: {
     ...mapGetters('fireSimulator', [
@@ -85,9 +84,10 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions('fireSimulator', ['setAnswer']),
+    ...mapActions('fireSimulator', ['setAnswer', 'markAnswer']),
     getAnswer(index) {
       const question = this.questionData.question
+      const category = this.questionData.category
       const options = []
       this.questionData.options.forEach((option) => {
         options.push({
@@ -99,20 +99,10 @@ export default {
       const answer = {
         question: question,
         options: options,
+        category: category
       }
-      if (!this.states.length) {
-        for (let i = 0; i < this.questionData.options.length; i++) {
-          this.states.push(false)
-        }
-      }
-      this.mark(index)
       this.setAnswer(answer)
-    },
-    mark(index) {
-      for (let i = 0; i < this.questionData.options.length; i++) {
-        this.states[i] = false
-      }
-      return (this.states[index] = true)
+      this.markAnswer(answer)
     },
   },
 }

@@ -83,6 +83,11 @@ export const mutations = {
   RESET_SCORE(state) {
     state.score = 0
   },
+  MARK_ANSWER(state, payload) {
+    const categoryIndex = state.currentSimulator.findIndex(category => category.category === payload.category)
+    const questionIndex = state.currentSimulator[categoryIndex].questions.findIndex(question => question.question === payload.question)
+    state.currentSimulator[categoryIndex].questions[questionIndex].state = true
+  }
 }
 
 export const actions = {
@@ -222,7 +227,6 @@ export const actions = {
       const questionsSet = questionsByCategory.filter(
         (questionToRemove) => questionToRemove.questions.length !== 0
       )
-      console.log(questionsSet)
       const newSetOfQuestions = questionsSet.map((category) => ({
         ...category,
         questions: category.questions.map((question) => ({
@@ -237,7 +241,6 @@ export const actions = {
           }))
         })),
       }))
-      console.log(newSetOfQuestions)
       commit('SET_CURRENT_SIMULATOR', newSetOfQuestions)
       commit('SET_ORIGINAL_SIMULATOR', questionsSet)
     } catch (error) {
@@ -265,4 +268,7 @@ export const actions = {
   resetScore({ commit }) {
     commit('RESET_SCORE')
   },
+  markAnswer({ commit }, payload) {
+    commit("MARK_ANSWER", payload)
+  }
 }

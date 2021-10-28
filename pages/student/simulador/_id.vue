@@ -52,14 +52,17 @@
                 mt-1
                 text-xs
                 rounded-full
-                bg-secondary
                 shadow
                 text-white
                 flex
                 justify-center
                 items-center
-                focus:bg-primary
+                focus:bg-yellow-700
               "
+              :class="{
+                'bg-secondary': !question.state,
+                'bg-primary': question.state
+              }"
               @click="getQuestion(i, ii)"
             >
               {{ ii + 1 }}
@@ -118,6 +121,7 @@ export default {
     getQuestion(i, ii) {
       const questionSelected = {
         question: this.getCurrentSimulator[i].questions[ii].question,
+        category: this.getCurrentSimulator[i].questions[ii].category,
         image: this.getCurrentSimulator[i].questions[ii].image,
         options: this.getCurrentSimulator[i].questions[ii].options
       }
