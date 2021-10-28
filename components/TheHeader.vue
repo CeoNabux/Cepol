@@ -129,11 +129,13 @@
               :key="i"
               class="w-full h-12 flex justify-center items-center py-4 mb-4"
             >
-              <nuxt-link :to="item.link">
-                <p class="text-white text-xl font-semibold">
-                  {{ item.name }}
-                </p>
-              </nuxt-link>
+              <li class="list-none" @click="closeMenu">
+                <nuxt-link :to="item.link">
+                  <p class="text-white text-xl font-semibold">
+                    {{ item.name }}
+                  </p>
+                </nuxt-link>
+              </li>
             </div>
           </div>
           <div
@@ -252,7 +254,7 @@ export default {
     signOut() {
       this.signUserOut()
       this.$router.push('/')
-    }
+    },
   },
 }
 </script>
