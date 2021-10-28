@@ -4,9 +4,6 @@
       <p class="text-xl text-gray-800 font-semibold">Simulador</p>
       <!-- EMPEZAR SIMULADOR -->
       <div v-if="!isSimulating" class="w-full mx-auto">
-        <p class="text-base font-medium text-gray-800 w-full text-center">
-          Comenzar simulador
-        </p>
         <c-button
           name="Empezar Simulador"
           class="bg-green-700 mt-4"
@@ -21,7 +18,7 @@
         <div class="w-1/2 flex flex-col items-center">
           <client-only>
             <vac
-              ref="print"
+              ref="vac1"
               :end-time="new Date().getTime() + time"
               @finish="(vac) => timesUp()"
             >
@@ -35,6 +32,13 @@
                 >Simulador Finalizado</span
               >
             </vac>
+            <div v-if="isSimulating" class="w-full mx-auto">
+              <c-button
+                name="Finalizar Simulador"
+                class="bg-pink-700 mt-4"
+                @click="finishTest"
+              />
+            </div>
           </client-only>
         </div>
       </div>
@@ -64,7 +68,12 @@ export default {
     timesUp() {
       this.finishSimulator(false)
       this.$router.push('score')
-    }
+    },
+    finishTest() {
+      this.$refs.vac1.finishCountdown()
+      this.finishSimulator(false)
+      this.$router.push('score')
+    },
   },
 }
 </script>
