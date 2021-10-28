@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gradient-to-tr from-white to-secondary">
-    <div class="w-full max-w-screen-2xl mx-auto">
+    <div class="w-full min-h-screen max-w-screen-2xl mx-auto">
       <!-- CONTENEDOR PRINCIPAL -->
       <div v-if="getPublishedPosts.length" class="w-full p-2">
         <!-- CONTENEDOR DE ULTIMO POST -->
