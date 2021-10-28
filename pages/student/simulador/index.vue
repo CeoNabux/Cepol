@@ -15,7 +15,7 @@
       <div v-else class="mt-4 flex justify-center items-center flex-wrap">
         <!-- AQUI VA EL SIMULADOR -->
         <div
-          v-for="(simulator, i) in getSimulators"
+          v-for="(simulator, i) in simulators"
           :key="i"
           class="w-full lg:w-1/2 p-2"
         >
@@ -23,10 +23,10 @@
             :id="simulator.id"
             :title="simulator.title"
             :description="simulator.description"
-            :simulatorStructure="simulator.simulatorStructure.length"
-            :hours="parseInt(simulator.time / 3600000)"
-            :minutes="parseInt(simulator.time / 60000)"
-            :seconds="parseInt((simulator.time % 60000) / 1000)"
+            :simulatorStructure="simulator.simulatorStructure"
+            :hours="simulator.hours"
+            :minutes="simulator.minutes"
+            :seconds="simulator.seconds"
             class="mx-auto"
           />
         </div>
@@ -53,16 +53,40 @@ export default {
       'getScore',
     ]),
     score() {
-      if(this.getScore > 0) {
+      if (this.getScore > 0) {
         this.resetScore()
       }
-    }
+    },
+  },
+  watch: {
+    getSimulators(value) {
+      if (value) {
+        this.setSimulators()
+      }
+    },
   },
   mounted() {
     this.fetchSimulators()
   },
   methods: {
     ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore']),
+    setSimulators() {
+      this.getSimulators.forEach((doc) => {
+        let number = 0
+        this.simulators.push({
+          id: doc.id,
+          title: doc.title,
+          description: doc.description,
+          countingQuestions: doc.simulatorStructure.forEach((simulator) => {
+            number = number + simulator.number
+          }),
+          simulatorStructure: number,
+          hours: parseInt(doc.time / 3600000),
+          minutes: parseInt(doc.time / 60000),
+          seconds: parseInt((doc.time % 60000) / 1000),
+        })
+      })
+    },
   },
 }
 </script>

@@ -14,8 +14,7 @@
           bg-gray-200
           shadow-lg
           my-8
-          flex
-          flex-col
+          flex flex-col
           justify-center
           items-center
         "
@@ -51,7 +50,7 @@
       <div v-else class="mt-4 flex justify-center items-center flex-wrap">
         <!-- AQUI VA EL SIMULADOR -->
         <div
-          v-for="(simulator, i) in getSimulators"
+          v-for="(simulator, i) in simulators"
           :key="i"
           class="w-full lg:w-1/2 p-2"
         >
@@ -59,10 +58,10 @@
             :id="simulator.id"
             :title="simulator.title"
             :description="simulator.description"
-            :simulatorStructure="simulator.simulatorStructure.length"
-            :hours="parseInt(simulator.time / 3600000)"
-            :minutes="parseInt(simulator.time / 60000)"
-            :seconds="parseInt((simulator.time % 60000) / 1000)"
+            :simulatorStructure="simulator.simulatorStructure"
+            :hours="simulator.hours"
+            :minutes="simulator.minutes"
+            :seconds="simulator.seconds"
             class="mx-auto"
           />
         </div>
@@ -117,6 +116,7 @@ export default {
       },
       maintainAspectRatio: false,
     },
+    simulators: []
   }),
   computed: {
     ...mapGetters('fireSimulator', [
@@ -135,6 +135,13 @@ export default {
       return {
         height: 350 + 'px',
         position: 'relative',
+      }
+    },
+  },
+  watch: {
+    getSimulators(value) {
+      if (value) {
+        this.setSimulators()
       }
     },
   },
@@ -159,6 +166,23 @@ export default {
       this.chartData.datasets[0].data = scoreHistory
       this.chartData.datasets[0].data.forEach((score, index) => {
         this.chartData.labels.push(`simulador ${index + 1}`)
+      })
+    },
+    setSimulators() {
+      this.getSimulators.forEach((doc) => {
+        let number = 0
+        this.simulators.push({
+          id: doc.id,
+          title: doc.title,
+          description: doc.description,
+          countingQuestions: doc.simulatorStructure.forEach((simulator) => {
+            number = number + simulator.number
+          }),
+          simulatorStructure: number,
+          hours: parseInt(doc.time / 3600000),
+          minutes: parseInt(doc.time / 60000),
+          seconds: parseInt((doc.time % 60000) / 1000),
+        })
       })
     },
     redirectToSimulator() {
