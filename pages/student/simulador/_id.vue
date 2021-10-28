@@ -46,9 +46,10 @@
               v-for="(question, ii) in categoryQuestions.questions"
               :key="ii"
               class="
-                w-5
-                h-5
+                w-6
+                h-6
                 mr-2
+                mt-1
                 text-xs
                 rounded-full
                 bg-secondary
