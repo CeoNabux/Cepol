@@ -125,6 +125,7 @@ export default {
       'getScore',
     ]),
     ...mapGetters('fireUsers', ['getUserData', 'getScores']),
+    ...mapGetters('fireSimulator', ['getScore']),
     ...mapGetters('fireAuthentication', ['user']),
     score() {
       if (this.getScore > 0) {
@@ -149,9 +150,10 @@ export default {
     this.fetchSimulators()
     this.getData()
     this.scoresHistory()
+    this.resetData()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore']),
+    ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore', 'resetDataSimulation']),
     ...mapActions('fireUsers', ['fetchUserData']),
     getData() {
       if (this.user.id) {
@@ -188,6 +190,11 @@ export default {
     redirectToSimulator() {
       this.$router.push('simulador')
     },
+    resetData() {
+      if(this.getScore > 0) {
+        this.resetDataSimulation
+      }
+    }
   },
 }
 </script>

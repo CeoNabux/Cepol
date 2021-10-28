@@ -67,7 +67,7 @@ export const mutations = {
   // recibimos el ultimo documento del fetch previo
   SET_LAST_DOC(state, payload) {
     state.lastDoc = payload
-  }
+  },
 }
 
 export const actions = {

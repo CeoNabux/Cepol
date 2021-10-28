@@ -67,9 +67,10 @@ export default {
   },
   mounted() {
     this.fetchSimulators()
+    this.resetData()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore']),
+    ...mapActions('fireSimulator', ['fetchSimulators', 'resetDataSimulation']),
     setSimulators() {
       this.getSimulators.forEach((doc) => {
         let number = 0
@@ -87,6 +88,11 @@ export default {
         })
       })
     },
+    resetData() {
+      if(this.getScore > 0) {
+        this.resetDataSimulation
+      }
+    }
   },
 }
 </script>

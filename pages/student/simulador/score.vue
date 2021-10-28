@@ -41,6 +41,6 @@ export default {
       }
       this.addScore(userData)
     }
-  }
+  },
 }
 </script>

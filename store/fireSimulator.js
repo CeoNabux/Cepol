@@ -84,14 +84,29 @@ export const mutations = {
     state.score = 0
   },
   MARK_ANSWER(state, payload) {
-    console.log(payload)
-    const categoryIndex = state.currentSimulator.findIndex(category => category.category === payload.category)
-    const questionIndex = state.currentSimulator[categoryIndex].questions.findIndex(question => question.question === payload.question)
-    const optionIndex = payload.options.findIndex(option => option.state === true)
+    const categoryIndex = state.currentSimulator.findIndex(
+      (category) => category.category === payload.category
+    )
+    const questionIndex = state.currentSimulator[
+      categoryIndex
+    ].questions.findIndex((question) => question.question === payload.question)
+    const optionIndex = payload.options.findIndex(
+      (option) => option.state === true
+    )
     state.currentSimulator[categoryIndex].questions[questionIndex].state = true
-    state.currentSimulator[categoryIndex].questions[questionIndex].options.forEach(option => option.state = false)
-    state.currentSimulator[categoryIndex].questions[questionIndex].options[optionIndex].state = true
-  }
+    state.currentSimulator[categoryIndex].questions[
+      questionIndex
+    ].options.forEach((option) => (option.state = false))
+    state.currentSimulator[categoryIndex].questions[questionIndex].options[
+      optionIndex
+    ].state = true
+  },
+  RESET_SIMULATION(state) {
+    state.currentSimulator = []
+    state.originalSimulator = []
+    state.currentSimulatorAnswers = []
+    state.score = 0
+  },
 }
 
 export const actions = {
@@ -239,10 +254,10 @@ export const actions = {
           category: question.category,
           image: question.image,
           state: false,
-          options: question.options.map(option => ({
+          options: question.options.map((option) => ({
             state: false,
-            text: option.text
-          }))
+            text: option.text,
+          })),
         })),
       }))
       commit('SET_CURRENT_SIMULATOR', newSetOfQuestions)
@@ -273,6 +288,9 @@ export const actions = {
     commit('RESET_SCORE')
   },
   markAnswer({ commit }, payload) {
-    commit("MARK_ANSWER", payload)
-  }
+    commit('MARK_ANSWER', payload)
+  },
+  resetDataSimulation({ commit }) {
+    commit('RESET_SIMULATION')
+  },
 }
