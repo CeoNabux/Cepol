@@ -2,7 +2,7 @@
   <div class="w-full px-2 py-3">
     <p
       v-if="!Object.keys(questionData).length"
-      class="h-72 text-center text-gray-500 text-3xl py-3 px-2 bg-white border border-gray-200 rounded-lg"
+      class="h-14 text-center text-gray-500 text-3xl py-3 px-2 bg-white border border-gray-200 rounded-lg"
     >
       Escoge una pregunta del panel
     </p>

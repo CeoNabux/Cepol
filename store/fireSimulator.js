@@ -14,6 +14,7 @@ export const state = () => ({
   simulators: [],
   isSimulating: false,
   currentSimulator: [],
+  originalSimulator: [],
   currentSimulatorAnswers: [],
   score: 0,
 })
@@ -33,6 +34,9 @@ export const getters = {
   },
   getCurrentSimulator(state) {
     return state.currentSimulator
+  },
+  getOriginalSimulator(state) {
+    return state.originalSimulator
   },
   getSimulatorAnswers(state) {
     return state.currentSimulatorAnswers
@@ -63,6 +67,9 @@ export const mutations = {
   },
   SET_CURRENT_SIMULATOR(state, payload) {
     state.currentSimulator = payload
+  },
+  SET_ORIGINAL_SIMULATOR(state, payload) {
+    state.originalSimulator = payload
   },
   ADD_ANSWER(state, payload) {
     state.currentSimulatorAnswers.push(payload)
@@ -139,15 +146,15 @@ export const actions = {
   },
   finishSimulator({ commit, getters }, Boolean) {
     let count = 0
-    for (let i = 0; i < getters.getCurrentSimulator.length; i++) {
+    for (let i = 0; i < getters.getOriginalSimulator.length; i++) {
       for (
         let ii = 0;
-        ii < getters.getCurrentSimulator[i].questions.length;
+        ii < getters.getOriginalSimulator[i].questions.length;
         ii++
       ) {
         for (let iii = 0; iii < getters.getSimulatorAnswers.length; iii++) {
           if (
-            getters.getCurrentSimulator[i].questions[ii].question ===
+            getters.getOriginalSimulator[i].questions[ii].question ===
             getters.getSimulatorAnswers[iii].question
           ) {
             const comparingOptions = (objc1, objc2) =>
@@ -161,7 +168,7 @@ export const actions = {
               )
 
             const correctAnswer = comparingAnswer(
-              getters.getCurrentSimulator[i].questions[ii].options,
+              getters.getOriginalSimulator[i].questions[ii].options,
               getters.getSimulatorAnswers[iii].options
             )
 
@@ -212,9 +219,27 @@ export const actions = {
           }
         }
       }
-      const questionsSet = questionsByCategory.filter((questionToRemove) => questionToRemove.questions.length !== 0)
+      const questionsSet = questionsByCategory.filter(
+        (questionToRemove) => questionToRemove.questions.length !== 0
+      )
       console.log(questionsSet)
-      commit('SET_CURRENT_SIMULATOR', questionsSet)
+      const newSetOfQuestions = questionsSet.map((category) => ({
+        ...category,
+        questions: category.questions.map((question) => ({
+          id: question.id,
+          question: question.question,
+          category: question.category,
+          image: question.image,
+          state: false,
+          options: question.options.map(option => ({
+            state: false,
+            text: option.text
+          }))
+        })),
+      }))
+      console.log(newSetOfQuestions)
+      commit('SET_CURRENT_SIMULATOR', newSetOfQuestions)
+      commit('SET_ORIGINAL_SIMULATOR', questionsSet)
     } catch (error) {
       console.error(error)
     }
