@@ -70,7 +70,6 @@ export default {
       this.$router.push('score')
     },
     finishTest() {
-      this.$refs.vac1.finishCountdown()
       this.finishSimulator(false)
       this.$router.push('score')
     },
