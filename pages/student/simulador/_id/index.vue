@@ -32,12 +32,16 @@
             mb-2
             px-3
             py-4
-            border border-gray-200
+            border
             bg-white
             shadow-md
             rounded-lg
             flex flex-wrap
           "
+          :class="{
+            'border-gray-400': !option.state,
+            'border-green-600': option.state
+          }"
         >
           <div
             v-if="option.text.substring(0, 6) !== 'https:'"

@@ -84,9 +84,13 @@ export const mutations = {
     state.score = 0
   },
   MARK_ANSWER(state, payload) {
+    console.log(payload)
     const categoryIndex = state.currentSimulator.findIndex(category => category.category === payload.category)
     const questionIndex = state.currentSimulator[categoryIndex].questions.findIndex(question => question.question === payload.question)
+    const optionIndex = payload.options.findIndex(option => option.state === true)
     state.currentSimulator[categoryIndex].questions[questionIndex].state = true
+    state.currentSimulator[categoryIndex].questions[questionIndex].options.forEach(option => option.state = false)
+    state.currentSimulator[categoryIndex].questions[questionIndex].options[optionIndex].state = true
   }
 }
 
