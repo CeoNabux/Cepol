@@ -3,6 +3,8 @@
     <div
       class="
         h-40
+        w-80
+        md:w-full
         border border-secondary
         flex flex-col
         justify-center
@@ -15,7 +17,7 @@
     >
       <div class="w-full px-2 py-1">
         <div class="w-full gradiente rounded-lg px-1">
-          <p class="text-gray-700 font-semibold text-lg mb-3">
+          <p class="w-64 lg:w-72 text-gray-700 font-semibold text-lg mb-3">
             {{ title }}
           </p>
         </div>
