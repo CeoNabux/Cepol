@@ -100,7 +100,6 @@ export default {
   mounted() {
     this.validatingTestById()
     this.redirectionToDashboard()
-    console.log('Esto es lo que quiero renderizar', this.getCurrentSimulator)
   },
   methods: {
     ...mapActions('fireSimulator', ['setCurrentSimulator']),
