@@ -32,7 +32,7 @@
             mb-2
             px-3
             py-4
-            border
+            border-2
             bg-white
             shadow-md
             rounded-lg
