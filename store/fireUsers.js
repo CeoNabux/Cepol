@@ -7,7 +7,7 @@ import {
   getDocs,
   getDoc,
   collection,
-  arrayUnion
+  arrayUnion,
 } from '@firebase/firestore'
 
 export const state = () => ({
@@ -15,6 +15,7 @@ export const state = () => ({
   loading: false,
   registeredNotes: [],
   userUid: '',
+  instructors: [],
 })
 
 export const getters = {
@@ -26,7 +27,10 @@ export const getters = {
   },
   getScores(state) {
     return state.registeredNotes
-  }
+  },
+  getInstructors(state) {
+    return state.instructors
+  },
 }
 
 export const mutations = {
@@ -50,6 +54,10 @@ export const mutations = {
     //RECIBIMOS EL UID PARA REUTILIZARLOS PARA LLEVAR
     //REGISTROS EN LA COLECCION USERS
     state.userUid = payload
+  },
+  SET_INSTRUCTORS(state, payload) {
+    // SE PASAN LOS DATOS QUE TRAEMOS DE LOS INTRUCTORES
+    state.instructors = payload
   },
 }
 
@@ -112,6 +120,21 @@ export const actions = {
         registeredNotes: arrayUnion(payload.score),
       })
       commit('SET_NEW_SCORE', payload.score)
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  // TRAEMOS USUARIOS QUE SON INSTRUCTORES
+  async fetchInstructors({ commit }) {
+    try {
+      const instructors = []
+      const instructorQuery = await getDocs(
+        collection(fireDataBase, 'instructors')
+      )
+      instructorQuery.forEach((doc) => {
+        instructors.push(doc.data())
+      })
+      commit('SET_INSTRUCTORS', instructors)
     } catch (error) {
       console.error(error)
     }

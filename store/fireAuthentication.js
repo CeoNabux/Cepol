@@ -124,6 +124,9 @@ export const actions = {
         payload.email,
         payload.password,
       )
+      await addDoc(collection(fireDataBase, 'instructors'), {
+        email: payload.email
+      })
       const setInstructor = httpsCallable(fireFunctions, 'setInstructor')
       await setInstructor({uid: user.user.uid})
       commit('SET_LOADING', false)
