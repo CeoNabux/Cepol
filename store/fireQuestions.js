@@ -15,12 +15,16 @@ import { fireDataBase, fireStorage } from '~/plugins/firebase/app'
 export const state = () => ({
   questions: [],
   categoryToCount: '',
+  loading: false,
 })
 
 export const getters = {
   getQuestions(state) {
     return state.questions
   },
+  getLoading(state) {
+    return state.loading
+  }
 }
 
 export const mutations = {
@@ -31,12 +35,15 @@ export const mutations = {
     state.questions = []
   },
   ERASE_QUESTION(state, payload) {
-    const toErase = state.questions.find((question) => question.id === payload)
+    const toErase = state.questions.findIndex((question) => question.id === payload)
     state.questions.splice(toErase, 1)
   },
   COUNT_CATEGORY(state, payload) {
     state.categoryToCount = payload
   },
+  SET_LOADING(state, payload) {
+    state.loading = payload
+  }
 }
 
 export const actions = {
@@ -154,9 +161,12 @@ export const actions = {
   },
   async eraseQuestion({ commit, dispatch }, payload) {
     try {
-      await deleteDoc(doc(fireDataBase, 'questions', payload))
+      commit('SET_LOADING', true)
+      commit('COUNT_CATEGORY', payload.question.category)
+      await deleteDoc(doc(fireDataBase, 'questions', payload.id))
       dispatch('subtractCounter')
-      commit('ERASE_QUESTION', payload)
+      commit('ERASE_QUESTION', payload.id)
+      commit('SET_LOADING', false)
     } catch (error) {
       console.error(error)
     }

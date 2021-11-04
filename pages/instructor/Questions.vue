@@ -1,5 +1,24 @@
 <template>
   <div class="w-full">
+    <div
+      v-if="getLoading"
+      class="
+        absolute
+        w-1/3
+        h-44
+        top-1/3
+        left-1/3
+        border border-gray-300
+        bg-white
+        flex
+        justify-center
+        items-center
+        shadow-md
+        rounded-md
+      "
+    >
+      <loading :loading="getLoading" />
+    </div>
     <div class="flex justify-between flex-wrap items-start w-full">
       <div
         class="
@@ -83,8 +102,10 @@
     <div
       class="
         mt-6
+        h-96
         w-full
         lg:w-8/12
+        overflow-y-auto
         rounded-lg
         border border-gray-400
         bg-white
@@ -162,11 +183,11 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapGetters('fireQuestions', ['getQuestions', 'getLoading']),
+  },
   mounted() {
     this.fetchQuestions()
-  },
-  computed: {
-    ...mapGetters('fireQuestions', ['getQuestions']),
   },
   methods: {
     ...mapActions('fireQuestions', [
@@ -190,8 +211,10 @@ export default {
       this.fetchByCategory(category)
     },
     removeQuestion(id) {
-      const docId = id
-      this.eraseQuestion(docId)
+      const questionData = this.getQuestions.filter(
+        (question) => question.id === id
+      )
+      this.eraseQuestion(questionData[0])
     },
   },
 }
