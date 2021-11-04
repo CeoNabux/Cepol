@@ -189,7 +189,11 @@ export default {
     passwordRepeated: '',
   }),
   computed: {
-    ...mapGetters('fireAuthentication', ['error', 'loading']),
+    ...mapGetters('fireAuthentication', [
+      'error',
+      'loading',
+      'getCurrentInstructor',
+    ]),
     ...mapGetters('fireUsers', ['getInstructors']),
     passwordConfirmed() {
       return this.password !== this.passwordRepeated
@@ -205,6 +209,15 @@ export default {
       )
     },
   },
+  watch: {
+    getCurrentInstructor(value) {
+      if (value !== 0) {
+        const user = this.getCurrentInstructor
+        console.log(user)
+        this.setInstructor(user)
+      }
+    },
+  },
   mounted() {
     if (!this.getInstructors.length) {
       this.fetchInstructors()
@@ -212,14 +225,15 @@ export default {
   },
   methods: {
     ...mapActions('fireAuthentication', ['signInstructorUp']),
-    ...mapActions('fireUsers', ['fetchInstructors', 'setInstructor', 'eraseInstructor']),
+    ...mapActions('fireUsers', [
+      'fetchInstructors',
+      'setInstructor',
+      'eraseInstructor',
+    ]),
     signUp() {
       this.signInstructorUp({
         email: this.email,
         password: this.password,
-      })
-      this.setInstructor({
-        email: this.email,
       })
     },
     eraseInstructorUser(email) {

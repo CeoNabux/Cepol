@@ -1,6 +1,6 @@
 import { fireAuth } from '~/plugins/firebase/app'
 import { fireDataBase } from '~/plugins/firebase/app'
-import { addDoc, collection } from '@firebase/firestore'
+import { addDoc, collection, doc, setDoc } from '@firebase/firestore'
 import { fireFunctions } from '~/plugins/firebase/app'
 import {
   createUserWithEmailAndPassword,
@@ -15,8 +15,8 @@ export const state = () => ({
   user: null,
   loading: false,
   error: null,
+  currentInstructor: ''
 })
-
 
 // GETTERS PARA TOMAR LOS DATOS DEL USUARIOS
 // EN CASO DE QUE ESTOS EXISTAN
@@ -29,9 +29,11 @@ export const getters = {
   },
   error(state) {
     return state.error
+  },
+  getCurrentInstructor(state) {
+    return state.currentInstructor
   }
 }
-
 
 //TENEMOS MUTACIONES PARA USUARIO
 // MUTACIONES PARA EL ESTADOS DE CARGA
@@ -50,8 +52,11 @@ export const mutations = {
   CLEAR_ERROR(state) {
     state.error = null
   },
+  CURRENT_INSTRUCTOR(state, payload) {
+    console.log(payload)
+    state.currentInstructor = payload
+  }
 }
-
 
 //SE CREARON LAS FUNCIONES QUE PERMITEN HACER
 // LOGEO Y REGISTRO DE USUARIOS
@@ -76,7 +81,7 @@ export const actions = {
         email: payload.email,
         age: 0,
         registeredNotes: [],
-        institution: ''
+        institution: '',
       })
       commit('SET_LOADING', false)
       this.$router.push('signIn')
@@ -87,23 +92,22 @@ export const actions = {
     }
   },
 
-
   //SE CREO UNA FUNCION PARA CREAR A LOS USUARIOS QUE SON ADMINS
   async signAdminUp({ commit }, payload) {
     commit('SET_LOADING', true)
     commit('CLEAR_ERROR')
     const role = {
-      admin: true
+      admin: true,
     }
     try {
       const auth = fireAuth
       const user = await createUserWithEmailAndPassword(
         auth,
         payload.email,
-        payload.password,
+        payload.password
       )
       const setAdmin = httpsCallable(fireFunctions, 'setAdmin')
-      await setAdmin({uid: user.user.uid})
+      await setAdmin({ uid: user.user.uid })
       commit('SET_LOADING', false)
       this.$router.push('signIn')
     } catch (error) {
@@ -114,7 +118,7 @@ export const actions = {
   },
 
   // SE CREO UNA FUNCION PARA CREAR USUARIOS QUE SON INSTRUCTORES
-  async signInstructorUp({ commit }, payload) {
+  async signInstructorUp({ commit, dispatch }, payload) {
     commit('SET_LOADING', true)
     commit('CLEAR_ERROR')
     try {
@@ -122,14 +126,21 @@ export const actions = {
       const user = await createUserWithEmailAndPassword(
         auth,
         payload.email,
-        payload.password,
+        payload.password
       )
-      await addDoc(collection(fireDataBase, 'instructors'), {
+      const instructorRef = doc(collection(fireDataBase, 'instructors'))
+      await setDoc(instructorRef, {
         email: payload.email,
-        uid: user.user.uid
+        uid: user.user.uid,
       })
+      const userData = {
+        email: payload.email,
+        uid: user.user.uid,
+        id: instructorRef.id,
+      }
       const setInstructor = httpsCallable(fireFunctions, 'setInstructor')
-      await setInstructor({uid: user.user.uid})
+      await setInstructor({ uid: user.user.uid })
+      commit('CURRENT_INSTRUCTOR', userData)
       commit('SET_LOADING', false)
     } catch (error) {
       commit('SET_LOADING', false)
@@ -137,7 +148,6 @@ export const actions = {
       console.error(error)
     }
   },
-
 
   // PEDIMOS EL INICIO DE SESION DE LO USUARIOS
   async signUserIn({ commit }, payload) {
@@ -154,13 +164,13 @@ export const actions = {
       const userId = await fireAuth.currentUser.getIdTokenResult()
       if (userId.claims.admin) {
         const admin = userId.claims.admin
-        role = {admin}
+        role = { admin }
       } else if (userId.claims.student) {
         const student = userId.claims.student
-        role = {student}
+        role = { student }
       } else {
         const instructor = userId.claims.instructor
-        role = {instructor}
+        role = { instructor }
       }
       const newUser = {
         id: user.user.uid,
@@ -182,5 +192,5 @@ export const actions = {
   },
   clearError({ commit }) {
     commit('CLEAR_ERROR')
-  }
+  },
 }

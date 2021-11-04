@@ -151,7 +151,7 @@ export const actions = {
     }
   },
   setInstructor({ commit }, payload) {
-    commit('SET_INSTRUCTOR', { email: payload.email })
+    commit('SET_INSTRUCTOR', payload )
   },
   async eraseInstructor({ commit }, payload) {
     try {
