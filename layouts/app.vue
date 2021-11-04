@@ -113,9 +113,9 @@ export default {
         return menuItems
       } else if (this.userRole === 'instructor') {
         let menuItems = [
-          { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
+          { icon: 'newLesson', link: 'questions', name: 'Crear preguntas' },
           // { icon: 'simulador', link: 'simulador', name: 'Simulador' },
-          // { icon: 'account', link: 'profile', name: 'Perfil' },
+          { icon: 'account', link: 'profile', name: 'Perfil' },
         ]
         return menuItems
       }
