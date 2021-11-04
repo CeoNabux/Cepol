@@ -113,6 +113,27 @@ export const actions = {
     }
   },
 
+  // SE CREO UNA FUNCION PARA CREAR USUARIOS QUE SON INSTRUCTORES
+  async signInstructorUp({ commit }, payload) {
+    commit('SET_LOADING', true)
+    commit('CLEAR_ERROR')
+    try {
+      const auth = fireAuth
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        payload.email,
+        payload.password,
+      )
+      const setInstructor = httpsCallable(fireFunctions, 'setInstructor')
+      await setInstructor({uid: user.user.uid})
+      commit('SET_LOADING', false)
+    } catch (error) {
+      commit('SET_LOADING', false)
+      commit('SET_ERROR', error)
+      console.error(error)
+    }
+  },
+
 
   // PEDIMOS EL INICIO DE SESION DE LO USUARIOS
   async signUserIn({ commit }, payload) {

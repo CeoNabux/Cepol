@@ -31,6 +31,20 @@ exports.setAdmin = functions.https.onCall((data) => {
   })
 })
 
+//CREATING INTRUCTORS IN ADMIN ROUTE
+exports.setInstructor = functions.https.onCall((data) => {
+  // if (!context.auth.token.admin) return
+  const instructorClaims = {
+    instructor: true,
+  }
+  admin.auth().setCustomUserClaims(data.uid, instructorClaims)
+  return admin.firestore().collection('roles').doc(data.uid).update({
+    role: instructorClaims,
+  })
+})
+
+
+
 //WE ARE DELETING USERS AND THEIR ROLES IN FIRESTORE DATABASE
 //auth trigger (user deleted)
 exports.newDeleted = functions.auth.user().onDelete((user) => {

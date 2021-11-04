@@ -50,16 +50,118 @@
         py-6
       "
     >
-    Aqui vamos a poner a los intructores</div>
+      <form action="" class="w-full flex flex-col px-4">
+        <!-- CORREO -->
+        <ValidationProvider
+          rules="required|email"
+          v-slot="{ errors }"
+          class="flex flex-col mb-4"
+        >
+          <label class="text-blue-700 text-lg font light mb-2"> Correo </label>
+          <input
+            v-model="email"
+            type="email"
+            class="py-2 px-3 border border-secondary rounded-md"
+            autocomplete="email"
+            required
+            placeholder="juanito@gmail.com"
+          />
+          <span class="text-pink-700 text-sm">{{ errors[0] }}</span>
+        </ValidationProvider>
+        <!-- PASSWORD -->
+        <ValidationProvider
+          :rules="{
+            min: 12,
+            required: true,
+            regex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/,
+          }"
+          v-slot="{ errors }"
+          class="flex flex-col mb-4"
+        >
+          <label for="" class="text-blue-700 text-lg font light mb-2">
+            Contraseña
+          </label>
+          <input
+            v-model="password"
+            type="password"
+            class="py-2 px-3 border border-secondary rounded-md"
+            required
+            placeholder="UnPasswordLargoEsMasSeguro"
+          />
+          <span class="text-pink-700 text-sm">{{ errors[0] }}</span>
+        </ValidationProvider>
+        <label for="" class="text-blue-700 text-lg font light mb-2">
+          Repite Contraseña
+        </label>
+        <input
+          v-model="passwordRepeated"
+          type="password"
+          class="py-2 px-3 border border-secondary rounded-md"
+          required
+          placeholder="UnPasswordLargoEsMasSeguro"
+        />
+        <span class="text-pink-700 text-sm">{{ passwordConfirmed }}</span>
+        <!-- LOADER -->
+        <div class="mx-auto my-2">
+          <loading :loading="loading" />
+        </div>
+        <!-- BOTON DE ACCION -->
+        <div class="w-full lg:w-32 mx-auto mt-4">
+          <c-button
+            :disabled="!formIsValid"
+            name="Regístrate"
+            class="text-white"
+            :class="[
+              { 'bg-gray-400': !formIsValid },
+              { 'bg-secondary': formIsValid },
+            ]"
+            @click.prevent="signUp"
+          />
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import { ValidationProvider } from 'vee-validate'
 export default {
   layout: 'app',
+  components: {
+    ValidationProvider
+  },
   data: () => ({
     bgImage: require('@/static/images/svg/newLesson.svg'),
+    email: '',
+    password: '',
+    passwordRepeated: '',
   }),
+  computed: {
+    ...mapGetters('fireAuthentication', ['error', 'loading']),
+    passwordConfirmed() {
+      return this.password !== this.passwordRepeated
+        ? 'Tu Contraseña debe ser igual'
+        : ''
+    },
+    formIsValid() {
+      return (
+        this.email !== '' &&
+        this.password !== '' &&
+        this.passwordRepeated !== '' &&
+        this.password === this.passwordRepeated
+      )
+    },
+  },
+  methods: {
+    ...mapActions('fireAuthentication', ['signInstructorUp']),
+    signUp() {
+      this.signInstructorUp({
+        email: this.email,
+        password: this.password,
+      })
+    },
+  },
 }
 </script>
 
