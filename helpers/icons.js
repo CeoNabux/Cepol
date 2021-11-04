@@ -11,6 +11,7 @@ import {
   mdiInstagram,
   mdiLogout,
   mdiMenu,
+  mdiTrashCan,
   mdiViewDashboard,
   mdiWhatsapp,
 } from '@mdi/js'
@@ -29,5 +30,6 @@ export default {
   file: mdiFileEditOutline,
   clock: mdiClockOutline,
   post: mdiFileDocumentEditOutline,
-  instructor: mdiAccountPlus
+  instructor: mdiAccountPlus,
+  trash: mdiTrashCan
 }

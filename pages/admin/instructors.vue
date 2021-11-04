@@ -136,11 +136,38 @@
         <div
           v-for="(user, i) in getInstructors"
           :key="i"
-          class="w-full mt-2 flex justify-center items-center"
+          class="
+            w-full
+            mt-2
+            flex
+            justify-center
+            items-center
+            border border-gray-300
+            shadow-lg
+            rounded-lg
+            py-3
+          "
         >
           <p>
             {{ user.email }}
           </p>
+          <button
+            class="
+              bg-pink-700
+              flex
+              justify-center
+              items-center
+              w-6
+              h-6
+              p-1
+              rounded-full
+              ml-2
+              shadow-lg
+            "
+            @click="eraseInstructorUser(user.email)"
+          >
+            <c-icon name="trash" class="text-white" />
+          </button>
         </div>
       </div>
     </div>
@@ -185,15 +212,21 @@ export default {
   },
   methods: {
     ...mapActions('fireAuthentication', ['signInstructorUp']),
-    ...mapActions('fireUsers', ['fetchInstructors', 'setInstructor']),
+    ...mapActions('fireUsers', ['fetchInstructors', 'setInstructor', 'eraseInstructor']),
     signUp() {
       this.signInstructorUp({
         email: this.email,
         password: this.password,
       })
       this.setInstructor({
-        email: this.email
+        email: this.email,
       })
+    },
+    eraseInstructorUser(email) {
+      const instructor = this.getInstructors.filter(
+        (instructor) => instructor.email === email
+      )
+      this.eraseInstructor(instructor)
     },
   },
 }

@@ -53,4 +53,8 @@ exports.newDeleted = functions.auth.user().onDelete((user) => {
   return doc.delete()
 })
 
+exports.deleteInstructor = functions.https.onCall((uid) => {
+  return admin.auth().deleteUser(uid)
+})
+
 // http callable function (adding a request)

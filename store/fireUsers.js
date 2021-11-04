@@ -1,4 +1,4 @@
-import { fireDataBase } from '~/plugins/firebase/app'
+import { fireDataBase, fireFunctions } from '~/plugins/firebase/app'
 import {
   updateDoc,
   doc,
@@ -8,7 +8,9 @@ import {
   getDoc,
   collection,
   arrayUnion,
+  deleteDoc,
 } from '@firebase/firestore'
+import { httpsCallable } from '@firebase/functions'
 
 export const state = () => ({
   userData: {},
@@ -61,7 +63,13 @@ export const mutations = {
   },
   SET_INSTRUCTOR(state, payload) {
     state.instructors.push(payload)
-  }
+  },
+  ERASE_INSTRUCTOR(state, payload) {
+    const instructorIndex = state.instructors.findIndex(
+      (instructor) => instructor.email === payload
+    )
+    state.instructors.splice(instructorIndex, 1)
+  },
 }
 
 export const actions = {
@@ -135,7 +143,7 @@ export const actions = {
         collection(fireDataBase, 'instructors')
       )
       instructorQuery.forEach((doc) => {
-        instructors.push(doc.data())
+        instructors.push({ id: doc.id, ...doc.data() })
       })
       commit('SET_INSTRUCTORS', instructors)
     } catch (error) {
@@ -144,5 +152,24 @@ export const actions = {
   },
   setInstructor({ commit }, payload) {
     commit('SET_INSTRUCTOR', { email: payload.email })
-  }
+  },
+  async eraseInstructor({ commit }, payload) {
+    try {
+      if (payload[0].id) {
+        await deleteDoc(doc(fireDataBase, 'instructors', payload[0].id))
+        const deleteUser = httpsCallable(fireFunctions, 'deleteInstructor')
+        const user = {
+          email: payload[0].email,
+          id: payload[0].id,
+          uid: payload[0].uid,
+        }
+        await deleteUser(user.uid)
+        commit('ERASE_INSTRUCTOR', payload[0].email)
+      } else {
+        commit('ERASE_INSTRUCTOR', payload[0].email)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  },
 }
