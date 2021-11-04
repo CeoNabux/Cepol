@@ -140,16 +140,13 @@ export default {
         let path
         if (value.role.student) {
           path = 'student'
-          console.log('Estamos en student')
           this.$router.push(`${path}/dashboard`)
         } else if (value.role.admin) {
-          console.log('Estamos en admin')
           path = 'admin'
           this.$router.push(`${path}/dashboard`)
         } else {
           path = 'instructor'
-          console.log('Estamos en instructor')
-          this.$router.push(`${path}/dashboard`)
+          this.$router.push(`${path}/questions`)
         }
       }
     },
