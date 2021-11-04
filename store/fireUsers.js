@@ -155,6 +155,7 @@ export const actions = {
   },
   async eraseInstructor({ commit }, payload) {
     try {
+      commit('SET_LOADING', true)
       if (payload[0].id) {
         await deleteDoc(doc(fireDataBase, 'instructors', payload[0].id))
         const deleteUser = httpsCallable(fireFunctions, 'deleteInstructor')
@@ -165,6 +166,7 @@ export const actions = {
         }
         await deleteUser(user.uid)
         commit('ERASE_INSTRUCTOR', payload[0].email)
+        commit('SET_LOADING', false)
       } else {
         commit('ERASE_INSTRUCTOR', payload[0].email)
       }

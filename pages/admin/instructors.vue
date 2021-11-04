@@ -1,5 +1,24 @@
 <template>
-  <div class="w-full">
+  <div class="w-full relative">
+    <div
+      v-if="getLoading"
+      class="
+        absolute
+        w-1/3
+        h-44
+        top-1/3
+        left-1/3
+        border border-gray-300
+        bg-white
+        flex
+        justify-center
+        items-center
+        shadow-md
+        rounded-md
+      "
+    >
+      <loading :loading="getLoading" />
+    </div>
     <div class="w-full flex flex-wrap justify-between items-start">
       <!-- LEFT SECTION -->
       <div class="w-full lg:w-8/12">
@@ -177,10 +196,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { ValidationProvider } from 'vee-validate'
+import Loading from '~/components/global/Loading.vue'
 export default {
   layout: 'app',
   components: {
     ValidationProvider,
+    Loading,
   },
   data: () => ({
     bgImage: require('@/static/images/svg/newLesson.svg'),
@@ -194,7 +215,7 @@ export default {
       'loading',
       'getCurrentInstructor',
     ]),
-    ...mapGetters('fireUsers', ['getInstructors']),
+    ...mapGetters('fireUsers', ['getInstructors', 'getLoading']),
     passwordConfirmed() {
       return this.password !== this.passwordRepeated
         ? 'Tu Contraseña debe ser igual'
