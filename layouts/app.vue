@@ -106,6 +106,7 @@ export default {
       if (this.userRole === 'admin') {
         let menuItems = [
           { icon: 'dashboard', link: 'dashboard', name: 'Dashboard' },
+          { icon: 'instructor', link: 'instructors', name: 'Instructores' },
           { icon: 'post', link: 'blog', name: 'Blog' },
           { icon: 'account', link: 'profile', name: 'Perfil' },
         ]

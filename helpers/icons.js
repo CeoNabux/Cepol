@@ -1,5 +1,6 @@
 import {
   mdiAccount,
+  mdiAccountPlus,
   mdiClockOutline,
   mdiClose,
   mdiFacebook,
@@ -27,5 +28,6 @@ export default {
   simulador: mdiFileEdit,
   file: mdiFileEditOutline,
   clock: mdiClockOutline,
-  post: mdiFileDocumentEditOutline
+  post: mdiFileDocumentEditOutline,
+  instructor: mdiAccountPlus
 }
