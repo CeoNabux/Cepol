@@ -256,6 +256,9 @@ export default {
         email: this.email,
         password: this.password,
       })
+      this.email = ''
+      this.password = ''
+      this.passwordRepeated = ''
     },
     eraseInstructorUser(email) {
       const instructor = this.getInstructors.filter(
