@@ -59,6 +59,9 @@ export const mutations = {
     // SE PASAN LOS DATOS QUE TRAEMOS DE LOS INTRUCTORES
     state.instructors = payload
   },
+  SET_INSTRUCTOR(state, payload) {
+    state.instructors.push(payload)
+  }
 }
 
 export const actions = {
@@ -139,4 +142,7 @@ export const actions = {
       console.error(error)
     }
   },
+  setInstructor({ commit }, payload) {
+    commit('SET_INSTRUCTOR', { email: payload.email })
+  }
 }

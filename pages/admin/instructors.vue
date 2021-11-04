@@ -185,11 +185,14 @@ export default {
   },
   methods: {
     ...mapActions('fireAuthentication', ['signInstructorUp']),
-    ...mapActions('fireUsers', ['fetchInstructors']),
+    ...mapActions('fireUsers', ['fetchInstructors', 'setInstructor']),
     signUp() {
       this.signInstructorUp({
         email: this.email,
         password: this.password,
+      })
+      this.setInstructor({
+        email: this.email
       })
     },
   },
