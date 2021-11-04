@@ -260,6 +260,18 @@ export const actions = {
           })),
         })),
       }))
+      for (let index = 0; index < newSetOfQuestions.length; index++) {
+        for (
+          let j, x, i = newSetOfQuestions[index].questions.length;
+          i;
+          j = Math.floor(Math.random() * i),
+            x = newSetOfQuestions[index].questions[--i],
+            newSetOfQuestions[index].questions[i] =
+              newSetOfQuestions[index].questions[j],
+            newSetOfQuestions[index].questions[j] = x
+        );
+      }
+      console.log(newSetOfQuestions)
       commit('SET_CURRENT_SIMULATOR', newSetOfQuestions)
       commit('SET_ORIGINAL_SIMULATOR', questionsSet)
     } catch (error) {
