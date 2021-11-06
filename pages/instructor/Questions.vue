@@ -150,11 +150,81 @@
         </div>
       </div>
     </div>
+    <!-- BOTONES PARA PEDIR NUEVAS PREGUNTAS -->
+    <div
+      class="
+        w-full
+        lg:w-8/12
+        h-12
+        mt-4
+        mr-auto
+        flex
+        justify-center
+        items-center
+      "
+    >
+      <div
+        class="
+          w-40
+          flex
+          justify-center
+          items-center
+          bg-white
+          mx-auto
+          py-2
+          rounded-lg
+          shadow-lg
+        "
+      >
+        <div class="flex justify-center items-center">
+          <!-- BOTON DE LA IZQUIERDA -->
+          <button
+            class="
+              border border-gray-300
+              shadow-md
+              rounded-full
+              flex
+              w-8
+              h-8
+              justify-center
+              items-center
+              mr-4
+            "
+          >
+            <c-icon name="leftArrow" class="text-gray-400" />
+          </button>
+          <!-- BOTON DE LA DERECHA -->
+          <button
+            class="
+              shadow-md
+              rounded-full
+              flex
+              bg-secondary
+              w-8
+              h-8
+              justify-center
+              items-center
+            "
+            @click="fetchQuestions"
+          >
+            <c-icon name="rightArrow" class="text-white" />
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import {
+  getDocs,
+  query,
+  limit,
+  startAfter,
+  collection,
+} from 'firebase/firestore'
+import { fireDataBase } from '~/plugins/firebase/app'
 export default {
   layout: 'app',
   data: () => ({
@@ -182,6 +252,10 @@ export default {
         state: false,
       },
     ],
+    eof: false,
+    lastDoc: null,
+    batchSize: 10,
+    questions: [],
   }),
   computed: {
     ...mapGetters('fireQuestions', ['getQuestions', 'getLoading']),
@@ -191,10 +265,48 @@ export default {
   },
   methods: {
     ...mapActions('fireQuestions', [
-      'fetchQuestions',
+      'setQuestions',
       'fetchByCategory',
       'eraseQuestion',
+      'fetchNextQuestions',
     ]),
+    async fetchQuestions() {
+      try {
+        if (this.eof) {
+        return
+      }
+      this.isLoading = true
+      let questionQuery = query(
+        collection(fireDataBase, 'questions'),
+        limit(this.batchSize)
+      )
+
+      if(this.lastDoc) {
+        questionQuery = query(
+          collection(fireDataBase, 'questions'),
+          startAfter(this.lastDoc),
+          limit(this.batchSize)
+        )
+      }
+
+
+
+      const questionSnapshot = await getDocs(questionQuery)
+      const questions = []
+      this.lastDoc = questionSnapshot.docs[questionSnapshot.docs.length - 1]
+      questionSnapshot.forEach((doc) => {
+        questions.push({
+          id: doc.id,
+          question: doc.data(),
+        })
+      })
+      this.questions = questions
+      this.isLoading = false
+      this.setQuestions(questions)
+      } catch (error) {
+        console.error(error)
+      }
+    },
     redirectionToCreateQuestion() {
       this.$router.push('/instructor/createquestions')
     },
@@ -215,6 +327,9 @@ export default {
         (question) => question.id === id
       )
       this.eraseQuestion(questionData[0])
+    },
+    getMoreQuestions() {
+      this.fetchNextQuestions()
     },
   },
 }

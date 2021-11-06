@@ -1,6 +1,8 @@
 import {
   mdiAccount,
   mdiAccountPlus,
+  mdiChevronDoubleLeft,
+  mdiChevronDoubleRight,
   mdiClockOutline,
   mdiClose,
   mdiFacebook,
@@ -31,5 +33,7 @@ export default {
   clock: mdiClockOutline,
   post: mdiFileDocumentEditOutline,
   instructor: mdiAccountPlus,
-  trash: mdiTrashCan
+  trash: mdiTrashCan,
+  rightArrow: mdiChevronDoubleRight,
+  leftArrow: mdiChevronDoubleLeft
 }

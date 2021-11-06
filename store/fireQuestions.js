@@ -8,6 +8,8 @@ import {
   where,
   deleteDoc,
   updateDoc,
+  limit,
+  startAfter,
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { fireDataBase, fireStorage } from '~/plugins/firebase/app'
@@ -16,6 +18,7 @@ export const state = () => ({
   questions: [],
   categoryToCount: '',
   loading: false,
+  lastQuestion: {},
 })
 
 export const getters = {
@@ -24,18 +27,32 @@ export const getters = {
   },
   getLoading(state) {
     return state.loading
-  }
+  },
+  getLastQuestion(state) {
+    return state.lastQuestion
+  },
 }
 
 export const mutations = {
   SET_QUESTIONS(state, payload) {
+    state.questions = payload
+  },
+  SET_NEW_QUESTIONS(state, payload) {
     state.questions.push(payload)
+  },
+  SET_LAST_QUESTION(state, payload) {
+    state.lastQuestion = payload
+  },
+  SET_FIRST_QUESTION(state, payload) {
+    state.firstQuestion = payload
   },
   ERASE_QUESTIONS(state) {
     state.questions = []
   },
   ERASE_QUESTION(state, payload) {
-    const toErase = state.questions.findIndex((question) => question.id === payload)
+    const toErase = state.questions.findIndex(
+      (question) => question.id === payload
+    )
     state.questions.splice(toErase, 1)
   },
   COUNT_CATEGORY(state, payload) {
@@ -43,11 +60,11 @@ export const mutations = {
   },
   SET_LOADING(state, payload) {
     state.loading = payload
-  }
+  },
 }
 
 export const actions = {
-  async saveQuestionInformation({ dispatch, commit, state }, payload) {
+  async saveQuestionInformation({ dispatch, commit }, payload) {
     try {
       const questionRef = doc(collection(fireDataBase, 'questions'))
       let url
@@ -98,17 +115,12 @@ export const actions = {
       console.error(error)
     }
   },
-  async fetchQuestions({ commit }) {
+  async setQuestions({ commit }, payload) {
     commit('ERASE_QUESTIONS')
     try {
-      const questionQuery = query(collection(fireDataBase, 'questions'))
-      const questionSnapshot = await getDocs(questionQuery)
-      questionSnapshot.forEach((doc) => {
-        commit('SET_QUESTIONS', {
-          id: doc.id,
-          question: doc.data(),
-        })
-      })
+      const questions = payload
+      console.log(questions)
+      // commit('SET_QUESTIONS', questions)
     } catch (error) {
       console.error(error)
     }
