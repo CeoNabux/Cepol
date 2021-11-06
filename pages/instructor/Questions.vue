@@ -273,36 +273,32 @@ export default {
     async fetchQuestions() {
       try {
         if (this.eof) {
-        return
-      }
-      this.isLoading = true
-      let questionQuery = query(
-        collection(fireDataBase, 'questions'),
-        limit(this.batchSize)
-      )
-
-      if(this.lastDoc) {
-        questionQuery = query(
+          return
+        }
+        this.isLoading = true
+        let questionQuery = query(
           collection(fireDataBase, 'questions'),
-          startAfter(this.lastDoc),
           limit(this.batchSize)
         )
-      }
 
+        if (this.lastDoc) {
+          questionQuery = query(
+            collection(fireDataBase, 'questions'),
+            startAfter(this.lastDoc),
+            limit(this.batchSize)
+          )
+        }
 
-
-      const questionSnapshot = await getDocs(questionQuery)
-      const questions = []
-      this.lastDoc = questionSnapshot.docs[questionSnapshot.docs.length - 1]
-      questionSnapshot.forEach((doc) => {
-        questions.push({
-          id: doc.id,
-          question: doc.data(),
+        const questionSnapshot = await getDocs(questionQuery)
+        this.lastDoc = questionSnapshot.docs[questionSnapshot.docs.length - 1]
+        questionSnapshot.forEach((doc) => {
+          this.questions.push({
+            id: doc.id,
+            question: doc.data(),
+          })
         })
-      })
-      this.questions = questions
-      this.isLoading = false
-      this.setQuestions(questions)
+        this.isLoading = false
+        this.setQuestions(this.questions)
       } catch (error) {
         console.error(error)
       }

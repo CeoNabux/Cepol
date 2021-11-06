@@ -35,16 +35,8 @@ export const getters = {
 
 export const mutations = {
   SET_QUESTIONS(state, payload) {
-    state.questions = payload
-  },
-  SET_NEW_QUESTIONS(state, payload) {
-    state.questions.push(payload)
-  },
-  SET_LAST_QUESTION(state, payload) {
-    state.lastQuestion = payload
-  },
-  SET_FIRST_QUESTION(state, payload) {
-    state.firstQuestion = payload
+    state.questions.push(...payload)
+    console.log(state.questions)
   },
   ERASE_QUESTIONS(state) {
     state.questions = []
@@ -119,8 +111,7 @@ export const actions = {
     commit('ERASE_QUESTIONS')
     try {
       const questions = payload
-      console.log(questions)
-      // commit('SET_QUESTIONS', questions)
+      commit('SET_QUESTIONS', questions)
     } catch (error) {
       console.error(error)
     }
