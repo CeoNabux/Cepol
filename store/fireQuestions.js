@@ -36,7 +36,6 @@ export const getters = {
 export const mutations = {
   SET_QUESTIONS(state, payload) {
     state.questions.push(...payload)
-    console.log(state.questions)
   },
   ERASE_QUESTIONS(state) {
     state.questions = []
