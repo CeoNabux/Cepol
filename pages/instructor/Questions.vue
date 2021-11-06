@@ -176,39 +176,8 @@
           shadow-lg
         "
       >
-        <div class="flex justify-center items-center">
-          <!-- BOTON DE LA IZQUIERDA -->
-          <button
-            class="
-              border border-gray-300
-              shadow-md
-              rounded-full
-              flex
-              w-8
-              h-8
-              justify-center
-              items-center
-              mr-4
-            "
-          >
-            <c-icon name="leftArrow" class="text-gray-400" />
-          </button>
-          <!-- BOTON DE LA DERECHA -->
-          <button
-            class="
-              shadow-md
-              rounded-full
-              flex
-              bg-secondary
-              w-8
-              h-8
-              justify-center
-              items-center
-            "
-            @click="fetchQuestions"
-          >
-            <c-icon name="rightArrow" class="text-white" />
-          </button>
+        <div class="w-32 flex justify-center items-center">
+          <c-button name='Cargar más' class="bg-secondary" @click="fetchQuestions" />
         </div>
       </div>
     </div>
