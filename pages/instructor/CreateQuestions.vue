@@ -22,7 +22,10 @@
           <div class="w-full">
             <!-- APARECE EDITOR CUANDO NO HAY PREGUNTA GUARDADA -->
             <div v-if="!question.editing" class="w-full">
-              <the-editor v-model="questionContent" />
+              <vue-editor
+                v-model="questionContent"
+                :editor-toolbar="customToolbar"
+              />
 
               <div class="container mt-6 px-0">
                 <label
@@ -110,15 +113,18 @@
             </p>
             <!-- AGREGAR RESPUESTA -->
             <div class="w-full my-4">
-              <the-editor v-model="answerContent" />
+              <vue-editor
+                v-model="answerContent"
+                :editor-toolbar="customToolbar"
+              />
               <div class="flex justify-between items-end mt-4">
                 <label
                   class="
                     w-64
                     flex flex-col
                     items-center
-                    px-4
-                    py-6
+                    px-2
+                    py-2
                     bg-secondary
                     rounded-md
                     shadow-md
@@ -153,6 +159,22 @@
                   "
                 >
                   <img :src="answerImage.imageUrl" />
+                </div>
+              </div>
+              <!-- BOTON PARA AGREGAR RESPUESTA -->
+              <div
+                class="w-full flex flex-wrap justify-between items-center mt-8"
+              >
+                <div class="w-full lg:w-1/2 px-1 text-white">
+                  <c-button
+                    name="Guardar respuesta"
+                    class="border border-gray-400 text-gray-400 bg-gray-50"
+                    :disabled="!answerIsValid"
+                    :class="{
+                      ['border-secondary text-secondary']: answerIsValid,
+                    }"
+                    @click="saveAnswer"
+                  />
                 </div>
               </div>
             </div>
@@ -225,22 +247,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <!-- BOTON PARA AGREGAR RESPUESTA -->
-            <div
-              class="w-full flex flex-wrap justify-between items-center mt-8"
-            >
-              <div class="w-full lg:w-1/2 px-1 text-white">
-                <c-button
-                  name="Guardar respuesta"
-                  class="border border-gray-400 text-gray-400 bg-gray-50"
-                  :disabled="!answerIsValid"
-                  :class="{
-                    ['border-secondary text-secondary']: answerIsValid,
-                  }"
-                  @click="saveAnswer"
-                />
               </div>
             </div>
           </div>
@@ -354,6 +360,23 @@ export default {
       },
       answers: [],
     },
+    //configuracion del editor
+    customToolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike', { align: [] }],
+
+      ['blockquote', 'code-block'],
+
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+      [{ direction: 'rtl' }],
+
+      [{ color: [] }, { background: [] }],
+      ['clean'],
+
+      ['link', 'formula', 'video'],
+    ],
   }),
   computed: {
     validQuestion() {
@@ -397,16 +420,14 @@ export default {
       if (this.answerContent !== '') {
         this.question.answers.push({ text: this.answerContent, state: false })
         this.answerContent = ''
-      } else{
+      } else {
         this.getImages(this.question.answerImage.imageObject)
       }
     },
     // TOMAMOS LAS IMAGENES DEL ARRAY CORRESPONDIENTE
     getImages(imageFile) {
       const imageObject = imageFile
-      const imageUrl = URL.createObjectURL(
-        imageFile
-      )
+      const imageUrl = URL.createObjectURL(imageFile)
       const newImage = {
         imageObject: imageObject,
         imageUrl: imageUrl,

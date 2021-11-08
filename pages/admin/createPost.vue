@@ -90,7 +90,7 @@
 
       <!-- CONTENEDOR PARA SUBIR EL BLOG -->
       <div class="w-full">
-        <quill-editor v-model="editorData" />
+        <vue-editor v-model="editorData" :editor-toolbar="customToolbar" />
       </div>
       <div class="w-full lg:w-5/12 mt-6">
         <c-button
@@ -149,6 +149,22 @@ export default {
       imageObject: '',
     },
     edited: false,
+    customToolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike', { align: [] }],
+
+      ['blockquote', 'code-block'],
+
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+      [{ direction: 'rtl' }],
+
+      [{ color: [] }, { background: [] }],
+      ['clean'],
+
+      ['link', 'formula', 'video'],
+    ],
   }),
   computed: {
     ...mapGetters('fireBlogs', ['isLoading']),

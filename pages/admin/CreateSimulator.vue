@@ -30,7 +30,7 @@
                 v-model="titleContent"
                 class="py-2 px-3 w-full mb-4 border border-gray-300 rounded lg"
               />
-              <the-editor v-model="descriptionContent" />
+              <vue-editor v-model="descriptionContent" :editor-toolbar="customToolbar" />
               <div class="w-full lg:w-1/2 mt-2">
                 <c-button
                   name="Guardar Descripcion"
@@ -214,7 +214,24 @@ export default {
     },
     time: 0,
     timePerQuestion: 21.17,
-    milisecond: 1000
+    milisecond: 1000,
+    //configuracion del editor
+    customToolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike', { align: [] }],
+
+      ['blockquote', 'code-block'],
+
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+      [{ direction: 'rtl' }],
+
+      [{ color: [] }, { background: [] }],
+      ['clean'],
+
+      ['link', 'formula', 'video'],
+    ],
   }),
   created() {
     this.fetchCategoriesState()
@@ -308,15 +325,15 @@ export default {
       }
     },
     sendToFirebase() {
-      for (let i = 0; i <  this.simulator.simulatorStructure.length; i++) {
+      for (let i = 0; i < this.simulator.simulatorStructure.length; i++) {
         this.time = this.time + this.simulator.simulatorStructure[i].number
       }
-      this.time = this.time  * this.timePerQuestion * this.milisecond
+      this.time = this.time * this.timePerQuestion * this.milisecond
       const simulatorData = {
         simulatorStructure: this.simulator.simulatorStructure,
         title: this.simulator.title,
         description: this.simulator.description,
-        time: parseInt(this.time)
+        time: parseInt(this.time),
       }
       this.postSimulator(simulatorData)
     },

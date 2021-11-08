@@ -34,7 +34,8 @@ export default {
     '~/plugins/google-maps.js',
     '~/plugins/chart.js',
     '~/plugins/vee-validate.js',
-    '~/plugins/vue-quill-editor.js',
+    '~/plugins/vue-editor.js',
+    '~/plugins/katex.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -53,6 +54,7 @@ export default {
     '@nuxtjs/tailwindcss',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'vue2-editor/nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
