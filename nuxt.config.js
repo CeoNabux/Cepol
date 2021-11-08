@@ -54,7 +54,7 @@ export default {
     '@nuxtjs/tailwindcss',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    'vue2-editor/nuxt'
+    'vue2-editor/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

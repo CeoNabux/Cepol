@@ -198,6 +198,8 @@
 <script>
 import CButton from '~/components/global/CButton.vue'
 import { mapActions, mapGetters } from 'vuex'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 export default {
   components: { CButton },
   layout: 'app',
@@ -235,6 +237,9 @@ export default {
   }),
   created() {
     this.fetchCategoriesState()
+  },
+  mounted() {
+    window.katex = katex
   },
   computed: {
     ...mapGetters('fireSimulator', ['getSimulatorCategories']),

@@ -139,6 +139,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 export default {
   layout: 'app',
   data: () => ({
@@ -178,6 +180,9 @@ export default {
     postSaved() {
       return this.edited !== false
     },
+  },
+  mounted() {
+    window.katex = katex
   },
   methods: {
     ...mapActions('fireBlogs', ['savePost', 'publishPost']),

@@ -309,6 +309,8 @@
 <script>
 import CButton from '~/components/global/CButton.vue'
 import { mapActions } from 'vuex'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 export default {
   components: { CButton },
   layout: 'app',
@@ -402,6 +404,9 @@ export default {
       }
       return false
     },
+  },
+  mounted() {
+    window.katex = katex
   },
   methods: {
     ...mapActions('fireQuestions', ['saveQuestionInformation']),
