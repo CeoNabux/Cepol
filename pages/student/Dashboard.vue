@@ -145,11 +145,15 @@ export default {
         this.setSimulators()
       }
     },
+    getScores(value) {
+      if(value) {
+        this.scoresHistory()
+      }
+    }
   },
   mounted() {
     this.fetchSimulators()
     this.getData()
-    this.scoresHistory()
     this.resetData()
   },
   methods: {
