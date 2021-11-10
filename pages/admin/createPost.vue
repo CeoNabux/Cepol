@@ -169,7 +169,7 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters('fireBlogs', ['isLoading']),
+    ...mapGetters('fireBlogs', ['isLoading', 'getEditingPost']),
     postIsValid() {
       return (
         this.image.imageUrl !== '' &&
@@ -183,6 +183,7 @@ export default {
   },
   mounted() {
     window.katex = katex
+    this.setData()
   },
   methods: {
     ...mapActions('fireBlogs', ['savePost', 'publishPost']),
@@ -208,6 +209,16 @@ export default {
       if (this.edited) {
         this.publishPost()
         this.edited = false
+      }
+    },
+    setData() {
+      if (Object.entries(this.getEditingPost).length !== 0) {
+        const title = this.getEditingPost.title
+        const data = this.getEditingPost.postData
+        const image = this.getEditingPost.image
+        this.title = title
+        this.editorData = data
+        this.image.imageUrl = image
       }
     },
   },
