@@ -237,7 +237,6 @@ export default {
       'setQuestions',
       'fetchByCategory',
       'eraseQuestion',
-      'fetchNextQuestions',
     ]),
     async fetchQuestions() {
       try {

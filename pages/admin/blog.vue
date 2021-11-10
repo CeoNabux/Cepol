@@ -52,55 +52,93 @@
             </div>
           </div>
         </div>
-        <p class="text-gray-700 text-2xl font-semibold mt-10 mb-6">
-          Aquí damos a conocer cosas increíbles a nuestra comunidad
-        </p>
-        <div
-          v-for="(post, i) in getPosts"
-          :key="i"
-          class="
-            w-full
-            flex flex-wrap
-            justify-between
-            items-end
-            shadow-2xl
-            rounded
-            px-2
-            py-3
-            mb-4
-            border border-gray-200
-          "
-        >
-          <div class="w-full lg:w-1/2">
-            <p
-              v-if="post.published"
-              class="text-primary text-base font-medium my-2"
-            >
-              Publicado
-            </p>
-            <p v-else class="text-gray-700 text-base font-medium my-2">
-              Sin publicar
-            </p>
-            <p class="text-secondary text-xl font-medium my-2">
-              {{ post.title }}
-            </p>
+      </div>
+    </div>
+    <!-- VAMOS A PRESENTAR LOS BLOGS -->
+    <div class="bg-white h-96 overflow-y-scroll w-full lg:w-2/3 rounded py-1 px-2 mt-4">
+      <p class="text-gray-700 text-2xl font-semibold mb-6">
+        Aquí damos a conocer cosas increíbles a nuestra comunidad
+      </p>
+      <div
+        v-for="(post, i) in getPosts"
+        :key="i"
+        class="
+          w-full
+          flex flex-wrap
+          justify-between
+          items-end
+          shadow-2xl
+          rounded
+          px-2
+          py-3
+          mb-4
+          border border-gray-200
+        "
+      >
+        <div class="w-full lg:w-1/2">
+          <p
+            v-if="post.post.published"
+            class="text-primary text-base font-medium my-2"
+          >
+            Publicado
+          </p>
+          <p v-else class="text-gray-700 text-base font-medium my-2">
+            Sin publicar
+          </p>
+          <p class="text-secondary text-xl font-medium my-2">
+            {{ post.post.title }}
+          </p>
+        </div>
+        <div class="w-full lg:w-1/2 mt-4 lg:mt-0 flex flex-wrap">
+          <div class="w-full lg:w-1/2 mt-2 lg:mt-0 px-1">
+            <c-button
+              name="Editar simulador"
+              class="bg-yellow-500 text-white"
+              @click="editPost(post.post.id)"
+            />
           </div>
-          <div class="w-full lg:w-1/2 mt-4 lg:mt-0 flex flex-wrap">
-            <div class="w-full lg:w-1/2 mt-2 lg:mt-0 px-1">
-              <c-button
-                name="Editar simulador"
-                class="bg-yellow-500 text-white"
-                @click="editPost(post.id)"
-              />
-            </div>
-            <div class="w-full lg:w-1/2 mt-2 lg:mt-0 px-1">
-              <c-button
-                name="Eliminar simulador"
-                class="bg-pink-700 text-white"
-                @click="removePost(post.id)"
-              />
-            </div>
+          <div class="w-full lg:w-1/2 mt-2 lg:mt-0 px-1">
+            <c-button
+              name="Eliminar simulador"
+              class="bg-pink-700 text-white"
+              @click="removePost(post.post.id)"
+            />
           </div>
+        </div>
+      </div>
+    </div>
+    <!-- BOTONES PARA PEDIR NUEVAS PREGUNTAS -->
+    <div
+      class="
+        w-full
+        lg:w-8/12
+        h-12
+        mt-4
+        mr-auto
+        flex
+        justify-center
+        items-center
+      "
+    >
+      <div
+        class="
+          w-40
+          flex
+          justify-center
+          items-center
+          bg-white
+          mx-auto
+          py-2
+          rounded-lg
+          shadow-lg
+        "
+      >
+        <div class="w-32 flex justify-center items-center">
+          <c-button
+            name="Cargar más"
+            class="bg-secondary"
+            @click="fetchPosts"
+          />
         </div>
       </div>
     </div>
@@ -109,22 +147,32 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import {
+  getDocs,
+  query,
+  limit,
+  startAfter,
+  collection,
+} from 'firebase/firestore'
+import { fireDataBase } from '~/plugins/firebase/app'
 export default {
   layout: 'app',
   data: () => ({
     bgImage: require('@/static/images/svg/newLesson.svg'),
+    eof: false,
+    lastDoc: null,
+    batchSize: 5,
+    posts: [],
   }),
   computed: {
     ...mapGetters('fireBlogs', ['getPosts']),
   },
-  created() {
-    this.fetchPosts()
-  },
   mounted() {
     this.resetEditingPost()
+    this.fetchPosts()
   },
   methods: {
-    ...mapActions('fireBlogs', ['fetchPosts', 'resetEditingPost']),
+    ...mapActions('fireBlogs', ['setPosts', 'resetEditingPost']),
     handlePagination() {
       this.fetchPosts()
     },
@@ -136,6 +184,39 @@ export default {
     },
     removePost(id) {
       console.log(id)
+    },
+    async fetchPosts() {
+      try {
+        if (this.eof) {
+          return
+        }
+        this.isLoading = true
+        let postQuery = query(
+          collection(fireDataBase, 'posts'),
+          limit(this.batchSize)
+        )
+
+        if (this.lastDoc) {
+          postQuery = query(
+            collection(fireDataBase, 'posts'),
+            startAfter(this.lastDoc),
+            limit(this.batchSize)
+          )
+        }
+
+        const postSnapshot = await getDocs(postQuery)
+        this.lastDoc = postSnapshot.docs[postSnapshot.docs.length - 1]
+        postSnapshot.forEach((doc) => {
+          this.posts.push({
+            id: doc.id,
+            post: doc.data(),
+          })
+        })
+        this.isLoading = false
+        this.setPosts(this.posts)
+      } catch (error) {
+        console.error(error)
+      }
     },
   },
 }

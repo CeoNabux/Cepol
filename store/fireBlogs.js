@@ -140,24 +140,8 @@ export const actions = {
       console.error(error)
     }
   },
-  async fetchPosts({ commit, getters }) {
-    const postRefs = collection(fireDataBase, 'posts')
-    const lastPost = getters.getLastDoc
-    if(lastPost === '') {
-      const firstDocQuery = query(postRefs, limit(5))
-      const documentSnapshot = await getDocs(firstDocQuery)
-      const posts = []
-      documentSnapshot.forEach((doc) => {
-        posts.push(doc.data())
-      })
-      commit('ADD_POSTS', posts)
-    } else {
-      // const nextDocQuery = query(postRefs, startAfter(lastPost), limit(5))
-      // const documentSnapshot = await getDocs(nextDocQuery)
-      // console.log(documentSnapshot)
-      // commit('ADD_POSTS', documentSnapshot)
-      console.log('aun no estamos aqui')
-    }
+  setPosts({ commit }, payload) {
+    commit('ADD_POSTS', payload)
   },
   resetEditingPost({ commit }) {
     commit('EDITING_POST', '')
