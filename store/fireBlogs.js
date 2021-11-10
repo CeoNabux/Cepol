@@ -72,7 +72,6 @@ export const mutations = {
   ERASE_POST(state, payload) {
     const postIndex = state.posts.findIndex((post) => post.id === payload)
     state.posts.splice(postIndex, 1)
-    console.log(postIndex)
   }
 }
 
