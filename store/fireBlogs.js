@@ -9,7 +9,8 @@ import {
   getDoc,
   where,
   limit,
-  startAfter
+  startAfter,
+  deleteDoc
 } from '@firebase/firestore'
 import {
   getDownloadURL,
@@ -68,6 +69,11 @@ export const mutations = {
   SET_LAST_DOC(state, payload) {
     state.lastDoc = payload
   },
+  ERASE_POST(state, payload) {
+    const postIndex = state.posts.findIndex((post) => post.id === payload)
+    state.posts.splice(postIndex, 1)
+    console.log(postIndex)
+  }
 }
 
 export const actions = {
@@ -145,6 +151,10 @@ export const actions = {
   },
   resetEditingPost({ commit }) {
     commit('EDITING_POST', '')
+  },
+  async erasePost({commit}, payload) {
+    await deleteDoc(doc(fireDataBase, 'posts', payload))
+    commit('ERASE_POST', payload)
   },
   async fetchPublishedPost({ commit }) {
     const postsRefs = collection(fireDataBase, 'posts')

@@ -172,7 +172,7 @@ export default {
     this.fetchPosts()
   },
   methods: {
-    ...mapActions('fireBlogs', ['setPosts', 'resetEditingPost']),
+    ...mapActions('fireBlogs', ['setPosts', 'resetEditingPost', 'erasePost']),
     handlePagination() {
       this.fetchPosts()
     },
@@ -183,7 +183,7 @@ export default {
       console.log(id)
     },
     removePost(id) {
-      console.log(id)
+      this.erasePost(id)
     },
     async fetchPosts() {
       try {
