@@ -22,7 +22,7 @@ import {
 export const state = () => ({
   posts: [],
   loading: false,
-  postEditing: '',
+  editingPost: {},
   lastDoc: '',
   publishedPosts: []
 })
@@ -35,7 +35,7 @@ export const getters = {
     return state.loading
   },
   getEditingPost(state) {
-    return state.postEditing
+    return state.editingPost
   },
   getLastDoc(state) {
     return state.lastDoc
@@ -63,7 +63,12 @@ export const mutations = {
   },
   EDITING_POST(state, payload) {
     // recibimos el id del documento en edicion
-    state.postEditing = payload
+    const editingPost = state.posts.filter((post) => post.id === payload)
+    state.editingPost = editingPost[0].post
+    this.$router.push('createPost')
+  },
+  ERASE_EDITING_POST(state, payload) {
+    state.editingPost = payload
   },
   // recibimos el ultimo documento del fetch previo
   SET_LAST_DOC(state, payload) {
@@ -148,8 +153,8 @@ export const actions = {
   setPosts({ commit }, payload) {
     commit('ADD_POSTS', payload)
   },
-  resetEditingPost({ commit }) {
-    commit('EDITING_POST', '')
+  resetEditingPost({ commit, getters }) {
+    commit('ERASE_EDITING_POST', {})
   },
   async erasePost({commit}, payload) {
     await deleteDoc(doc(fireDataBase, 'posts', payload))
@@ -162,5 +167,8 @@ export const actions = {
     postsSnapshot.forEach((doc) => {
       commit('ADD_PUBLISHED_POSTS', doc.data())
     })
+  },
+  setData({commit}, payload) {
+    commit('EDITING_POST', payload)
   }
 }

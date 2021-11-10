@@ -55,7 +55,19 @@
       </div>
     </div>
     <!-- VAMOS A PRESENTAR LOS BLOGS -->
-    <div class="bg-white h-96 overflow-y-scroll w-full lg:w-2/3 rounded py-1 px-2 mt-4">
+    <div
+      class="
+        bg-white
+        h-96
+        overflow-y-scroll
+        w-full
+        lg:w-2/3
+        rounded
+        py-1
+        px-2
+        mt-4
+      "
+    >
       <p class="text-gray-700 text-2xl font-semibold mb-6">
         Aquí damos a conocer cosas increíbles a nuestra comunidad
       </p>
@@ -172,15 +184,17 @@ export default {
     this.fetchPosts()
   },
   methods: {
-    ...mapActions('fireBlogs', ['setPosts', 'resetEditingPost', 'erasePost']),
-    handlePagination() {
-      this.fetchPosts()
-    },
+    ...mapActions('fireBlogs', [
+      'setPosts',
+      'resetEditingPost',
+      'erasePost',
+      'setData',
+    ]),
     redirectionToCreateBlogs() {
       this.$router.push('createPost')
     },
     editPost(id) {
-      console.log(id)
+      this.setData(id)
     },
     removePost(id) {
       this.erasePost(id)
