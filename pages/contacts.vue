@@ -4,23 +4,64 @@
       <div class="w-full">
         <the-map />
       </div>
-      <div class="w-full relative lg:w-10/12 mx-auto">
+      <div class="w-full relative h-64 lg:w-10/12 mx-auto">
         <div
           class="
             w-full
             absolute
-            flex flex-wrap
+            flex flex-wrap-reverse
             justify-center
-            items-center
             bg-green-50
             rounded-lg
             shadow-md
-            bottom-1
+            bottom-16
           "
         >
-          <div class="w-full lg:w-3/4 py-3 px-4"></div>
-          <div class="w-full lg:w-1/4 bg-primary py-3 px-4 rounded-r-lg">
-            <p class="text-2xl font-semibold mb-2 text-green-600">Envianos un correo</p>
+          <div class="w-full lg:w-3/4 py-3 px-4">
+            <form action="">
+              <div class="w-full flex flex-col">
+                <label for="" class="textg-sm text-secondary text-medium">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  class="w-full md:w-3/4 lg:w-1/2 px-2 py-1 border-b border-secondary"
+                />
+              </div>
+              <div class="w-full flex flex-col mt-2">
+                <label for="" class="textg-sm text-secondary text-medium">
+                  Correo
+                </label>
+                <input
+                  type="email"
+                  class="w-full md:w-3/4 lg:w-1/2 px-2 py-1 border-b border-secondary"
+                />
+              </div>
+              <div class="w-full flex flex-col mt-2">
+                <label for="" class="textg-sm text-secondary text-medium">
+                  Mensaje
+                </label>
+                <textarea
+                  type="text"
+                  class="w-full md:w-3/4 lg:w-1/2 px-2 py-1 border-b border-secondary"
+                />
+              </div>
+            </form>
+          </div>
+          <div
+            class="
+              w-full
+              lg:w-1/4
+              bg-primary
+              py-3
+              px-4
+              rounded-t-lg
+              lg:rounded-r-lg
+            "
+          >
+            <p class="text-2xl font-semibold mb-2 text-green-600">
+              Envianos un correo
+            </p>
             <div class="w-full flex justify-center item-center px-2">
               <div class="w-2/5 flex justify-center items-center">
                 <div class="bg-gray-200 h-px w-full"></div>
@@ -54,9 +95,9 @@
 export default {
   data: () => ({
     icons: [
-      { name: 'facebook', link: '' },
-      { name: 'instagram', link: '' },
-      { name: 'whatsapp', link: '' },
+      { name: 'facebook', link: 'https://wa.link/4c88ug' },
+      { name: 'instagram', link: 'https://www.instagram.com/cepolsa/' },
+      { name: 'whatsapp', link: 'https://www.facebook.com/centro.cepol' },
     ],
   }),
   methods: {
