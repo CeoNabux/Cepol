@@ -24,6 +24,25 @@
             y rapidez todos los ejercicios del examen en los cuatro
             razonamientos: Numérico, Verbal, Abstracto, Atención y Concentración
           </p>
+          <div class="mt-4 w-64">
+            <button
+              class="
+                bg-green-500
+                flex
+                justify-around
+                items-center
+                rounded-lg
+                py-1
+                px-2
+              "
+              @click="redirectionToWs('https://wa.link/8rhc3u')"
+            >
+              <p class="text-white">Saber más de este curso</p>
+              <div class="w-8 h-8">
+                <c-icon name="whatsapp" class="text-white" />
+              </div>
+            </button>
+          </div>
         </div>
         <div class="mt-2 lg:mt-0 w-full lg:w-1/2">
           <figure class="w-full flex justify-center items-center">
@@ -56,6 +75,25 @@
             Matemàticas, Fìsica y Quìmica. Incluye acompañamiento gratuito de
             apoyo en tus materias durante tu preuniversitario
           </p>
+          <div class="mt-4 w-64">
+            <button
+              class="
+                bg-green-500
+                flex
+                justify-around
+                items-center
+                rounded-lg
+                py-1
+                px-2
+              "
+              @click="redirectionToWs('https://wa.link/4c88ug')"
+            >
+              <p class="text-white">Saber más de este curso</p>
+              <div class="w-8 h-8">
+                <c-icon name="whatsapp" class="text-white" />
+              </div>
+            </button>
+          </div>
         </div>
         <div class="mt-2 lg:mt-0 w-full lg:w-1/2">
           <figure class="w-full flex justify-center items-center">
@@ -94,6 +132,25 @@
             para orientarte hacia una mejor elección en tu carrera para la
             educación superior.
           </p>
+          <div class="mt-4 w-64">
+            <button
+              class="
+                bg-green-500
+                flex
+                justify-around
+                items-center
+                rounded-lg
+                py-1
+                px-2
+              "
+              @click="redirectionToWs('https://wa.link/ame35d')"
+            >
+              <p class="text-white">Saber más de este curso</p>
+              <div class="w-8 h-8">
+                <c-icon name="whatsapp" class="text-white" />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
       <!-- CUARTA SECCION DE SERVICIOS -->
@@ -134,3 +191,13 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    redirectionToWs(service) {
+      window.open(service, '_blank')
+    },
+  },
+}
+</script>
