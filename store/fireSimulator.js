@@ -107,6 +107,15 @@ export const mutations = {
     state.currentSimulatorAnswers = []
     state.score = 0
   },
+  RESET_SIMULATOR_STORE(state) {
+    state.simulatorCategories = []
+    state.simulators = []
+    state.isSimulating = false
+    state.currentSimulator = []
+    state.originalSimulator = []
+    state.currentSimulatorAnswers = []
+    state.score = 0
+  },
 }
 
 export const actions = {
@@ -305,4 +314,7 @@ export const actions = {
   resetDataSimulation({ commit }) {
     commit('RESET_SIMULATION')
   },
+  resetSimulatorData({ commit }) {
+    commit('RESET_SIMULATOR_STORE')
+  }
 }

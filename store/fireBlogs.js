@@ -10,7 +10,7 @@ import {
   where,
   limit,
   startAfter,
-  deleteDoc
+  deleteDoc,
 } from '@firebase/firestore'
 import {
   getDownloadURL,
@@ -24,7 +24,7 @@ export const state = () => ({
   loading: false,
   editingPost: {},
   lastDoc: '',
-  publishedPosts: []
+  publishedPosts: [],
 })
 
 export const getters = {
@@ -42,7 +42,7 @@ export const getters = {
   },
   getPublishedPosts(state) {
     return state.publishedPosts
-  }
+  },
 }
 
 export const mutations = {
@@ -77,7 +77,14 @@ export const mutations = {
   ERASE_POST(state, payload) {
     const postIndex = state.posts.findIndex((post) => post.id === payload)
     state.posts.splice(postIndex, 1)
-  }
+  },
+  RESET_BLOGS_STORE(state) {
+    state.posts = []
+    state.loading = false
+    state.editingPost = {}
+    state.lastDoc = ''
+    state.publishedPosts = []
+  },
 }
 
 export const actions = {
@@ -156,19 +163,26 @@ export const actions = {
   resetEditingPost({ commit, getters }) {
     commit('ERASE_EDITING_POST', {})
   },
-  async erasePost({commit}, payload) {
+  async erasePost({ commit }, payload) {
     await deleteDoc(doc(fireDataBase, 'posts', payload))
     commit('ERASE_POST', payload)
   },
   async fetchPublishedPost({ commit }) {
     const postsRefs = collection(fireDataBase, 'posts')
-    const firstQuery = query(postsRefs, where('published', '==', true) ,limit(5))
+    const firstQuery = query(
+      postsRefs,
+      where('published', '==', true),
+      limit(5)
+    )
     const postsSnapshot = await getDocs(firstQuery)
     postsSnapshot.forEach((doc) => {
       commit('ADD_PUBLISHED_POSTS', doc.data())
     })
   },
-  setData({commit}, payload) {
+  setData({ commit }, payload) {
     commit('EDITING_POST', payload)
+  },
+  resetBlogsData({ commit }) {
+    commit('RESET_BLOGS_STORE')
   }
 }

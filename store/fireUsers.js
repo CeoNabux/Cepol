@@ -70,6 +70,13 @@ export const mutations = {
     )
     state.instructors.splice(instructorIndex, 1)
   },
+  RESET_USER_DATA(state) {
+    state.userData = {}
+    state.loading = false
+    state.registeredNotes = []
+    state.userUid = ''
+    state.instructors = []
+  },
 }
 
 export const actions = {
@@ -151,7 +158,7 @@ export const actions = {
     }
   },
   setInstructor({ commit }, payload) {
-    commit('SET_INSTRUCTOR', payload )
+    commit('SET_INSTRUCTOR', payload)
   },
   async eraseInstructor({ commit }, payload) {
     try {
@@ -174,4 +181,7 @@ export const actions = {
       console.error(error)
     }
   },
+  resetUserData({ commit }) {
+    commit('RESET_USER_DATA')
+  }
 }

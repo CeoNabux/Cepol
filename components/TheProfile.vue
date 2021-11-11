@@ -8,8 +8,7 @@
         px-2
         w-40
         h-48
-        sm:w-64
-        sm:h-48
+        sm:w-64 sm:h-48
         absolute
         z-10
         bg-white
@@ -18,15 +17,12 @@
         top-1/2
         left-1/3
         sm:left-1/3
-        flex
-        flex-col
+        flex flex-col
         justify-between
         items-center
       "
     >
-      <p class="text-xl text-primary font-medium text-center">
-        Guardando
-      </p>
+      <p class="text-xl text-primary font-medium text-center">Guardando</p>
       <loading :loading="getLoading" />
     </div>
     <!-- CONTENEDOR PRINCIPAL DE LA VISTA -->
@@ -127,8 +123,19 @@ export default {
   },
   methods: {
     ...mapActions('fireAuthentication', ['signUserOut']),
-    ...mapActions('fireUsers', ['uploadUserData', 'fetchUserData']),
+    ...mapActions('fireBlogs', ['resetBlogsData']),
+    ...mapActions('fireSimulator', ['resetSimulatorData']),
+    ...mapActions('fireQuestions', ['resetQuestionsData']),
+    ...mapActions('fireUsers', [
+      'uploadUserData',
+      'fetchUserData',
+      'resetUserData',
+    ]),
     signOut() {
+      this.resetQuestionsData()
+      this.resetBlogsData()
+      this.resetSimulatorData()
+      this.resetUserData()
       this.signUserOut()
     },
     updateData() {

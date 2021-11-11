@@ -52,6 +52,12 @@ export const mutations = {
   SET_LOADING(state, payload) {
     state.loading = payload
   },
+  RESET_QUESTIONS_STORE(state) {
+    state.questions = []
+    state.categoryToCount = ''
+    state.loading = false
+    state.lastQuestion = {}
+  },
 }
 
 export const actions = {
@@ -173,4 +179,7 @@ export const actions = {
       console.error(error)
     }
   },
+  resetQuestionsData({ commit }) {
+    commit('RESET_QUESTIONS_STORE')
+  }
 }
