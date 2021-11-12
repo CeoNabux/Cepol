@@ -219,7 +219,6 @@ export default {
         this.resetFieldsForm()
         this.emailSent = true
         setTimeout(() => (this.emailSent = false), 1000)
-        console.log('correo enviado')
       } catch (error) {
         console.error(error)
       }
