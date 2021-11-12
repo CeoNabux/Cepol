@@ -24,6 +24,7 @@
                   Nombre
                 </label>
                 <input
+                  v-model="name"
                   type="text"
                   class="w-full md:w-3/4 lg:w-1/2 px-2 py-1 border-b border-secondary"
                 />
@@ -33,6 +34,7 @@
                   Correo
                 </label>
                 <input
+                  v-model="email"
                   type="email"
                   class="w-full md:w-3/4 lg:w-1/2 px-2 py-1 border-b border-secondary"
                 />
@@ -42,11 +44,15 @@
                   Mensaje
                 </label>
                 <textarea
+                  v-model="message"
                   type="text"
                   class="w-full md:w-3/4 lg:w-1/2 px-2 py-1 border-b border-secondary"
                 />
               </div>
             </form>
+            <div class="w-full lg:w-1/2 mt-4">
+              <c-button name="Enviar" class="bg-secondary text-white" @click="sendMail" />
+            </div>
           </div>
           <div
             class="
@@ -92,8 +98,14 @@
 </template>
 
 <script>
+import emailjs from 'emailjs-com'
+import CButton from '~/components/global/CButton.vue'
 export default {
+  components: { CButton },
   data: () => ({
+    name: '',
+    email: '',
+    message: '',
     icons: [
       { name: 'facebook', link: 'https://wa.link/4c88ug' },
       { name: 'instagram', link: 'https://www.instagram.com/cepolsa/' },
@@ -104,6 +116,31 @@ export default {
     redirectionToSocialMedia(link) {
       window.open(link, '_blank')
     },
+    resetFieldsForm() {
+      this.name = ''
+      this.email = ''
+      this.message = ''
+    },
+    async sendMail() {
+      const params = {
+        to_name: 'Cepol',
+        from_name: this.name,
+        reply_to: this.email,
+        message: this.message
+      }
+      try {
+        await emailjs.send(
+          'service_7qnslkc',
+          'template_knzxxzh',
+          params,
+          'user_bzk4OXg1GFi5EG8cNALdG'
+        )
+        console.log('correo enviado')
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
   },
 }
 </script>
