@@ -19,6 +19,7 @@ export const state = () => ({
   categoryToCount: '',
   loading: false,
   lastQuestion: {},
+  confirmation: false,
 })
 
 export const getters = {
@@ -27,6 +28,9 @@ export const getters = {
   },
   getLoading(state) {
     return state.loading
+  },
+  getConfirmation(state) {
+    return state.confirmation
   },
   getLastQuestion(state) {
     return state.lastQuestion
@@ -52,6 +56,9 @@ export const mutations = {
   SET_LOADING(state, payload) {
     state.loading = payload
   },
+  SET_CONFIRMATION(state, payload) {
+    state.confirmation = payload
+  },
   RESET_QUESTIONS_STORE(state) {
     state.questions = []
     state.categoryToCount = ''
@@ -62,6 +69,7 @@ export const mutations = {
 
 export const actions = {
   async saveQuestionInformation({ dispatch, commit }, payload) {
+    commit('SET_LOADING', true)
     try {
       const questionRef = doc(collection(fireDataBase, 'questions'))
       let url
@@ -98,7 +106,7 @@ export const actions = {
           answerOptions.push({ state: state, text: text })
         }
       }
-
+      
       const questionText = {
         question: payload.question,
         answers: answerOptions,
@@ -106,8 +114,11 @@ export const actions = {
         image: url,
       }
       await setDoc(questionRef, questionText)
+      commit('SET_LOADING', false)
       commit('COUNT_CATEGORY', payload.category)
       dispatch('addCounter')
+      commit('SET_CONFIRMATION', true)
+      setTimeout(() => commit('SET_CONFIRMATION', false), 500)
     } catch (error) {
       console.error(error)
     }

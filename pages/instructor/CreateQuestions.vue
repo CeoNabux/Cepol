@@ -1,5 +1,45 @@
 <template>
   <div class="w-full">
+    <div
+      v-if="getLoading"
+      class="
+        absolute
+        w-1/3
+        h-44
+        top-1/3
+        left-1/3
+        border border-gray-300
+        bg-white
+        flex
+        justify-center
+        items-center
+        shadow-md
+        rounded-md
+        z-10
+      "
+    >
+      <loading :loading="getLoading" />
+    </div>
+    <div
+      v-if="getConfirmation"
+      class="
+        absolute
+        w-1/3
+        h-44
+        top-1/3
+        left-1/3
+        border border-gray-300
+        bg-white
+        flex
+        justify-center
+        items-center
+        shadow-md
+        rounded-md
+        z-10
+      "
+    >
+      <p class="text-lg text-primary text-center w-full">Mensaje Enviado</p>
+    </div>
     <div class="px-6 py-2 border border-gray-400 rounded-lg shadow bg-white">
       <h1 class="text-4xl text-gray-700 font-semibold">Crea tú pregunta</h1>
       <!-- SECCION DE CREACION DE PREGUNTAS -->
@@ -308,7 +348,7 @@
 
 <script>
 import CButton from '~/components/global/CButton.vue'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
 export default {
@@ -381,6 +421,7 @@ export default {
     ],
   }),
   computed: {
+    ...mapGetters('fireQuestions', ['getLoading', 'getConfirmation']),
     validQuestion() {
       return (
         this.question.question.text !== '' &&
