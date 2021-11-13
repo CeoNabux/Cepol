@@ -46,7 +46,7 @@
       <div class="w-full">
         <the-map />
       </div>
-      <div class="w-full relative h-64 lg:w-10/12 mx-auto">
+      <div class="w-full relative h-64 xl:h-auto lg:px-0 xl:py-4 lg:w-10/12 mx-auto">
         <div
           class="
             w-full
@@ -57,6 +57,9 @@
             rounded-lg
             shadow-md
             bottom-16
+            xl:static
+            xl:bottom-0
+            mx-auto
           "
         >
           <div class="w-full lg:w-3/4 py-3 px-4">
