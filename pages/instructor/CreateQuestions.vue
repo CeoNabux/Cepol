@@ -38,7 +38,7 @@
         z-10
       "
     >
-      <p class="text-lg text-primary text-center w-full">Mensaje Enviado</p>
+      <p class="text-lg text-primary text-center w-full">Pregunta Guardada 😎</p>
     </div>
     <div class="px-6 py-2 border border-gray-400 rounded-lg shadow bg-white">
       <h1 class="text-4xl text-gray-700 font-semibold">Crea tú pregunta</h1>
