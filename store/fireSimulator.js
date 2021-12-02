@@ -56,12 +56,14 @@ export const mutations = {
     state.isSimulating = Boolean
   },
   SET_LOADING(state, Boolean) {
-    console.log('estamos cargando '+ Boolean)
     state.loading = Boolean
   },
   ERASE_SIMULATOR(state, payload) {
     const simulatorIndex = state.simulators.findIndex( simulator => simulator.id === payload)
     state.simulators.splice(simulatorIndex, 1)
+  },
+  ADD_SIMULATOR(state, payload) {
+    state.simulators.push(payload)
   },
   FINISH_SIMULATOR(state, Boolean) {
     state.isSimulating = Boolean
@@ -157,6 +159,7 @@ export const actions = {
         simulatorStructure: payload.simulatorStructure,
         time: payload.time,
       }
+      commit('ADD_SIMULATOR', simulatorData)
       const simulatorRef = doc(collection(fireDataBase, 'simulators'))
       await setDoc(simulatorRef, simulatorData)
       this.$router.push('dashboard')
@@ -293,7 +296,6 @@ export const actions = {
             newSetOfQuestions[index].questions[j] = x
         );
       }
-      console.log(newSetOfQuestions)
       commit('SET_CURRENT_SIMULATOR', newSetOfQuestions)
       commit('SET_ORIGINAL_SIMULATOR', questionsSet)
     } catch (error) {

@@ -153,7 +153,7 @@ export default {
     },
   },
   created() {
-    this.fetchSimulators()
+    this.fetchDataSimulators()
   },
   mounted() {
     this.resetEditingPost()
@@ -172,9 +172,10 @@ export default {
       this.eraseSimulator(index)
     },
     setSimulators() {
+      const simulatorArray = []
       this.getSimulators.forEach((doc) => {
         let number = 0
-        this.simulators.push({
+        simulatorArray.push({
           id: doc.id,
           title: doc.title,
           description: doc.description,
@@ -187,10 +188,16 @@ export default {
           seconds: parseInt((doc.time % 60000) / 1000),
         })
       })
+      this.simulators = simulatorArray
     },
-  },
-  destroyed() {
-    this.clearSimulators()
+    fetchDataSimulators() {
+      if (this.getSimulators.length === 0) {
+        this.fetchSimulators()
+        this.setSimulators()
+      } else {
+        this.setSimulators()
+      }
+    },
   },
 }
 </script>
