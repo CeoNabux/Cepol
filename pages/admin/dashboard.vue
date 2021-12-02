@@ -175,6 +175,12 @@ export default {
       const simulatorArray = []
       this.getSimulators.forEach((doc) => {
         let number = 0
+        let h, m, s
+        s = doc.time / 1000
+        h = parseInt(s / 3600)
+        s = s % 3600
+        m = parseInt(s / 60)
+        s = s % 60
         simulatorArray.push({
           id: doc.id,
           title: doc.title,
@@ -183,9 +189,9 @@ export default {
             number = number + simulator.number
           }),
           simulatorStructure: number,
-          hours: parseInt(doc.time / 3600000),
-          minutes: parseInt(doc.time / 60000),
-          seconds: parseInt((doc.time % 60000) / 1000),
+          seconds: s,
+          minutes: m,
+          hours: h,
         })
       })
       this.simulators = simulatorArray
