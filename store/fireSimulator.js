@@ -17,9 +17,13 @@ export const state = () => ({
   originalSimulator: [],
   currentSimulatorAnswers: [],
   score: 0,
+  loading: false
 })
 
 export const getters = {
+  getLoading(state) {
+    return state.loading
+  },
   getSimulatorCategories(state) {
     return state.simulatorCategories
   },
@@ -49,6 +53,9 @@ export const getters = {
 export const mutations = {
   START_SIMULATOR(state, Boolean) {
     state.isSimulating = Boolean
+  },
+  SET_LOADING(state, Boolean) {
+    state.loading = Boolean
   },
   FINISH_SIMULATOR(state, Boolean) {
     state.isSimulating = Boolean
@@ -316,5 +323,10 @@ export const actions = {
   },
   resetSimulatorData({ commit }) {
     commit('RESET_SIMULATOR_STORE')
+  },
+  eraseSimulator({commit}, payload) {
+    commit('SET_LOADING', true)
+    console.log(payload + 'Estamos en vuex')
+    commit('SET_LOADING', false)
   }
 }

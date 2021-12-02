@@ -140,15 +140,13 @@ export default {
     this.resetEditingPost()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators', 'clearSimulators']),
+    ...mapActions('fireSimulator', ['fetchSimulators', 'clearSimulators', 'eraseSimulator']),
     ...mapActions('fireBlogs', ['resetEditingPost']),
     redirectionToCreateSimulator() {
       this.$router.push('/admin/CreateSimulator')
     },
     removeSimulator(index) {
-      const id = ''
-      id = this.getSimulators[index]
-      console.log(id)
+      this.eraseSimulator(index)
     },
     setSimulators() {
       this.getSimulators.forEach((doc) => {
