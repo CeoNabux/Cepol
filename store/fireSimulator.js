@@ -6,6 +6,7 @@ import {
   where,
   limit,
   query,
+  deleteDoc,
 } from '@firebase/firestore'
 import { fireDataBase } from '~/plugins/firebase/app'
 
@@ -55,7 +56,12 @@ export const mutations = {
     state.isSimulating = Boolean
   },
   SET_LOADING(state, Boolean) {
+    console.log('estamos cargando '+ Boolean)
     state.loading = Boolean
+  },
+  ERASE_SIMULATOR(state, payload) {
+    const simulatorIndex = state.simulators.findIndex( simulator => simulator.id === payload)
+    state.simulators.splice(simulatorIndex, 1)
   },
   FINISH_SIMULATOR(state, Boolean) {
     state.isSimulating = Boolean
@@ -324,9 +330,15 @@ export const actions = {
   resetSimulatorData({ commit }) {
     commit('RESET_SIMULATOR_STORE')
   },
-  eraseSimulator({commit}, payload) {
+  async eraseSimulator({commit}, payload) {
     commit('SET_LOADING', true)
-    console.log(payload + 'Estamos en vuex')
+    commit('ERASE_SIMULATOR', payload)
+    try {
+      const simulatorRef = doc(fireDataBase, 'simulators', payload)
+      await deleteDoc(simulatorRef)
+    }catch(error) {
+      console.error(error)
+    }
     commit('SET_LOADING', false)
   }
 }

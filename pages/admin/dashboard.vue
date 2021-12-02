@@ -1,5 +1,24 @@
 <template>
   <div class="w-full">
+    <div
+      v-if="getLoading"
+      class="
+        absolute
+        w-1/3
+        h-44
+        top-1/3
+        left-1/3
+        border border-gray-300
+        bg-white
+        flex
+        justify-center
+        items-center
+        shadow-md
+        rounded-md
+      "
+    >
+      <loading :loading="getLoading" />
+    </div>
     <div class="flex justify-between flex-wrap items-start w-full">
       <div
         class="
@@ -124,7 +143,7 @@ export default {
     simulators: [],
   }),
   computed: {
-    ...mapGetters('fireSimulator', ['getSimulators']),
+    ...mapGetters('fireSimulator', ['getSimulators', 'getLoading']),
   },
   watch: {
     getSimulators(value) {
@@ -140,7 +159,11 @@ export default {
     this.resetEditingPost()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators', 'clearSimulators', 'eraseSimulator']),
+    ...mapActions('fireSimulator', [
+      'fetchSimulators',
+      'clearSimulators',
+      'eraseSimulator',
+    ]),
     ...mapActions('fireBlogs', ['resetEditingPost']),
     redirectionToCreateSimulator() {
       this.$router.push('/admin/CreateSimulator')
@@ -156,7 +179,7 @@ export default {
           title: doc.title,
           description: doc.description,
           countingQuestions: doc.simulatorStructure.forEach((simulator) => {
-            number = (number + simulator.number)
+            number = number + simulator.number
           }),
           simulatorStructure: number,
           hours: parseInt(doc.time / 3600000),
