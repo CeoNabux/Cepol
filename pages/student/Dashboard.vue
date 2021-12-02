@@ -116,7 +116,7 @@ export default {
       },
       maintainAspectRatio: false,
     },
-    simulators: []
+    simulators: [],
   }),
   computed: {
     ...mapGetters('fireSimulator', [
@@ -146,10 +146,10 @@ export default {
       }
     },
     getScores(value) {
-      if(value) {
+      if (value) {
         this.scoresHistory()
       }
-    }
+    },
   },
   mounted() {
     this.fetchSimulators()
@@ -157,7 +157,11 @@ export default {
     this.resetData()
   },
   methods: {
-    ...mapActions('fireSimulator', ['fetchSimulators', 'resetScore', 'resetDataSimulation']),
+    ...mapActions('fireSimulator', [
+      'fetchSimulators',
+      'resetScore',
+      'resetDataSimulation',
+    ]),
     ...mapActions('fireUsers', ['fetchUserData']),
     getData() {
       if (this.user.id) {
@@ -177,6 +181,12 @@ export default {
     setSimulators() {
       this.getSimulators.forEach((doc) => {
         let number = 0
+        let h, m, s
+        s = doc.time / 1000
+        h = parseInt(s / 3600)
+        s = s % 3600
+        m = parseInt(s / 60)
+        s = s % 60
         this.simulators.push({
           id: doc.id,
           title: doc.title,
@@ -185,9 +195,9 @@ export default {
             number = number + simulator.number
           }),
           simulatorStructure: number,
-          hours: parseInt(doc.time / 3600000),
-          minutes: parseInt(doc.time / 60000),
-          seconds: parseInt((doc.time % 60000) / 1000),
+          hours: h,
+          minutes: m,
+          seconds: s,
         })
       })
     },
@@ -195,10 +205,10 @@ export default {
       this.$router.push('simulador')
     },
     resetData() {
-      if(this.getScore > 0) {
+      if (this.getScore > 0) {
         this.resetDataSimulation
       }
-    }
+    },
   },
 }
 </script>
