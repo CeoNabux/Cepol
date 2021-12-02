@@ -215,7 +215,7 @@ export default {
       simulatorStructure: [],
     },
     time: 0,
-    timePerQuestion: 21.17,
+    timePerQuestion: 40.00,
     milisecond: 1000,
     //configuracion del editor
     customToolbar: [
