@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: process.env.NUXT_ENV_STORAGEBUCKET,
   messagingSenderId: process.env.NUXT_ENV_MESSAGINGSENDER,
   appId: process.env.NUXT_ENV_APPID,
-  measurementId: process.env.NUXT_ENV_MEASURESID,
+  measurementId: process.env.NUXT_ENV_APPID,
 }
 
 const app = initializeApp(firebaseConfig)
