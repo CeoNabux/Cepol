@@ -42,7 +42,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/google-fonts'],
+  buildModules: ['@nuxtjs/google-fonts', '@nuxtjs/dotenv'],
 
   googleFonts: {
     families: {

@@ -4,14 +4,16 @@ import { getAuth } from 'firebase/auth'
 import { getStorage } from 'firebase/storage'
 import { getFunctions } from 'firebase/functions'
 
+console.log(process.env.VUE_APP_APIKEY)
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyC7PwbeY_JaLbeA4fdSIXz2PJYQfAu_bTo',
-  authDomain: 'cepol-f002a.firebaseapp.com',
-  projectId: 'cepol-f002a',
-  storageBucket: 'cepol-f002a.appspot.com',
-  messagingSenderId: '766713054373',
-  appId: '1:766713054373:web:56f7752bc0e432e383b94c',
-  measurementId: 'G-P2H0QN04Q1',
+  apiKey: process.env.VUE_APP_APIKEY,
+  authDomain: process.env.VUE_APP_AUTHDOMAIN,
+  projectId: process.env.VUE_APP_PROJECTID,
+  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDER,
+  appId: process.env.VUE_APP_APPID,
+  measurementId: process.env.VUE_APP_MEASURESID,
 }
 
 const app = initializeApp(firebaseConfig)

@@ -213,10 +213,10 @@ export default {
       }
       try {
         await emailjs.send(
-          'service_7qnslkc',
-          'template_knzxxzh',
+          process.env.VUE_APP_SERVICE,
+          process.env.VUE_APP_TEMPLATE,
           params,
-          'user_bzk4OXg1GFi5EG8cNALdG'
+          process.env.VUE_APP_USERID,
         )
         this.loading = false
         this.resetFieldsForm()

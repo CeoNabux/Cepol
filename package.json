@@ -11,6 +11,7 @@
   "dependencies": {
     "@mdi/js": "^5.9.55",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "chart.js": "2.9.4",
     "core-js": "^3.15.1",
     "emailjs-com": "^3.2.0",
