@@ -75,6 +75,6 @@ export default {
     transpile: ['vee-validate'],
   },
   env: {
-    GOOGLE_MAPS: 'AIzaSyBQc4P1XMeB7jtTzLzSXpdYv-C5CVjd1-c',
+    GOOGLE_MAPS: process.env.VUE_APP_MAPS,
   },
 }
