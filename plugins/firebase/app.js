@@ -4,7 +4,6 @@ import { getAuth } from 'firebase/auth'
 import { getStorage } from 'firebase/storage'
 import { getFunctions } from 'firebase/functions'
 
-console.log(process.env.NUXT_ENV_APIKEY)
 
 const firebaseConfig = {
   apiKey: process.env.NUXT_ENV_APIKEY,
