@@ -4,16 +4,16 @@ import { getAuth } from 'firebase/auth'
 import { getStorage } from 'firebase/storage'
 import { getFunctions } from 'firebase/functions'
 
-console.log(process.env.VUE_APP_APIKEY)
+console.log(process.env.NUXT_ENV_APIKEY)
 
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_APIKEY,
-  authDomain: process.env.VUE_APP_AUTHDOMAIN,
-  projectId: process.env.VUE_APP_PROJECTID,
-  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
-  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDER,
-  appId: process.env.VUE_APP_APPID,
-  measurementId: process.env.VUE_APP_MEASURESID,
+  apiKey: process.env.NUXT_ENV_APIKEY,
+  authDomain: process.env.NUXT_ENV_AUTHDOMAIN,
+  projectId: process.env.NUXT_ENV_PROJECTID,
+  storageBucket: process.env.NUXT_ENV_STORAGEBUCKET,
+  messagingSenderId: process.env.NUXT_ENV_MESSAGINGSENDER,
+  appId: process.env.NUXT_ENV_APPID,
+  measurementId: process.env.NUXT_ENV_MEASURESID,
 }
 
 const app = initializeApp(firebaseConfig)

@@ -9,7 +9,6 @@ yarn-error.log*
 
 # Files with secret passwords
 .env
-.env.production
 
 # Runtime data
 pids

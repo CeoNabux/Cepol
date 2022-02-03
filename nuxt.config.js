@@ -42,7 +42,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/google-fonts', '@nuxtjs/dotenv'],
+  buildModules: ['@nuxtjs/google-fonts'],
 
   googleFonts: {
     families: {
@@ -75,6 +75,6 @@ export default {
     transpile: ['vee-validate'],
   },
   env: {
-    GOOGLE_MAPS: process.env.VUE_APP_MAPS,
+    GOOGLE_MAPS: process.env.NUXT_ENV_MAPS,
   },
 }
