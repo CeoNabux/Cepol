@@ -195,6 +195,7 @@ export const actions = {
   },
   finishSimulator({ commit, getters }, Boolean) {
     let count = 0
+    // COMPARING SIMULATOR ANSWERS WITH USER ANSWERS
     for (let i = 0; i < getters.getOriginalSimulator.length; i++) {
       for (
         let ii = 0;
@@ -228,9 +229,16 @@ export const actions = {
         }
       }
     }
-    const averageScorePerAnswer = 4
+    // COUNTING NUMBER OF QUESTIONS
+    let numberOfQuestions = 0
+    for (let i = 0; i < getters.getOriginalSimulator.length; i++) {
+      numberOfQuestions = numberOfQuestions + getters.getOriginalSimulator[i].questions.length
+    }
+    const points = 400
+    const averageScorePerAnswer = points / numberOfQuestions
+    console.log(averageScorePerAnswer.toFixed(2))
     const freePoints = 600
-    const score = Math.trunc(freePoints + count * averageScorePerAnswer)
+    const score = Math.trunc(freePoints + count * averageScorePerAnswer.toFixed(2))
     commit('SCORE_TEST', score)
     commit('FINISH_SIMULATOR', Boolean)
     commit('CLEAR_SIMULATOR')
