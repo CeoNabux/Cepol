@@ -41,6 +41,7 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ['@nuxtjs/google-fonts'],
 
@@ -76,19 +77,5 @@ export default {
   },
   env: {
     GOOGLE_MAPS: process.env.NUXT_ENV_MAPS,
-
-    NUXT_ENV_SERVICE: process.env.NUXT_ENV_SERVICE,
-    NUXT_ENV_TEMPLATE: process.env.NUXT_ENV_TEMPLATE,
-    NUXT_ENV_USERID: process.env.NUXT_ENV_USERID,
-
-    NUXT_ENV_APIKEY: process.env.NUXT_ENV_APIKEY,
-    NUXT_ENV_AUTHDOMAIN: process.env.NUXT_ENV_AUTHDOMAIN,
-    NUXT_ENV_PROJECTID: process.env.NUXT_ENV_PROJECTID,
-    NUXT_ENV_STORAGEBUCKET: process.env.NUXT_ENV_STORAGEBUCKET,
-    NUXT_ENV_MESSAGINGSENDER: process.env.NUXT_ENV_MESSAGINGSENDER,
-    NUXT_ENV_APPID: process.env.NUXT_ENV_APPID,
-    NUXT_ENV_MEASURESID: process.env.NUXT_ENV_APPID,
-
-    MAPS: process.env.NUXT_ENV_MAPS,
   },
 }

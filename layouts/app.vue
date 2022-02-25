@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col-reverse lg:flex-row min-h-screen bg-blue-900 relative"
+    class="flex flex-col-reverse lg:flex-row min-h-screen bg-gray-200 relative"
   >
     <!-- SIDEBBAR -->
     <div
@@ -87,7 +87,7 @@
         px-3
       "
     >
-      <nuxt class="bg-blue-900" />
+      <nuxt class="bg-gray-200" />
     </div>
   </div>
 </template>
